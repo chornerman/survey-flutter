@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_config.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -10,8 +12,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var config = AppConfig.of(context)!;
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: config.appName,
       theme: ThemeData(
         // This is the theme of your application.
         //
