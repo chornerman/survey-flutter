@@ -1,0 +1,50 @@
+name: Deploy staging
+
+on:
+  pull_request:
+    types: [ opened, synchronize, edited, reopened ]
+  push:
+    branches-ignore:
+      - develop
+      - main
+      - 'release/**'
+jobs:
+  run_tests_and_deploy_staging:
+    name: Run tests and deploy staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.10.5'
+          channel: 'stable'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Analyze error
+        run: flutter analyze
+
+      - name: Analyze code formatting
+        run: flutter format --set-exit-if-changed .
+
+      - name: Run unit tests and widget tests
+        run: flutter test --coverage
+
+      - name: Upload code coverage to CodeCov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/lcov.info
+
+      - name: Build staging Android artifact
+        run: flutter build apk --flavor=staging
+
+      - name: Upload to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: staging-android-artifact
+          path: build/app/outputs/flutter-apk/app-release.apk
