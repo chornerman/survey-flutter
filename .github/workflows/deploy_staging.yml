@@ -41,10 +41,10 @@ jobs:
           file: ./coverage/lcov.info
 
       - name: Build staging Android artifact
-        run: flutter build apk --flavor=staging
+        run: flutter build apk --flavor staging -t lib/main_staging.dart --debug
 
       - name: Upload to GitHub
         uses: actions/upload-artifact@v3
         with:
           name: staging-android-artifact
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-staging-debug.apk
