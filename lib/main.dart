@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'app_config.dart';
+import 'flavors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var config = AppConfig.of(context)!;
-
     return MaterialApp(
-      title: config.appName,
+      title: F.appName,
       theme: ThemeData(
         // This is the theme of your application.
         //
