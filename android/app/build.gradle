@@ -51,17 +51,14 @@ android {
     }
 
     flavorDimensions "stage"
-
     productFlavors {
         production {
             dimension "stage"
             applicationId "co.nimblehq.survey"
-            resValue "string", "app_name", "Survey"
         }
         staging {
             dimension "stage"
             applicationId "co.nimblehq.survey.staging"
-            resValue "string", "app_name", "Survey Staging"
         }
     }
 
