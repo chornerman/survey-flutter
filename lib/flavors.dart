@@ -18,9 +18,9 @@ class F {
   static String get apiEndpoint {
     switch (appFlavor) {
       case Flavor.production:
-        return 'https://survey-api.nimblehq.co/';
+        return 'https://survey-api.nimblehq.co';
       default:
-        return 'https://nimble-survey-web-staging.herokuapp.com/';
+        return 'https://nimble-survey-web-staging.herokuapp.com';
     }
   }
 }
