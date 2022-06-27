@@ -50,6 +50,18 @@ android {
         versionName flutterVersionName
     }
 
+    flavorDimensions "stage"
+    productFlavors {
+        production {
+            dimension "stage"
+            applicationId "co.nimblehq.survey"
+        }
+        staging {
+            dimension "stage"
+            applicationId "co.nimblehq.survey.staging"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
