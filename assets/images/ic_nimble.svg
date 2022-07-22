@@ -1,0 +1,45 @@
+<svg width="168" height="40" viewBox="0 0 168 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_34_1459)">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M142.037 2.77466H136.76L136.76 31.9996H142.037V2.77466Z" fill="white" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M151.629 19.6294C152.116 16.4665 154.308 14.4651 157.433 14.4651C160.721 14.4651 162.873 16.4665 162.994 19.6294H151.629ZM157.394 10.4216C150.899 10.4216 146.353 14.8255 146.353 21.3511C146.353 27.7967 150.777 32.2 157.515 32.2C161.33 32.2 164.496 30.8387 166.648 28.5168L163.807 25.5944C162.264 27.156 160.194 27.9964 157.961 27.9964C154.795 27.9964 152.441 26.1551 151.751 23.1125H167.784C168.312 15.3459 165.024 10.4216 157.394 10.4216Z"
+            fill="white" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M45.5141 10.3815C41.9828 10.4212 39.2633 11.7422 37.7208 14.5851V10.5812H32.444V31.9999H37.7208V21.4715C37.7208 17.9477 39.8311 15.346 43.4033 15.3057C46.4071 15.3057 48.2331 17.1476 48.2331 20.15V31.9999H53.5508V18.6281C53.5508 13.5444 50.5068 10.3815 45.5141 10.3815Z"
+            fill="white" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M58.3497 31.9993H63.6266V10.5812H58.3497V31.9993Z" fill="white" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M96.8798 10.3815C93.0642 10.4212 90.2227 12.0231 88.8022 15.5055C87.7868 12.2631 85.1489 10.3815 81.3328 10.3815C77.8826 10.4212 75.2039 11.703 73.7023 14.5448V10.5812H68.4255V31.9999H73.7023V21.4307C73.7023 17.9477 75.7723 15.3852 79.222 15.266C82.1446 15.266 83.931 17.1068 83.931 20.15V31.9999H89.2481V21.4307C89.2481 17.9477 91.3187 15.3852 94.7281 15.266C97.6501 15.266 99.4773 17.1068 99.4773 20.15V31.9999H104.794V18.6281C104.794 13.5444 101.79 10.3815 96.8798 10.3815Z"
+            fill="white" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M121 27.7163C117.387 27.7163 114.871 25.0743 114.871 21.231C114.871 17.4677 117.387 14.7849 121 14.7849C124.572 14.7849 127.089 17.4677 127.089 21.231C127.089 25.034 124.572 27.7163 121 27.7163ZM122.177 10.4212C118.93 10.4212 116.413 11.7423 114.871 14.1045V2.77441H109.594V31.9999H114.871V28.5169C116.454 30.8786 118.97 32.2002 122.258 32.2002C128.428 32.2002 132.446 27.8366 132.446 21.3905C132.446 14.8257 128.306 10.4212 122.177 10.4212Z"
+            fill="white" />
+        <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd"
+            d="M58.3497 7.97898H63.6266V2.77441H58.3497V7.97898Z" fill="white" />
+        <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd"
+            d="M0 16.0005H8.11109V8.00049H0V16.0005Z" fill="white" />
+        <path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd"
+            d="M8.11115 8.00024L16.2222 16.0002H8.11115V8.00024Z" fill="white" />
+        <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd"
+            d="M0 24.0004H8.11109V16.0004H0V24.0004Z" fill="white" />
+        <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M0 40H8.11109V32.0006H0V40Z"
+            fill="white" />
+        <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd"
+            d="M8.11115 24.0004H16.2222V16.0004H8.11115V24.0004Z" fill="white" />
+        <path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd"
+            d="M16.2223 24.0004H24.3334V16.0004H16.2223V24.0004Z" fill="white" />
+        <path opacity="0.7" fill-rule="evenodd" clip-rule="evenodd"
+            d="M16.2223 7.99998H24.3334V0H16.2223V7.99998Z" fill="white" />
+        <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd"
+            d="M8.11115 24.0002H16.2222V32.0002L8.11115 24.0002Z" fill="white" />
+        <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd"
+            d="M16.2223 32.0007H24.3334V24.0007H16.2223V32.0007Z" fill="white" />
+    </g>
+    <defs>
+        <clipPath id="clip0_34_1459">
+            <rect width="167.839" height="40" fill="white" />
+        </clipPath>
+    </defs>
+</svg>
