@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
 import 'flavors.dart';
-import 'main.dart';
+import 'main.dart' as app;
 
 void main() {
   F.appFlavor = Flavor.staging;
-  runApp(const App());
+  app.main();
 }
