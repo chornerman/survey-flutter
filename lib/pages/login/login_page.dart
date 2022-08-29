@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:survey/assets.dart';
 import 'package:survey/dimens.dart';
@@ -35,18 +36,22 @@ class LoginPage extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(top: Dimens.space110),
-                child: const TextInputWidget(hintText: "Email"),
+                child: TextInputWidget(
+                  hintText: AppLocalizations.of(context)!.loginEmail,
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: Dimens.space20),
-                child: const TextInputWidget(
-                  hintText: "Password",
+                child: TextInputWidget(
+                  hintText: AppLocalizations.of(context)!.loginPassword,
                   isPasswordInput: true,
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: Dimens.space20),
-                child: const LoginButtonWidget(buttonText: "Log in"),
+                child: LoginButtonWidget(
+                  buttonText: AppLocalizations.of(context)!.login,
+                ),
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey/dimens.dart';
 
 class TextInputWidget extends StatelessWidget {
@@ -55,7 +56,7 @@ class TextInputWidget extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  "Forgot?",
+                  AppLocalizations.of(context)!.loginForgotPassword,
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.white.withOpacity(0.3),
