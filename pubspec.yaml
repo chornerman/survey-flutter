@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 0.1.0+1
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,24 +32,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-  cupertino_icons: ^1.0.2
-  flutter_svg: ^0.22.0
+  flutter_svg: ^1.1.5
 
 dev_dependencies:
+  build_runner: ^2.2.1
+  flutter_gen_runner: ^4.3.0
+  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^1.0.0
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
   uses-material-design: true
 
@@ -65,3 +56,11 @@ flutter:
           weight: 400
         - asset: assets/fonts/Neuzeit-Bold.otf
           weight: 800
+
+flutter_gen:
+  integrations:
+    flutter_svg: true
+
+  colors:
+    inputs:
+      - assets/color/colors.xml

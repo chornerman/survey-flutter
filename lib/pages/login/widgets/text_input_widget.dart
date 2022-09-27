@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey/dimens.dart';
 
 class TextInputWidget extends StatelessWidget {
   final String hintText;
   final bool isPasswordInput;
+  final Widget? endWidget;
 
   const TextInputWidget({
     Key? key,
     required this.hintText,
     this.isPasswordInput = false,
+    this.endWidget,
   }) : super(key: key);
 
   @override
@@ -43,27 +44,7 @@ class TextInputWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (isPasswordInput)
-            Expanded(
-              flex: 0,
-              child: TextButton(
-                onPressed: () {
-                  // TODO: Define in integration part
-                },
-                style: TextButton.styleFrom(
-                  minimumSize: Size.zero,
-                  padding: EdgeInsets.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.loginForgotPassword,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white.withOpacity(0.3),
-                  ),
-                ),
-              ),
-            ),
+          if (endWidget != null) Expanded(flex: 0, child: endWidget!),
         ],
       ),
     );

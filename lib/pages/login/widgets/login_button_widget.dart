@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:survey/app_colors.dart';
 import 'package:survey/dimens.dart';
+import 'package:survey/gen/colors.gen.dart';
 
 class LoginButtonWidget extends StatelessWidget {
   final String buttonText;
@@ -30,7 +30,7 @@ class LoginButtonWidget extends StatelessWidget {
         child: Text(
           buttonText,
           style: const TextStyle(
-            color: AppColors.chineseBlack,
+            color: ColorName.chineseBlack,
             fontSize: 17,
             fontWeight: FontWeight.w800,
           ),
