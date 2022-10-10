@@ -25,6 +25,9 @@ jobs:
       - name: Get Flutter dependencies
         run: flutter pub get
 
+      - name: Generate Flutter files
+        run: flutter packages pub run build_runner build
+
       - name: Analyze error
         run: flutter analyze
 
