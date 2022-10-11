@@ -50,3 +50,4 @@ app.*.map.json
 *.gen.dart
 *.config.dart
 *.freezed.dart
+*.mocks.dart
