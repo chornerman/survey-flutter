@@ -1,28 +1,27 @@
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/grant_type.dart';
 import 'package:survey/api/request/login_request.dart';
 import 'package:survey/api/response/login_response.dart';
-import 'package:survey/api/service/user_service.dart';
+import 'package:survey/api/service/auth_service.dart';
 import 'package:survey/flavors.dart';
 
-const String _grantTypePassword = 'password';
-
-abstract class UserRepository {
+abstract class AuthRepository {
   Future<LoginResponse> login(
       {required String email, required String password});
 }
 
-@Singleton(as: UserRepository)
-class UserRepositoryImpl extends UserRepository {
-  final UserService _userService;
+@Singleton(as: AuthRepository)
+class AuthRepositoryImpl extends AuthRepository {
+  final AuthService _authService;
 
-  UserRepositoryImpl(this._userService);
+  AuthRepositoryImpl(this._authService);
 
   @override
   Future<LoginResponse> login(
       {required String email, required String password}) {
-    return _userService.login(
+    return _authService.login(
       LoginRequest(
-        grantType: _grantTypePassword,
+        grantType: GrantType.password.value,
         email: email,
         password: password,
         clientId: F.clientId,

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
-import 'package:survey/api/repository/user_repository.dart';
+import 'package:survey/api/repository/auth_repository.dart';
 import 'package:survey/api/response/login_response.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/utils/shared_preferences_utils.dart';
@@ -18,7 +18,7 @@ class LoginInput {
 
 @Injectable()
 class LoginUseCase extends UseCase<void, LoginInput> {
-  final UserRepository _repository;
+  final AuthRepository _repository;
   final SharedPreferencesUtils _sharedPreferencesUtils;
 
   const LoginUseCase(
@@ -30,12 +30,12 @@ class LoginUseCase extends UseCase<void, LoginInput> {
   Future<Result<void>> call(LoginInput input) {
     return _repository
         .login(email: input.email, password: input.password)
-        .then((value) => _saveRefreshToken(value))
+        .then((value) => _saveTokens(value))
         .onError<Exception>(
             (exception, stackTrace) => Failed(UseCaseException(exception)));
   }
 
-  Result<void> _saveRefreshToken(LoginResponse loginResponse) {
+  Result<void> _saveTokens(LoginResponse loginResponse) {
     _sharedPreferencesUtils.saveAccessToken(loginResponse.accessToken);
     _sharedPreferencesUtils.saveTokenType(loginResponse.tokenType);
     _sharedPreferencesUtils.saveRefreshToken(loginResponse.refreshToken);
