@@ -21,4 +21,6 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(Japx.decode(json));
+
+  Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
 }

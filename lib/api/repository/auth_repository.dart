@@ -3,7 +3,7 @@ import 'package:survey/api/grant_type.dart';
 import 'package:survey/api/request/login_request.dart';
 import 'package:survey/api/response/login_response.dart';
 import 'package:survey/api/service/auth_service.dart';
-import 'package:survey/flavors.dart';
+import 'package:survey/env_variables.dart';
 
 abstract class AuthRepository {
   Future<LoginResponse> login(
@@ -24,8 +24,8 @@ class AuthRepositoryImpl extends AuthRepository {
         grantType: GrantType.password.value,
         email: email,
         password: password,
-        clientId: F.clientId,
-        clientSecret: F.clientSecret,
+        clientId: EnvVariables.clientId,
+        clientSecret: EnvVariables.clientSecret,
       ),
     );
   }

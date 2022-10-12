@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:survey/di/interceptor/app_interceptor.dart';
-import 'package:survey/flavors.dart';
+import 'package:survey/env_variables.dart';
 
 const String _headerContentType = 'Content-Type';
 const String _defaultContentType = 'application/json; charset=utf-8';
@@ -36,7 +36,7 @@ class DioProvider {
       ..options.connectTimeout = _connectionTimeout
       ..options.receiveTimeout = _connectionTimeout
       ..options.headers = {_headerContentType: _defaultContentType}
-      ..options.baseUrl = F.apiEndpoint
+      ..options.baseUrl = EnvVariables.apiEndpoint
       ..interceptors.addAll(interceptors);
   }
 }
