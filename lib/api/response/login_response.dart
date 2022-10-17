@@ -1,5 +1,5 @@
-import 'package:japx/japx.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey/api/response/converter/response_converter.dart';
 
 part 'login_response.g.dart';
 
@@ -20,7 +20,7 @@ class LoginResponse {
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$LoginResponseFromJson(Japx.decode(json));
+      _$LoginResponseFromJson(fromJsonApi(json));
 
   Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
 }
