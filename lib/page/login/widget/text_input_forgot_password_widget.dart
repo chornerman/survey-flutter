@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey/di/di.dart';
+import 'package:survey/navigator.dart';
 
 class TextInputForgotPasswordWidget extends StatelessWidget {
-  const TextInputForgotPasswordWidget({Key? key}) : super(key: key);
+  TextInputForgotPasswordWidget({Key? key}) : super(key: key);
+
+  final _appNavigator = getIt.get<AppNavigator>();
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        // TODO: Define in integration part
-      },
+      onPressed: () => navigateToResetPassword(context),
       style: TextButton.styleFrom(
         minimumSize: Size.zero,
         padding: EdgeInsets.zero,
@@ -24,4 +26,7 @@ class TextInputForgotPasswordWidget extends StatelessWidget {
       ),
     );
   }
+
+  void navigateToResetPassword(BuildContext context) =>
+      _appNavigator.navigateToResetPassword(context);
 }

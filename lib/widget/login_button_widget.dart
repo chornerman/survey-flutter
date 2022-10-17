@@ -4,10 +4,12 @@ import 'package:survey/gen/colors.gen.dart';
 
 class LoginButtonWidget extends StatelessWidget {
   final String buttonText;
+  final VoidCallback onPressed;
 
   const LoginButtonWidget({
     Key? key,
     required this.buttonText,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -24,9 +26,7 @@ class LoginButtonWidget extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {
-          // TODO: Define in integration part
-        },
+        onPressed: onPressed,
         child: Text(
           buttonText,
           style: const TextStyle(
