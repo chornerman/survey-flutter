@@ -1,13 +1,15 @@
 import 'package:injectable/injectable.dart';
 import 'package:survey/api/grant_type.dart';
 import 'package:survey/api/request/login_request.dart';
-import 'package:survey/api/response/login_response.dart';
 import 'package:survey/api/service/auth_service.dart';
 import 'package:survey/env_variables.dart';
+import 'package:survey/model/login_model.dart';
 
 abstract class AuthRepository {
-  Future<LoginResponse> login(
-      {required String email, required String password});
+  Future<LoginModel> login({
+    required String email,
+    required String password,
+  });
 }
 
 @Singleton(as: AuthRepository)
@@ -17,9 +19,11 @@ class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl(this._authService);
 
   @override
-  Future<LoginResponse> login(
-      {required String email, required String password}) {
-    return _authService.login(
+  Future<LoginModel> login({
+    required String email,
+    required String password,
+  }) async {
+    final response = await _authService.login(
       LoginRequest(
         grantType: GrantType.password.value,
         email: email,
@@ -27,6 +31,11 @@ class AuthRepositoryImpl extends AuthRepository {
         clientId: EnvVariables.clientId,
         clientSecret: EnvVariables.clientSecret,
       ),
+    );
+    return LoginModel(
+      accessToken: response.accessToken,
+      tokenType: response.tokenType,
+      refreshToken: response.refreshToken,
     );
   }
 }

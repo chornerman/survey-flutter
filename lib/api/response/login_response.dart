@@ -5,11 +5,11 @@ part 'login_response.g.dart';
 
 @JsonSerializable()
 class LoginResponse {
-  String accessToken;
-  String tokenType;
-  DateTime expiresIn;
-  String refreshToken;
-  DateTime createdAt;
+  final String accessToken;
+  final String tokenType;
+  final int expiresIn;
+  final String refreshToken;
+  final int createdAt;
 
   LoginResponse({
     required this.accessToken,

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 import 'package:survey/api/repository/auth_repository.dart';
-import 'package:survey/api/response/login_response.dart';
+import 'package:survey/model/login_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/utils/shared_preferences_utils.dart';
 
@@ -35,10 +35,10 @@ class LoginUseCase extends UseCase<void, LoginInput> {
             (exception, stackTrace) => Failed(UseCaseException(exception)));
   }
 
-  Result<void> _saveTokens(LoginResponse loginResponse) {
-    _sharedPreferencesUtils.saveAccessToken(loginResponse.accessToken);
-    _sharedPreferencesUtils.saveTokenType(loginResponse.tokenType);
-    _sharedPreferencesUtils.saveRefreshToken(loginResponse.refreshToken);
+  Result<void> _saveTokens(LoginModel model) {
+    _sharedPreferencesUtils.saveAccessToken(model.accessToken);
+    _sharedPreferencesUtils.saveTokenType(model.tokenType);
+    _sharedPreferencesUtils.saveRefreshToken(model.refreshToken);
     return Success(null);
   }
 }

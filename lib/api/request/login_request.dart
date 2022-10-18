@@ -4,11 +4,11 @@ part 'login_request.g.dart';
 
 @JsonSerializable()
 class LoginRequest {
-  String grantType;
-  String email;
-  String password;
-  String clientId;
-  String clientSecret;
+  final String grantType;
+  final String email;
+  final String password;
+  final String clientId;
+  final String clientSecret;
 
   LoginRequest({
     required this.grantType,
