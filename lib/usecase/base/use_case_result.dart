@@ -11,9 +11,9 @@ class Success<T> extends Result<T> {
 }
 
 class UseCaseException implements Exception {
-  final Exception exception;
+  final Exception actualException;
 
-  UseCaseException(this.exception);
+  UseCaseException(this.actualException);
 }
 
 class Failed<T> extends Result<T> {
