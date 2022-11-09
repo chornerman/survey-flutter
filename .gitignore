@@ -51,3 +51,13 @@ app.*.map.json
 *.config.dart
 *.freezed.dart
 *.mocks.dart
+
+## flutter_config related
+**/ios/Flutter/tmp.xcconfig
+**/ios/.envfile
+.env
+.env.staging
+
+## Fastlane related
+/android/fastlane/report.xml
+/android/vendor/
