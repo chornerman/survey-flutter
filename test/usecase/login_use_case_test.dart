@@ -19,7 +19,7 @@ void main() {
     });
 
     test(
-        'When execute use case with valid email and password, it returns Success result',
+        'When executing use case with valid email and password, it returns Success result',
         () async {
       when(mockRepository.login(
         email: anyNamed('email'),
@@ -40,7 +40,7 @@ void main() {
     });
 
     test(
-        'When execute use case with incorrect email or password, it returns Failed result',
+        'When executing use case with incorrect email or password, it returns Failed result',
         () async {
       final exception = Exception();
       when(mockRepository.login(
