@@ -12,7 +12,7 @@ import 'package:survey/page/login/login_view_model.dart';
 import 'package:survey/page/login/widget/text_input_forgot_password_widget.dart';
 import 'package:survey/usecase/login_use_case.dart';
 import 'package:survey/widget/circular_progress_bar_widget.dart';
-import 'package:survey/widget/login_button_widget.dart';
+import 'package:survey/widget/custom_button_widget.dart';
 import 'package:survey/widget/text_input_widget.dart';
 
 final loginViewModelProvider =
@@ -86,12 +86,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       hintText: AppLocalizations.of(context)!.loginPassword,
                       isPasswordInput: true,
                       controller: _passwordController,
-                      endWidget: TextInputForgotPasswordWidget(),
+                      endWidget: TextInputForgotPasswordWidget(
+                        onPressed: () {
+                          _navigateToResetPassword();
+                        },
+                      ),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: Dimens.space20),
-                    child: LoginButtonWidget(
+                    child: CustomButtonWidget(
                       buttonText: AppLocalizations.of(context)!.login,
                       onPressed: () {
                         _hideKeyboard();
@@ -116,6 +120,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void _navigateToHome() => _appNavigator.navigateToHome(context);
+
+  void _navigateToResetPassword() =>
+      _appNavigator.navigateToResetPassword(context);
 
   void _showError(String errorMessage) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

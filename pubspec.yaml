@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   dio: ^4.0.6
+  email_validator: ^2.1.17
   equatable: ^2.0.5
   flutter:
     sdk: flutter

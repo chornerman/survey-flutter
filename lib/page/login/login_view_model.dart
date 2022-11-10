@@ -1,10 +1,8 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey/page/login/login_state.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/usecase/login_use_case.dart';
-
-const String _patternEmailValidation =
-    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
 class LoginViewModel extends StateNotifier<LoginState> {
   final LoginUseCase _loginUseCase;
@@ -31,7 +29,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
   }
 
   bool _validateInputs(String email, String password) {
-    final isEmailValid = RegExp(_patternEmailValidation).hasMatch(email);
+    final isEmailValid = EmailValidator.validate(email);
     final isPasswordValid = password.isNotEmpty;
     return isEmailValid && isPasswordValid;
   }
