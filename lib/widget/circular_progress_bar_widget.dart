@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CircularProgressBar extends StatelessWidget {
-  const CircularProgressBar({Key? key}) : super(key: key);
+class CircularProgressBarWidget extends StatelessWidget {
+  const CircularProgressBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
