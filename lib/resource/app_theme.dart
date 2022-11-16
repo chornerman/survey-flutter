@@ -28,6 +28,11 @@ class AppTheme {
             fontSize: 34,
             fontWeight: FontWeight.w800,
           ),
+          headline5: TextStyle(
+            color: Colors.white,
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+          ),
           button: TextStyle(
             color: ColorName.chineseBlack,
             fontSize: 17,
