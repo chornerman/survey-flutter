@@ -35,7 +35,7 @@ void main() {
       expect(result.length, 2);
       expect(result[0].title, "Scarlett Bangkok");
       expect(result[1].title, "ibis Bangkok Riverside");
-
+      verify(mockHiveUtils.clearSurveys()).called(1);
       verify(mockHiveUtils.saveSurveys(result)).called(1);
     });
 

@@ -6,6 +6,7 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData get defaultTheme => ThemeData(
+        scaffoldBackgroundColor: Colors.black,
         fontFamily: FontFamily.neuzeit,
         textTheme: const TextTheme(
           bodyText1: TextStyle(

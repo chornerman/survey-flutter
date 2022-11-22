@@ -6,6 +6,7 @@ import 'package:survey/api/service/auth_service.dart';
 import 'package:survey/api/service/survey_service.dart';
 import 'package:survey/database/hive_utils.dart';
 import 'package:survey/database/shared_preferences_utils.dart';
+import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
 import 'package:survey/usecase/login_use_case.dart';
 
@@ -18,6 +19,7 @@ import 'package:survey/usecase/login_use_case.dart';
   MockSpec<SurveyService>(),
   MockSpec<LoginUseCase>(),
   MockSpec<GetSurveysUseCase>(),
+  MockSpec<GetCachedSurveysUseCase>(),
   MockSpec<DioError>(),
 ])
 void main() {}
