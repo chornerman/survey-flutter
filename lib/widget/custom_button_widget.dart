@@ -15,13 +15,14 @@ class CustomButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: Dimens.space56,
+      height: Dimens.customButtonHeight,
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.space10),
+              borderRadius:
+                  BorderRadius.circular(Dimens.customButtonBorderRadius),
             ),
           ),
         ),

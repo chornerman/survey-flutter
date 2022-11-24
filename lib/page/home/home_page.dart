@@ -6,6 +6,7 @@ import 'package:survey/model/survey_model.dart';
 import 'package:survey/page/home/home_state.dart';
 import 'package:survey/page/home/home_view_model.dart';
 import 'package:survey/page/home/widget/home_header_widget.dart';
+import 'package:survey/page/home/widget/home_surveys_indicators_widget.dart';
 import 'package:survey/page/home/widget/home_surveys_page_view_widget.dart';
 import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
@@ -29,6 +30,8 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final _currentSurveysPage = ValueNotifier<int>(0);
+
   @override
   void initState() {
     super.initState();
@@ -67,6 +70,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               if (shouldEnablePagination)
                 ref.read(homeViewModelProvider.notifier).loadSurveysFromApi()
             },
+            currentSurveysPage: _currentSurveysPage,
+          ),
+          HomeSurveysIndicatorsWidget(
+            surveysAmount: surveys.length,
+            currentSurveysPage: _currentSurveysPage,
           ),
           SafeArea(
             child: HomeHeaderWidget(
@@ -83,5 +91,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       duration: const Duration(seconds: 2),
       content: Text(errorMessage),
     ));
+  }
+
+  @override
+  void dispose() {
+    _currentSurveysPage.dispose();
+    super.dispose();
   }
 }
