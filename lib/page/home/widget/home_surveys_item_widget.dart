@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:survey/gen/assets.gen.dart';
-import 'package:survey/gen/colors.gen.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/resource/dimens.dart';
 
@@ -55,7 +54,7 @@ class HomeSurveysItemWidget extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1
-                        ?.copyWith(color: ColorName.whiteAlpha70),
+                        ?.copyWith(color: Colors.white70),
                   ),
                 ),
                 Padding(
