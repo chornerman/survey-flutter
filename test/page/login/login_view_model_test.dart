@@ -66,16 +66,15 @@ void main() {
 
     test('When calling login with Failed result, it returns ApiError state',
         () {
-      final exception = UseCaseException(Exception());
       when(mockLoginUseCase.call(any))
-          .thenAnswer((_) async => Failed(exception));
+          .thenAnswer((_) async => Failed(UseCaseException(Exception())));
       final stateStream = loginViewModel.stream;
 
       expect(
           stateStream,
           emitsInOrder([
             const LoginState.loading(),
-            LoginState.apiError(exception),
+            const LoginState.apiError(),
           ]));
 
       loginViewModel.login('chorny@berlento.com', '12345678');

@@ -12,6 +12,7 @@ import '../../mock/mock_dependencies.mocks.dart';
 
 void main() {
   group('HomeViewModelTest', () {
+    late MockGetUserUseCase mockGetUserUseCase;
     late MockGetSurveysUseCase mockGetSurveysUseCase;
     late MockGetCachedSurveysUseCase mockGetCachedSurveysUseCase;
     late ProviderContainer providerContainer;
@@ -35,6 +36,7 @@ void main() {
     ];
 
     setUp(() {
+      mockGetUserUseCase = MockGetUserUseCase();
       mockGetSurveysUseCase = MockGetSurveysUseCase();
       mockGetCachedSurveysUseCase = MockGetCachedSurveysUseCase();
 
@@ -43,6 +45,7 @@ void main() {
       providerContainer = ProviderContainer(
         overrides: [
           homeViewModelProvider.overrideWithValue(HomeViewModel(
+            mockGetUserUseCase,
             mockGetSurveysUseCase,
             mockGetCachedSurveysUseCase,
           )),
@@ -59,9 +62,22 @@ void main() {
       final stateStream = homeViewModel.stream;
 
       expect(surveysStream, emitsInOrder([cachedSurveys]));
-      expect(stateStream, emitsInOrder([HomeState.cacheLoadingSuccess()]));
+      expect(
+          stateStream, emitsInOrder([const HomeState.cacheLoadingSuccess()]));
 
       homeViewModel.loadSurveysFromCache();
+    });
+
+    test(
+        'When getting user from api with Success result, it emits UserModel correspondingly',
+        () async {
+      final user = MockUserModel();
+      when(mockGetUserUseCase.call()).thenAnswer((_) async => Success(user));
+      final userStream = homeViewModel.user;
+
+      expect(userStream, emitsInOrder([user]));
+
+      homeViewModel.getUser();
     });
 
     test(
@@ -73,20 +89,20 @@ void main() {
       final stateStream = homeViewModel.stream;
 
       expect(surveysStream, emitsInOrder([surveys]));
-      expect(stateStream, emitsInOrder([HomeState.apiLoadingSuccess()]));
+      expect(stateStream, emitsInOrder([const HomeState.apiLoadingSuccess()]));
 
       homeViewModel.loadSurveysFromApi();
     });
 
     test(
-        'When loading surveys from api with Failed result, it returns Error state',
+        'When loading surveys from api with Failed result, it returns LoadSurveysError state',
         () {
       final exception = UseCaseException(Exception());
       when(mockGetSurveysUseCase.call(any))
           .thenAnswer((_) async => Failed(exception));
       final stateStream = homeViewModel.stream;
 
-      expect(stateStream, emitsInOrder([HomeState.error(exception)]));
+      expect(stateStream, emitsInOrder([const HomeState.error()]));
 
       homeViewModel.loadSurveysFromApi();
     });

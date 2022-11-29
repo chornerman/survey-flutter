@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/navigator.dart';
@@ -41,8 +42,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ) {
       newLoginState.maybeWhen(
         success: () => _navigateToHome(),
-        apiError: (error) =>
-            _showError(AppLocalizations.of(context)!.loginError),
+        apiError: () => _showError(AppLocalizations.of(context)!.loginError),
         invalidInputsError: () =>
             _showError(AppLocalizations.of(context)!.loginInvalidEmailPassword),
         orElse: () {},
@@ -127,7 +127,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   void _showError(String errorMessage) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: Constants.snackBarDurationInSecond),
       content: Text(errorMessage),
     ));
   }
