@@ -6,7 +6,7 @@ import 'package:survey/page/login/login_state.dart';
 import 'package:survey/page/login/login_view_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 
-import '../../test/mock/mock_dependencies.mocks.dart';
+import '../../mock/mock_dependencies.mocks.dart';
 
 void main() {
   group('LoginViewModelTest', () {
