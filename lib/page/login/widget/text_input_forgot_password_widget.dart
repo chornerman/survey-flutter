@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TextInputForgotPasswordWidget extends StatelessWidget {
-  const TextInputForgotPasswordWidget({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+
+  const TextInputForgotPasswordWidget({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        // TODO: Define in integration part
-      },
+      onPressed: onPressed,
       style: TextButton.styleFrom(
         minimumSize: Size.zero,
         padding: EdgeInsets.zero,

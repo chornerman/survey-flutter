@@ -4,12 +4,14 @@ import 'package:survey/dimens.dart';
 class TextInputWidget extends StatelessWidget {
   final String hintText;
   final bool isPasswordInput;
+  final TextEditingController? controller;
   final Widget? endWidget;
 
   const TextInputWidget({
     Key? key,
     required this.hintText,
     this.isPasswordInput = false,
+    this.controller,
     this.endWidget,
   }) : super(key: key);
 
@@ -27,6 +29,7 @@ class TextInputWidget extends StatelessWidget {
           Expanded(
             flex: 1,
             child: TextFormField(
+              controller: controller,
               obscureText: isPasswordInput,
               enableSuggestions: !isPasswordInput,
               autocorrect: !isPasswordInput,
