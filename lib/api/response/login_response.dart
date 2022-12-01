@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey/api/response/converter/response_converter.dart';
-import 'package:survey/model/login_model.dart';
 
 part 'login_response.g.dart';
 
@@ -22,10 +21,4 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(fromDataJsonApi(json));
-
-  LoginModel toLoginModel() => LoginModel(
-        accessToken: accessToken,
-        tokenType: tokenType,
-        refreshToken: refreshToken,
-      );
 }

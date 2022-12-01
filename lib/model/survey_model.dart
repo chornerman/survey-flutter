@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:survey/api/response/survey_response.dart';
 
 part 'survey_model.g.dart';
 
@@ -23,4 +24,13 @@ class SurveyModel extends Equatable {
 
   @override
   List<Object?> get props => [id, title, description, coverImageUrl];
+
+  factory SurveyModel.fromResponse(SurveyResponse response) {
+    return SurveyModel(
+      id: response.id,
+      title: response.title ?? "",
+      description: response.description ?? "",
+      coverImageUrl: response.getHdCoverImageUrl(),
+    );
+  }
 }

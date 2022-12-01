@@ -12,7 +12,7 @@ abstract class AuthRepository {
   });
 }
 
-@LazySingleton(as: AuthRepository)
+@Singleton(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository {
   final AuthService _authService;
 
@@ -32,6 +32,6 @@ class AuthRepositoryImpl extends AuthRepository {
         clientSecret: EnvVariables.clientSecret,
       ),
     );
-    return response.toLoginModel();
+    return LoginModel.fromResponse(response);
   }
 }

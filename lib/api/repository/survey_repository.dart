@@ -10,7 +10,7 @@ abstract class SurveyRepository {
   });
 }
 
-@LazySingleton(as: SurveyRepository)
+@Singleton(as: SurveyRepository)
 class SurveyRepositoryImpl extends SurveyRepository {
   final SurveyService _surveyService;
   final HiveUtils _hiveUtils;
@@ -24,7 +24,7 @@ class SurveyRepositoryImpl extends SurveyRepository {
   }) async {
     final response = await _surveyService.getSurveys(pageNumber, pageSize);
     final surveyModels =
-        response.surveys.map((item) => item.toSurveyModel()).toList();
+        response.surveys.map((item) => SurveyModel.fromResponse(item)).toList();
 
     _saveSurveysCache(surveyModels);
 
