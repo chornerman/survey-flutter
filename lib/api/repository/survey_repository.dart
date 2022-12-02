@@ -1,10 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/service/survey_service.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/database/hive_utils.dart';
 import 'package:survey/model/survey_model.dart';
-
-const _firstSurveysPageNumber = 1;
 
 abstract class SurveyRepository {
   Future<List<SurveyModel>> getSurveys({
@@ -40,7 +39,9 @@ class SurveyRepositoryImpl extends SurveyRepository {
   }
 
   void _saveSurveysCache(int pageNumber, List<SurveyModel> surveyModels) {
-    if (pageNumber == _firstSurveysPageNumber) _hiveUtils.clearSurveys();
+    if (pageNumber == Constants.firstSurveysPageNumber) {
+      _hiveUtils.clearSurveys();
+    }
     _hiveUtils.saveSurveys(surveyModels);
   }
 }

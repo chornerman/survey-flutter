@@ -134,6 +134,38 @@ void main() {
     });
 
     test(
+        'When refreshing surveys with Success result, it emits SurveyModel list and returns ApiLoadingSuccess state',
+        () async {
+      when(mockGetSurveysUseCase.call(any))
+          .thenAnswer((_) async => Success(surveys));
+      final surveysStream = homeViewModel.surveys;
+      final stateStream = homeViewModel.stream;
+
+      expect(surveysStream, emitsInOrder([surveys]));
+      expect(stateStream, emitsInOrder([const HomeState.apiLoadingSuccess()]));
+
+      homeViewModel.refreshSurveys();
+    });
+
+    test(
+        'When refreshing surveys with Failed result, it returns LoadSurveysError state and emits corresponding errorMessage',
+        () {
+      when(mockGetSurveysUseCase.call(any))
+          .thenAnswer((_) async => Failed(mockException));
+      final errorStream = homeViewModel.error;
+      final stateStream = homeViewModel.stream;
+
+      expect(
+          errorStream,
+          emitsInOrder([
+            NetworkExceptions.getErrorMessage(NetworkExceptions.badRequest())
+          ]));
+      expect(stateStream, emitsInOrder([const HomeState.loadSurveysError()]));
+
+      homeViewModel.refreshSurveys();
+    });
+
+    test(
         'When getting current date, it returns formatted current date correctly',
         () {
       withClock(Clock.fixed(DateTime(2000)), () {
