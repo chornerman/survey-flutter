@@ -16,6 +16,10 @@ class HomeSurveysPageViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (currentSurveysPage.value > surveys.length - 1) {
+      currentSurveysPage.value = surveys.length - 1;
+    }
+
     return PageView.builder(
       itemCount: surveys.length,
       controller: _pageController,

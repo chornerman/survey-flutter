@@ -64,18 +64,20 @@ class _HomePageState extends ConsumerState<HomePage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          HomeSurveysPageViewWidget(
-            surveys: surveys,
-            loadMoreSurveys: () => {
-              if (shouldEnablePagination)
-                ref.read(homeViewModelProvider.notifier).loadSurveysFromApi()
-            },
-            currentSurveysPage: _currentSurveysPage,
-          ),
-          HomeSurveysIndicatorsWidget(
-            surveysAmount: surveys.length,
-            currentSurveysPage: _currentSurveysPage,
-          ),
+          if (surveys.isNotEmpty) ...[
+            HomeSurveysPageViewWidget(
+              surveys: surveys,
+              loadMoreSurveys: () => {
+                if (shouldEnablePagination)
+                  ref.read(homeViewModelProvider.notifier).loadSurveysFromApi()
+              },
+              currentSurveysPage: _currentSurveysPage,
+            ),
+            HomeSurveysIndicatorsWidget(
+              surveysLength: surveys.length,
+              currentSurveysPage: _currentSurveysPage,
+            ),
+          ],
           SafeArea(
             child: HomeHeaderWidget(
                 currentDate:

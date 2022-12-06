@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:survey/resource/dimens.dart';
 
-class CustomButtonWidget extends StatelessWidget {
+class RoundedButtonWidget extends StatelessWidget {
   final String buttonText;
   final VoidCallback onPressed;
 
-  const CustomButtonWidget({
+  const RoundedButtonWidget({
     Key? key,
     required this.buttonText,
     required this.onPressed,
@@ -15,14 +15,14 @@ class CustomButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: Dimens.customButtonHeight,
+      height: Dimens.roundedButtonHeight,
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
               borderRadius:
-                  BorderRadius.circular(Dimens.customButtonBorderRadius),
+                  BorderRadius.circular(Dimens.roundedButtonBorderRadius),
             ),
           ),
         ),

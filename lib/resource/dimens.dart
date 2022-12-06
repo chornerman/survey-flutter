@@ -14,8 +14,8 @@ class Dimens {
   static const double textInputHeight = 56;
   static const double textInputBorderRadius = 12;
 
-  static const double customButtonBorderRadius = 10;
-  static const double customButtonHeight = 56;
+  static const double roundedButtonBorderRadius = 10;
+  static const double roundedButtonHeight = 56;
 
   static const double homeSurveysIndicatorsSize = 8;
   static const double homeSurveysNextButtonSize = 56;
