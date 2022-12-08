@@ -1,0 +1,47 @@
+name: Deploy production
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy_android_production_debug:
+    name: Deploy Android production debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java environment
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11.x'
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.0'
+          channel: 'stable'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Generate Flutter files
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Decrypt large secret
+        run: ./.github/workflows/decrypt_secret.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      - name: Build Android production debug APK
+        run: flutter build apk --flavor production --debug --build-number $GITHUB_RUN_NUMBER
+
+      - name: Upload Android production debug APK to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID_PRODUCTION }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: developer
+          releaseNotes: Production debug build
+          file: build/app/outputs/flutter-apk/app-production-debug.apk
