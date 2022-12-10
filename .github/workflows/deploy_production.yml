@@ -30,7 +30,7 @@ jobs:
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Decrypt large secret
-        run: ./.github/workflows/decrypt_secret.sh
+        run: ./.github/workflows/decrypt_secret_android.sh
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
@@ -45,3 +45,55 @@ jobs:
           groups: developer
           releaseNotes: Production debug build
           file: build/app/outputs/flutter-apk/app-production-debug.apk
+
+  deploy_ios_production_debug:
+    name: Deploy iOS production debug
+    runs-on: macOS-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.0'
+          channel: 'stable'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Generate Flutter files
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+          working-directory: 'ios'
+
+      - name: Install Pod
+        run: cd ./ios && pod install
+
+      - name: Decrypt large secret
+        run: ./.github/workflows/decrypt_secret_ios_production.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      - name: Build and deploy iOS production debug to Firebase
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: build_and_deploy_ios
+          subdirectory: ios
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER_PRODUCTION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          GIT_AUTHORIZATION: ${{ secrets.GIT_AUTHORIZATION }}
+          TEMP_KEYCHAIN_NAME: ${{ secrets.TEMP_KEYCHAIN_NAME }}
+          TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
+          SCHEME: production
+          BUILD_NUMBER: $GITHUB_RUN_NUMBER
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID_IOS_PRODUCTION }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          RELEASE_NOTES: Production debug build
