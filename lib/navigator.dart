@@ -17,6 +17,8 @@ class Routes {
 }
 
 abstract class AppNavigator {
+  void navigateBack(BuildContext context);
+
   void navigateToHome(BuildContext context);
 
   void navigateToResetPassword(BuildContext context);
@@ -24,6 +26,9 @@ abstract class AppNavigator {
 
 @Injectable(as: AppNavigator)
 class AppNavigatorImpl extends AppNavigator {
+  @override
+  void navigateBack(BuildContext context) => Navigator.of(context).pop();
+
   @override
   void navigateToHome(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeHome);
