@@ -13,6 +13,7 @@ import 'package:survey/page/home/widget/home_surveys_page_view_widget.dart';
 import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
 import 'package:survey/usecase/get_user_use_case.dart';
+import 'package:survey/widget/loading_indicator_widget.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>((ref) {
@@ -116,16 +117,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: ListView(),
               ),
             SafeArea(
-              child: HomeHeaderWidget(
-                currentDate:
-                    ref.read(homeViewModelProvider.notifier).getCurrentDate(),
-                userAvatarUrl: ref.watch(_userStreamProvider).value?.avatarUrl,
+              child: Column(
+                children: [
+                  HomeHeaderWidget(
+                    currentDate: ref
+                        .read(homeViewModelProvider.notifier)
+                        .getCurrentDate(),
+                    userAvatarUrl:
+                        ref.watch(_userStreamProvider).value?.avatarUrl,
+                  ),
+                  if (shouldShowLoading)
+                    LoadingIndicatorWidget(shouldIgnoreOtherGestures: false)
+                ],
               ),
             ),
-            if (shouldShowLoading)
-              const Center(
-                child: CircularProgressIndicator(color: Colors.white),
-              )
           ],
         ),
       ),

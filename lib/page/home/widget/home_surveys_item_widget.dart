@@ -60,7 +60,7 @@ class HomeSurveysItemWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: Dimens.space20),
                   child: ElevatedButton(
-                    child: Assets.images.icArrowRight.svg(),
+                    child: Assets.images.icArrowNext.svg(),
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       shape: const CircleBorder(),
