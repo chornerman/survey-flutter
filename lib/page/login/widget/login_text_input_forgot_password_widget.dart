@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TextInputForgotPasswordWidget extends StatelessWidget {
+class LoginTextInputForgotPasswordWidget extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const TextInputForgotPasswordWidget({
+  const LoginTextInputForgotPasswordWidget({
     Key? key,
     required this.onPressed,
   }) : super(key: key);

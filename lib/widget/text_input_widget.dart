@@ -18,11 +18,11 @@ class TextInputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimens.space56,
+      height: Dimens.textInputHeight,
       padding: const EdgeInsets.symmetric(horizontal: Dimens.space12),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(Dimens.space12),
+        borderRadius: BorderRadius.circular(Dimens.textInputBorderRadius),
       ),
       child: Row(
         children: [

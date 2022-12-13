@@ -66,7 +66,10 @@ class HomeSurveysItemWidget extends StatelessWidget {
                       elevation: 0,
                       shape: const CircleBorder(),
                       backgroundColor: Colors.white,
-                      minimumSize: Size(Dimens.space56, Dimens.space56),
+                      minimumSize: Size(
+                        Dimens.homeSurveysNextButtonSize,
+                        Dimens.homeSurveysNextButtonSize,
+                      ),
                     ),
                     onPressed: onNextButtonPressed,
                   ),

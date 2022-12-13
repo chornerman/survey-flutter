@@ -5,15 +5,21 @@ import 'package:survey/page/home/widget/home_surveys_item_widget.dart';
 class HomeSurveysPageViewWidget extends StatelessWidget {
   final List<SurveyModel> surveys;
   final VoidCallback loadMoreSurveys;
+  final ValueNotifier<int> currentSurveysPage;
   final _pageController = PageController();
 
   HomeSurveysPageViewWidget({
     required this.surveys,
     required this.loadMoreSurveys,
+    required this.currentSurveysPage,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (currentSurveysPage.value > surveys.length - 1) {
+      currentSurveysPage.value = surveys.length - 1;
+    }
+
     return PageView.builder(
       itemCount: surveys.length,
       controller: _pageController,
@@ -26,6 +32,9 @@ class HomeSurveysPageViewWidget extends StatelessWidget {
             // TODO: Navigate to Survey Detail screen
           },
         );
+      },
+      onPageChanged: (int index) {
+        currentSurveysPage.value = index;
       },
     );
   }

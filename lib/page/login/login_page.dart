@@ -8,11 +8,11 @@ import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/page/login/login_state.dart';
 import 'package:survey/page/login/login_view_model.dart';
-import 'package:survey/page/login/widget/text_input_forgot_password_widget.dart';
+import 'package:survey/page/login/widget/login_text_input_forgot_password_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/login_use_case.dart';
 import 'package:survey/widget/circular_progress_bar_widget.dart';
-import 'package:survey/widget/custom_button_widget.dart';
+import 'package:survey/widget/rounded_button_widget.dart';
 import 'package:survey/widget/text_input_widget.dart';
 
 final loginViewModelProvider =
@@ -86,7 +86,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         hintText: AppLocalizations.of(context)!.loginPassword,
                         isPasswordInput: true,
                         controller: _passwordController,
-                        endWidget: TextInputForgotPasswordWidget(
+                        endWidget: LoginTextInputForgotPasswordWidget(
                           onPressed: () {
                             _navigateToResetPassword();
                           },
@@ -95,7 +95,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: Dimens.space20),
-                      child: CustomButtonWidget(
+                      child: RoundedButtonWidget(
                         buttonText: AppLocalizations.of(context)!.login,
                         onPressed: () {
                           _hideKeyboard();
