@@ -3,6 +3,8 @@ import 'package:survey/api/service/survey_service.dart';
 import 'package:survey/database/hive_utils.dart';
 import 'package:survey/model/survey_model.dart';
 
+const _firstSurveysPageNumber = 1;
+
 abstract class SurveyRepository {
   Future<List<SurveyModel>> getSurveys({
     required int pageNumber,
@@ -26,12 +28,13 @@ class SurveyRepositoryImpl extends SurveyRepository {
     final surveyModels =
         response.surveys.map((item) => SurveyModel.fromResponse(item)).toList();
 
-    _saveSurveysCache(surveyModels);
+    _saveSurveysCache(pageNumber, surveyModels);
 
     return surveyModels;
   }
 
-  void _saveSurveysCache(List<SurveyModel> surveyModels) {
+  void _saveSurveysCache(int pageNumber, List<SurveyModel> surveyModels) {
+    if (pageNumber == _firstSurveysPageNumber) _hiveUtils.clearSurveys();
     _hiveUtils.saveSurveys(surveyModels);
   }
 }

@@ -35,7 +35,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = ref.watch(loginViewModelProvider);
     ref.listen<LoginState>(loginViewModelProvider, (
       LoginState? previousLoginState,
       LoginState newLoginState,
@@ -45,7 +44,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         apiError: (error) =>
             _showError(AppLocalizations.of(context)!.loginError),
         invalidInputsError: () =>
-            _showError(AppLocalizations.of(context)!.invalidEmailPassword),
+            _showError(AppLocalizations.of(context)!.loginInvalidEmailPassword),
         orElse: () {},
       );
     });
@@ -113,10 +112,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
           ),
         ),
-        loginViewModel.maybeWhen(
-          loading: () => const CircularProgressBarWidget(),
-          orElse: () => const SizedBox(),
-        )
+        ref.watch(loginViewModelProvider).maybeWhen(
+              loading: () => const CircularProgressBarWidget(),
+              orElse: () => const SizedBox(),
+            )
       ],
     );
   }
@@ -128,7 +127,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   void _showError(String errorMessage) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
       content: Text(errorMessage),
     ));
   }

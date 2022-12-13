@@ -12,9 +12,11 @@ void main() {
   group('LoginViewModelTest', () {
     late MockLoginUseCase mockLoginUseCase;
     late ProviderContainer providerContainer;
+    late LoginViewModel loginViewModel;
 
     setUp(() {
       mockLoginUseCase = MockLoginUseCase();
+
       providerContainer = ProviderContainer(
         overrides: [
           loginViewModelProvider
@@ -22,6 +24,7 @@ void main() {
         ],
       );
       addTearDown(providerContainer.dispose);
+      loginViewModel = providerContainer.read(loginViewModelProvider.notifier);
     });
 
     test('When initializing, it initializes with Init state', () {
@@ -34,8 +37,7 @@ void main() {
     test('When calling login with Success result, it returns Success state',
         () {
       when(mockLoginUseCase.call(any)).thenAnswer((_) async => Success(null));
-      final stateStream =
-          providerContainer.read(loginViewModelProvider.notifier).stream;
+      final stateStream = loginViewModel.stream;
 
       expect(
           stateStream,
@@ -43,16 +45,14 @@ void main() {
             const LoginState.loading(),
             const LoginState.success(),
           ]));
-      providerContainer
-          .read(loginViewModelProvider.notifier)
-          .login('chorny@berlento.com', '12345678');
+
+      loginViewModel.login('chorny@berlento.com', '12345678');
     });
 
     test(
         'When calling login with invalid email or password, it returns InvalidInputsError state',
         () {
-      final stateStream =
-          providerContainer.read(loginViewModelProvider.notifier).stream;
+      final stateStream = loginViewModel.stream;
 
       expect(
           stateStream,
@@ -60,9 +60,8 @@ void main() {
             const LoginState.loading(),
             const LoginState.invalidInputsError(),
           ]));
-      providerContainer
-          .read(loginViewModelProvider.notifier)
-          .login('Chorny', '');
+
+      loginViewModel.login('Chorny', '');
     });
 
     test('When calling login with Failed result, it returns ApiError state',
@@ -70,8 +69,7 @@ void main() {
       final exception = UseCaseException(Exception());
       when(mockLoginUseCase.call(any))
           .thenAnswer((_) async => Failed(exception));
-      final stateStream =
-          providerContainer.read(loginViewModelProvider.notifier).stream;
+      final stateStream = loginViewModel.stream;
 
       expect(
           stateStream,
@@ -79,9 +77,8 @@ void main() {
             const LoginState.loading(),
             LoginState.apiError(exception),
           ]));
-      providerContainer
-          .read(loginViewModelProvider.notifier)
-          .login('chorny@berlento.com', '12345678');
+
+      loginViewModel.login('chorny@berlento.com', '12345678');
     });
   });
 }

@@ -9,7 +9,7 @@ abstract class HiveUtils {
 
   void saveSurveys(List<SurveyModel> surveyModels);
 
-  void clear();
+  void clearSurveys();
 }
 
 @Singleton(as: HiveUtils)
@@ -30,7 +30,7 @@ class HiveUtilsImpl extends HiveUtils {
   }
 
   @override
-  void clear() async {
+  void clearSurveys() async {
     await _surveyBox.delete(_surveysKey);
   }
 }
