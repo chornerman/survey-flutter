@@ -44,3 +44,20 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter generated files
+*.g.dart
+*.gen.dart
+*.config.dart
+*.freezed.dart
+*.mocks.dart
+
+## flutter_config related
+**/ios/Flutter/tmp.xcconfig
+**/ios/.envfile
+.env
+.env.staging
+
+## Fastlane related
+/android/fastlane/report.xml
+/android/vendor/
