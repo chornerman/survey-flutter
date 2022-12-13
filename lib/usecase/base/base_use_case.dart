@@ -9,3 +9,9 @@ abstract class UseCase<T, I> extends BaseUseCase<Result<T>> {
 
   Future<Result<T>> call(I input);
 }
+
+abstract class SimpleUseCase<T> {
+  const SimpleUseCase();
+
+  T call();
+}

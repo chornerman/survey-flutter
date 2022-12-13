@@ -32,10 +32,6 @@ class AuthRepositoryImpl extends AuthRepository {
         clientSecret: EnvVariables.clientSecret,
       ),
     );
-    return LoginModel(
-      accessToken: response.accessToken,
-      tokenType: response.tokenType,
-      refreshToken: response.refreshToken,
-    );
+    return LoginModel.fromResponse(response);
   }
 }

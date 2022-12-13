@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String _keyAccessToken = "accessToken";
-const String _keyTokenType = "tokenType";
-const String _keyRefreshToken = "refreshToken";
+const String _accessTokenKey = "accessToken";
+const String _tokenTypeKey = "tokenType";
+const String _refreshTokenKey = "refreshToken";
 
 abstract class SharedPreferencesUtils {
   String get accessToken;
@@ -11,6 +11,8 @@ abstract class SharedPreferencesUtils {
   String get tokenType;
 
   String get refreshToken;
+
+  String get authToken;
 
   void saveAccessToken(String accessToken);
 
@@ -26,27 +28,30 @@ class SharedPreferencesUtilsImpl extends SharedPreferencesUtils {
   SharedPreferencesUtilsImpl(this._sharedPreferences);
 
   @override
-  String get accessToken => _sharedPreferences.getString(_keyAccessToken) ?? '';
+  String get accessToken => _sharedPreferences.getString(_accessTokenKey) ?? '';
 
   @override
-  String get tokenType => _sharedPreferences.getString(_keyTokenType) ?? '';
+  String get tokenType => _sharedPreferences.getString(_tokenTypeKey) ?? '';
 
   @override
   String get refreshToken =>
-      _sharedPreferences.getString(_keyRefreshToken) ?? '';
+      _sharedPreferences.getString(_refreshTokenKey) ?? '';
+
+  @override
+  String get authToken => '$tokenType $accessToken';
 
   @override
   void saveAccessToken(String accessToken) async {
-    await _sharedPreferences.setString(_keyAccessToken, accessToken);
+    await _sharedPreferences.setString(_accessTokenKey, accessToken);
   }
 
   @override
   void saveTokenType(String tokenType) async {
-    await _sharedPreferences.setString(_keyTokenType, tokenType);
+    await _sharedPreferences.setString(_tokenTypeKey, tokenType);
   }
 
   @override
   void saveRefreshToken(String refreshToken) async {
-    await _sharedPreferences.setString(_keyRefreshToken, refreshToken);
+    await _sharedPreferences.setString(_refreshTokenKey, refreshToken);
   }
 }
