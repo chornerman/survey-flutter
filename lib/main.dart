@@ -3,9 +3,9 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey/di/di.dart';
-import 'package:survey/gen/fonts.gen.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/page/login/login_page.dart';
+import 'package:survey/resource/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: FontFamily.neuzeit),
+      theme: AppTheme.defaultTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const Scaffold(

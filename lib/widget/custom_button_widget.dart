@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey/dimens.dart';
-import 'package:survey/gen/colors.gen.dart';
+import 'package:survey/resource/dimens.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   final String buttonText;
@@ -29,11 +28,7 @@ class CustomButtonWidget extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: const TextStyle(
-            color: ColorName.chineseBlack,
-            fontSize: 17,
-            fontWeight: FontWeight.w800,
-          ),
+          style: Theme.of(context).textTheme.button,
         ),
       ),
     );
