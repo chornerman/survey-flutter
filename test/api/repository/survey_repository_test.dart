@@ -24,7 +24,7 @@ void main() {
     });
 
     test(
-        'When calling getSurveys successfully, it returns corresponding mapped result',
+        'When calling getSurveys with pageNumber equal to 1 successfully, it returns corresponding mapped result and clear surveys cache',
         () async {
       final surveysJson =
           await FileUtils.loadFile('test/mock/mock_response/surveys.json');
@@ -38,6 +38,23 @@ void main() {
       expect(result[0], SurveyModel.fromResponse(response.surveys[0]));
       expect(result[1], SurveyModel.fromResponse(response.surveys[1]));
       verify(mockHiveUtils.clearSurveys()).called(1);
+      verify(mockHiveUtils.saveSurveys(result)).called(1);
+    });
+
+    test(
+        'When calling getSurveys with pageNumber not equal to 1 successfully, it returns corresponding mapped result',
+        () async {
+      final surveysJson =
+          await FileUtils.loadFile('test/mock/mock_response/surveys.json');
+      final response = SurveysResponse.fromJson(surveysJson);
+      when(mockSurveyService.getSurveys(any, any))
+          .thenAnswer((_) async => response);
+
+      final result = await repository.getSurveys(pageNumber: 2, pageSize: 2);
+
+      expect(result.length, 2);
+      expect(result[0], SurveyModel.fromResponse(response.surveys[0]));
+      expect(result[1], SurveyModel.fromResponse(response.surveys[1]));
       verify(mockHiveUtils.saveSurveys(result)).called(1);
     });
 

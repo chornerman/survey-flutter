@@ -30,7 +30,8 @@ class SurveyRepositoryImpl extends SurveyRepository {
           .map((item) => SurveyModel.fromResponse(item))
           .toList();
 
-      _saveSurveysCache(pageNumber, surveyModels);
+      final shouldClearCache = pageNumber == Constants.firstSurveysPageNumber;
+      _saveSurveysCache(shouldClearCache, surveyModels);
 
       return surveyModels;
     } catch (exception) {
@@ -38,10 +39,11 @@ class SurveyRepositoryImpl extends SurveyRepository {
     }
   }
 
-  void _saveSurveysCache(int pageNumber, List<SurveyModel> surveyModels) {
-    if (pageNumber == Constants.firstSurveysPageNumber) {
-      _hiveUtils.clearSurveys();
-    }
+  void _saveSurveysCache(
+    bool shouldClearCache,
+    List<SurveyModel> surveyModels,
+  ) {
+    if (shouldClearCache) _hiveUtils.clearSurveys();
     _hiveUtils.saveSurveys(surveyModels);
   }
 }
