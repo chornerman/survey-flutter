@@ -11,6 +11,8 @@ class Dimens {
   static const double space20 = 20;
   static const double space22 = 22;
   static const double space24 = 24;
+  static const double space35 = 35;
+  static const double space50 = 50;
   static const double space96 = 96;
   static const double space110 = 110;
   static const double space120 = 120;
@@ -29,4 +31,6 @@ class Dimens {
   static const double homeUserAvatarSize = 36;
   static const double homeSkeletonLoadingTextHeight = 18;
   static const double homeSkeletonLoadingTextBorderRadius = 14;
+  static const double homeDrawerWidthFactor = 0.64;
+  static const double homeDrawerSeparatorHeight = 0.5;
 }

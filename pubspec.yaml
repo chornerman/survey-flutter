@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   another_flushbar: ^1.12.29
+  cached_network_image: ^3.2.3
   dio: ^4.0.6
   email_validator: ^2.1.17
   equatable: ^2.0.5

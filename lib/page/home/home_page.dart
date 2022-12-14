@@ -6,6 +6,7 @@ import 'package:survey/model/survey_model.dart';
 import 'package:survey/model/user_model.dart';
 import 'package:survey/page/home/home_state.dart';
 import 'package:survey/page/home/home_view_model.dart';
+import 'package:survey/page/home/widget/home_drawer_widget.dart';
 import 'package:survey/page/home/widget/home_header_widget.dart';
 import 'package:survey/page/home/widget/home_skeleton_loading_widget.dart';
 import 'package:survey/page/home/widget/home_surveys_indicators_widget.dart';
@@ -87,6 +88,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   }) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      endDrawer: HomeDrawerWidget(),
       body: RefreshIndicator(
         color: Colors.white,
         backgroundColor: Colors.white30,

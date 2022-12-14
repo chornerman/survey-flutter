@@ -9,5 +9,7 @@
     "resetPasswordSuccessTitle": "ตรวจสอบอีเมลล์ของคุณ",
     "resetPasswordSuccessDescription": "เราได้ส่งขั้นตอนการรีเซ็ตรหัสผ่านให้คุณทางอีเมลล์แล้ว",
     "resetPasswordInvalidEmail": "อีเมลล์ไม่ถูกต้อง",
-    "homeToday": "วันนี้"
+    "homeToday": "วันนี้",
+    "homeUser": "ผู้ใช้",
+    "homeLogout": "ออกจากระบบ"
 }
