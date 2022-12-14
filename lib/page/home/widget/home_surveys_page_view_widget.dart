@@ -24,8 +24,9 @@ class HomeSurveysPageViewWidget extends StatelessWidget {
       itemCount: surveys.length,
       controller: _pageController,
       itemBuilder: (BuildContext context, int index) {
-        if (index + 1 == surveys.length) loadMoreSurveys.call();
-
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (index + 1 == surveys.length) loadMoreSurveys.call();
+        });
         return HomeSurveysItemWidget(
           survey: surveys[index],
           onNextButtonPressed: () => {

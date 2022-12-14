@@ -53,34 +53,33 @@ void main() {
     });
 
     test(
-        'When initializing, it fetches cached surveys correctly and returns CacheLoadingSuccess state',
+        'When loading surveys from cache, it emits cached SurveyModel list and returns CacheLoadingSuccess state',
         () {
       final surveysStream = homeViewModel.surveys;
+      final stateStream = homeViewModel.stream;
 
       expect(surveysStream, emitsInOrder([cachedSurveys]));
-      expect(
-        providerContainer.read(homeViewModelProvider),
-        const HomeState.cacheLoadingSuccess(),
-      );
-      verify(homeViewModel.loadSurveysFromCache()).called(1);
+      expect(stateStream, emitsInOrder([HomeState.cacheLoadingSuccess()]));
+
+      homeViewModel.loadSurveysFromCache();
     });
 
     test(
-        'When loads surveys from api with Success result, it emits SurveyModel list and returns ApiLoadingSuccess state',
+        'When loading surveys from api with Success result, it emits SurveyModel list and returns ApiLoadingSuccess state',
         () async {
       when(mockGetSurveysUseCase.call(any))
           .thenAnswer((_) async => Success(surveys));
       final surveysStream = homeViewModel.surveys;
       final stateStream = homeViewModel.stream;
 
-      expect(surveysStream, emitsInOrder([cachedSurveys, surveys]));
+      expect(surveysStream, emitsInOrder([surveys]));
       expect(stateStream, emitsInOrder([HomeState.apiLoadingSuccess()]));
 
       homeViewModel.loadSurveysFromApi();
     });
 
     test(
-        'When loads surveys from api with Failed result, it returns Error state',
+        'When loading surveys from api with Failed result, it returns Error state',
         () {
       final exception = UseCaseException(Exception());
       when(mockGetSurveysUseCase.call(any))

@@ -18,9 +18,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   HomeViewModel(
     this._getSurveysUseCase,
     this._getCachedSurveysUseCase,
-  ) : super(const HomeState.init()) {
-    loadSurveysFromCache();
-  }
+  ) : super(const HomeState.init());
 
   int _surveysPageNumber = 1;
 
@@ -30,13 +28,15 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   void loadSurveysFromCache() async {
     final surveys = _getCachedSurveysUseCase.call();
-    if (surveys.isNotEmpty) {
+    if (surveys.isNotEmpty && state != HomeState.apiLoadingSuccess()) {
       _surveys.add(surveys);
       state = const HomeState.cacheLoadingSuccess();
     }
   }
 
   void loadSurveysFromApi() async {
+    if (_surveysPageNumber > 1) state = const HomeState.loading();
+
     final result = await _getSurveysUseCase.call(GetSurveysInput(
       pageNumber: _surveysPageNumber,
       pageSize: _surveysPageSize,

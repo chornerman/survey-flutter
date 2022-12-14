@@ -6,6 +6,7 @@ import 'package:survey/model/survey_model.dart';
 import 'package:survey/page/home/home_state.dart';
 import 'package:survey/page/home/home_view_model.dart';
 import 'package:survey/page/home/widget/home_header_widget.dart';
+import 'package:survey/page/home/widget/home_skeleton_loading_widget.dart';
 import 'package:survey/page/home/widget/home_surveys_indicators_widget.dart';
 import 'package:survey/page/home/widget/home_surveys_page_view_widget.dart';
 import 'package:survey/usecase/get_cached_surveys_use_case.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    ref.read(homeViewModelProvider.notifier).loadSurveysFromCache();
     ref.read(homeViewModelProvider.notifier).loadSurveysFromApi();
   }
 
@@ -42,8 +44,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
     return ref.watch(homeViewModelProvider).when(
-          init: () => _buildHomePage(surveys),
-          loading: () => _buildHomePage(surveys),
+          init: () => HomeSkeletonLoadingWidget(),
+          loading: () => _buildHomePage(surveys, shouldShowLoading: true),
           cacheLoadingSuccess: () => _buildHomePage(surveys),
           apiLoadingSuccess: () =>
               _buildHomePage(surveys, shouldEnablePagination: true),
@@ -58,6 +60,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _buildHomePage(
     List<SurveyModel> surveys, {
+    bool shouldShowLoading = false,
     bool shouldEnablePagination = false,
   }) {
     return Scaffold(
@@ -83,6 +86,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                 currentDate:
                     ref.read(homeViewModelProvider.notifier).getCurrentDate()),
           ),
+          if (shouldShowLoading)
+            const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            )
         ],
       ),
     );
