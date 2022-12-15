@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
@@ -30,6 +29,9 @@ final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyModel>>(
 final _userStreamProvider = StreamProvider.autoDispose<UserModel>(
     (ref) => ref.watch(homeViewModelProvider.notifier).user);
 
+final _errorStreamProvider = StreamProvider.autoDispose<String>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).error);
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -50,6 +52,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final error = ref.watch(_errorStreamProvider).value;
+    if (error != null) _showError(error);
+
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
     return ref.watch(homeViewModelProvider).when(
           init: () => HomeSkeletonLoadingWidget(),
@@ -57,10 +62,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           cacheLoadingSuccess: () => _buildHomePage(surveys),
           apiLoadingSuccess: () =>
               _buildHomePage(surveys, shouldEnablePagination: true),
-          error: () {
-            _showError(AppLocalizations.of(context)!.homeLoadSurveysError);
-            return _buildHomePage(surveys);
-          },
+          loadSurveysError: () => _buildHomePage(surveys),
         );
   }
 

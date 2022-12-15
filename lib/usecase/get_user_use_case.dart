@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/repository/user_repository.dart';
 import 'package:survey/model/user_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
@@ -15,7 +16,7 @@ class GetUserUseCase extends NoInputUseCase<UserModel> {
         .getUser()
         // ignore: unnecessary_cast
         .then((value) => Success(value) as Result<UserModel>)
-        .onError<Exception>(
+        .onError<NetworkExceptions>(
             (exception, stackTrace) => Failed(UseCaseException(exception)));
   }
 }

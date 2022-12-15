@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/service/survey_service.dart';
 import 'package:survey/database/hive_utils.dart';
 import 'package:survey/model/survey_model.dart';
@@ -24,13 +25,18 @@ class SurveyRepositoryImpl extends SurveyRepository {
     required int pageNumber,
     required int pageSize,
   }) async {
-    final response = await _surveyService.getSurveys(pageNumber, pageSize);
-    final surveyModels =
-        response.surveys.map((item) => SurveyModel.fromResponse(item)).toList();
+    try {
+      final response = await _surveyService.getSurveys(pageNumber, pageSize);
+      final surveyModels = response.surveys
+          .map((item) => SurveyModel.fromResponse(item))
+          .toList();
 
-    _saveSurveysCache(pageNumber, surveyModels);
+      _saveSurveysCache(pageNumber, surveyModels);
 
-    return surveyModels;
+      return surveyModels;
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
   }
 
   void _saveSurveysCache(int pageNumber, List<SurveyModel> surveyModels) {

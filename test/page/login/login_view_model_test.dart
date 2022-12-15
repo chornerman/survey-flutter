@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/page/login/login_page.dart';
 import 'package:survey/page/login/login_state.dart';
 import 'package:survey/page/login/login_view_model.dart';
@@ -64,17 +65,23 @@ void main() {
       loginViewModel.login('Chorny', '');
     });
 
-    test('When calling login with Failed result, it returns ApiError state',
+    test(
+        'When calling login with Failed result, it returns ApiError state with corresponding errorMessage',
         () {
+      final mockException = MockUseCaseException();
+      when(mockException.actualException)
+          .thenReturn(NetworkExceptions.badRequest());
       when(mockLoginUseCase.call(any))
-          .thenAnswer((_) async => Failed(UseCaseException(Exception())));
+          .thenAnswer((_) async => Failed(mockException));
       final stateStream = loginViewModel.stream;
 
       expect(
           stateStream,
           emitsInOrder([
             const LoginState.loading(),
-            const LoginState.apiError(),
+            LoginState.apiError(
+              NetworkExceptions.getErrorMessage(NetworkExceptions.badRequest()),
+            ),
           ]));
 
       loginViewModel.login('chorny@berlento.com', '12345678');

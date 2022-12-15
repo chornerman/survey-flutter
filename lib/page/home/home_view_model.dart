@@ -34,10 +34,16 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   Stream<List<SurveyModel>> get surveys => _surveys.stream;
 
+  final PublishSubject<String> _error = PublishSubject();
+
+  Stream<String> get error => _error.stream;
+
   void getUser() async {
     final result = await _getUserUseCase.call();
     if (result is Success<UserModel>) {
       _user.add(result.value);
+    } else {
+      _error.add((result as Failed).getErrorMessage());
     }
   }
 
@@ -68,7 +74,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
       state = const HomeState.apiLoadingSuccess();
       _surveysPageNumber++;
     } else {
-      state = HomeState.error();
+      _error.add((result as Failed).getErrorMessage());
+      state = HomeState.loadSurveysError();
     }
   }
 

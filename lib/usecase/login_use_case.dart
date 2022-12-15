@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/repository/auth_repository.dart';
 import 'package:survey/database/shared_preferences_utils.dart';
 import 'package:survey/model/login_model.dart';
@@ -31,7 +32,7 @@ class LoginUseCase extends UseCase<void, LoginInput> {
     return _repository
         .login(email: input.email, password: input.password)
         .then((value) => _saveTokens(value))
-        .onError<Exception>(
+        .onError<NetworkExceptions>(
             (exception, stackTrace) => Failed(UseCaseException(exception)));
   }
 

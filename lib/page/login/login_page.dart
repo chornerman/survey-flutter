@@ -42,7 +42,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ) {
       newLoginState.maybeWhen(
         success: () => _navigateToHome(),
-        apiError: () => _showError(AppLocalizations.of(context)!.loginError),
+        apiError: (errorMessage) => _showError(errorMessage),
         invalidInputsError: () =>
             _showError(AppLocalizations.of(context)!.loginInvalidEmailPassword),
         orElse: () {},

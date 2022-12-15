@@ -21,7 +21,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       if (result is Success) {
         state = const LoginState.success();
       } else {
-        state = LoginState.apiError();
+        state = LoginState.apiError((result as Failed).getErrorMessage());
       }
     } else {
       state = const LoginState.invalidInputsError();

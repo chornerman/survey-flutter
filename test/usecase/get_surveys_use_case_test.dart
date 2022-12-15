@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
@@ -33,7 +34,7 @@ void main() {
     test(
         'When executing use case and repository returns error, it returns Failed result',
         () async {
-      final exception = Exception();
+      final exception = NetworkExceptions.badRequest();
       when(mockRepository.getSurveys(pageNumber: 1, pageSize: 2))
           .thenAnswer((_) => Future.error(exception));
 
