@@ -14,6 +14,7 @@ import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
 import 'package:survey/usecase/get_user_use_case.dart';
 import 'package:survey/usecase/login_use_case.dart';
+import 'package:survey/usecase/logout_use_case.dart';
 import 'package:survey/usecase/reset_password_use_case.dart';
 
 @GenerateNiceMocks([
@@ -30,6 +31,7 @@ import 'package:survey/usecase/reset_password_use_case.dart';
   MockSpec<GetCachedSurveysUseCase>(),
   MockSpec<GetUserUseCase>(),
   MockSpec<ResetPasswordUseCase>(),
+  MockSpec<LogoutUseCase>(),
   MockSpec<UserModel>(),
   MockSpec<DioError>(),
   MockSpec<UseCaseException>(),

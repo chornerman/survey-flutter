@@ -1,6 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:survey/constants.dart';
 import 'package:survey/model/survey_model.dart';
@@ -10,6 +11,7 @@ import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
 import 'package:survey/usecase/get_user_use_case.dart';
+import 'package:survey/usecase/logout_use_case.dart';
 
 const _homeCurrentDatePattern = 'EEEE, MMMM dd';
 const _surveysPageSize = 5;
@@ -18,11 +20,13 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final GetUserUseCase _getUserUseCase;
   final GetSurveysUseCase _getSurveysUseCase;
   final GetCachedSurveysUseCase _getCachedSurveysUseCase;
+  final LogoutUseCase _logoutUseCase;
 
   HomeViewModel(
     this._getUserUseCase,
     this._getSurveysUseCase,
     this._getCachedSurveysUseCase,
+    this._logoutUseCase,
   ) : super(const HomeState.init());
 
   int _surveysPageNumber = 1;
@@ -42,6 +46,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final PublishSubject<String> _error = PublishSubject();
 
   Stream<String> get error => _error.stream;
+
+  Stream<String> get appVersion => _getFormattedAppVersion().asStream();
 
   void getUser() async {
     final result = await _getUserUseCase.call();
@@ -99,8 +105,28 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
   }
 
+  void logout() async {
+    state = const HomeState.loading();
+
+    final result = await _logoutUseCase.call();
+    if (result is Success<void>) {
+      state = const HomeState.logoutSuccess();
+    } else {
+      _error.add((result as Failed).getErrorMessage());
+    }
+  }
+
   String getCurrentDate() =>
       DateFormat(_homeCurrentDatePattern).format(clock.now()).toUpperCase();
+
+  Future<String> _getFormattedAppVersion() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      return "v${packageInfo.version} (${packageInfo.buildNumber})";
+    } catch (exception) {
+      return '';
+    }
+  }
 
   void _handleLoadSurveysError(String errorMessage) {
     _error.add(errorMessage);

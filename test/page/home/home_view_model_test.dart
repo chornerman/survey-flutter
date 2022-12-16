@@ -16,6 +16,7 @@ void main() {
     late MockGetUserUseCase mockGetUserUseCase;
     late MockGetSurveysUseCase mockGetSurveysUseCase;
     late MockGetCachedSurveysUseCase mockGetCachedSurveysUseCase;
+    late MockLogoutUseCase mockLogoutUseCase;
     late MockUseCaseException mockException;
     late ProviderContainer providerContainer;
     late HomeViewModel homeViewModel;
@@ -41,6 +42,7 @@ void main() {
       mockGetUserUseCase = MockGetUserUseCase();
       mockGetSurveysUseCase = MockGetSurveysUseCase();
       mockGetCachedSurveysUseCase = MockGetCachedSurveysUseCase();
+      mockLogoutUseCase = MockLogoutUseCase();
       mockException = MockUseCaseException();
 
       when(mockGetCachedSurveysUseCase.call()).thenAnswer((_) => cachedSurveys);
@@ -53,6 +55,7 @@ void main() {
             mockGetUserUseCase,
             mockGetSurveysUseCase,
             mockGetCachedSurveysUseCase,
+            mockLogoutUseCase,
           )),
         ],
       );
@@ -163,6 +166,37 @@ void main() {
       expect(stateStream, emitsInOrder([const HomeState.loadSurveysError()]));
 
       homeViewModel.refreshSurveys();
+    });
+
+    test('When logging out with Success result, it returns LogoutSuccess state',
+        () async {
+      when(mockLogoutUseCase.call()).thenAnswer((_) async => Success(null));
+      final stateStream = homeViewModel.stream;
+
+      expect(
+          stateStream,
+          emitsInOrder([
+            const HomeState.loading(),
+            const HomeState.logoutSuccess(),
+          ]));
+
+      homeViewModel.logout();
+    });
+
+    test(
+        'When logging out with Failed result, it emits corresponding errorMessage',
+        () async {
+      when(mockLogoutUseCase.call())
+          .thenAnswer((_) async => Failed(mockException));
+      final errorStream = homeViewModel.error;
+
+      expect(
+          errorStream,
+          emitsInOrder([
+            NetworkExceptions.getErrorMessage(NetworkExceptions.badRequest())
+          ]));
+
+      homeViewModel.logout();
     });
 
     test(

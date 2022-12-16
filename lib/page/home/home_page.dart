@@ -4,6 +4,7 @@ import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/model/user_model.dart';
+import 'package:survey/navigator.dart';
 import 'package:survey/page/home/home_state.dart';
 import 'package:survey/page/home/home_view_model.dart';
 import 'package:survey/page/home/widget/home_drawer_widget.dart';
@@ -14,6 +15,7 @@ import 'package:survey/page/home/widget/home_surveys_page_view_widget.dart';
 import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
 import 'package:survey/usecase/get_user_use_case.dart';
+import 'package:survey/usecase/logout_use_case.dart';
 import 'package:survey/widget/loading_indicator_widget.dart';
 
 final homeViewModelProvider =
@@ -22,6 +24,7 @@ final homeViewModelProvider =
     getIt.get<GetUserUseCase>(),
     getIt.get<GetSurveysUseCase>(),
     getIt.get<GetCachedSurveysUseCase>(),
+    getIt.get<LogoutUseCase>(),
   );
 });
 
@@ -34,6 +37,9 @@ final _userStreamProvider = StreamProvider.autoDispose<UserModel>(
 final _errorStreamProvider = StreamProvider.autoDispose<String>(
     (ref) => ref.watch(homeViewModelProvider.notifier).error);
 
+final _appVersionStreamProvider = StreamProvider.autoDispose<String>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).appVersion);
+
 final jumpToFirstSurveysPageStreamProvider = StreamProvider.autoDispose<void>(
     (ref) => ref.watch(homeViewModelProvider.notifier).jumpToFirstSurveysPage);
 
@@ -45,6 +51,8 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final _appNavigator = getIt.get<AppNavigator>();
+
   final _currentSurveysPage = ValueNotifier<int>(0);
 
   @override
@@ -57,30 +65,36 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<HomeState>(homeViewModelProvider, (
+      HomeState? previousState,
+      HomeState newState,
+    ) {
+      newState.maybeWhen(
+        logoutSuccess: () =>
+            _appNavigator.navigateToLoginAndClearStack(context),
+        orElse: () {},
+      );
+    });
+
     final error = ref.watch(_errorStreamProvider).value;
     if (error != null) _showError(error);
 
+    final user = ref.watch(_userStreamProvider).value;
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
     return ref.watch(homeViewModelProvider).when(
           init: () => HomeSkeletonLoadingWidget(),
-          loading: () => _buildHomePage(
-            surveys,
-            shouldShowLoading: true,
-          ),
-          cacheLoadingSuccess: () => _buildHomePage(surveys),
-          apiLoadingSuccess: () => _buildHomePage(
-            surveys,
-            shouldEnablePagination: true,
-            shouldEnablePullToRefresh: true,
-          ),
-          loadSurveysError: () => _buildHomePage(
-            surveys,
-            shouldEnablePullToRefresh: true,
-          ),
+          loading: () => _buildHomePage(user, surveys, shouldShowLoading: true),
+          cacheLoadingSuccess: () => _buildHomePage(user, surveys),
+          apiLoadingSuccess: () => _buildHomePage(user, surveys,
+              shouldEnablePagination: true, shouldEnablePullToRefresh: true),
+          loadSurveysError: () =>
+              _buildHomePage(user, surveys, shouldEnablePullToRefresh: true),
+          logoutSuccess: () => const SizedBox(),
         );
   }
 
   Widget _buildHomePage(
+    UserModel? user,
     List<SurveyModel> surveys, {
     bool shouldShowLoading = false,
     bool shouldEnablePagination = false,
@@ -88,7 +102,14 @@ class _HomePageState extends ConsumerState<HomePage> {
   }) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      endDrawer: HomeDrawerWidget(),
+      endDrawer: HomeDrawerWidget(
+        user: user,
+        logout: () {
+          ref.read(homeViewModelProvider.notifier).logout();
+          _appNavigator.navigateBack(context);
+        },
+        appVersion: ref.watch(_appVersionStreamProvider).value ?? '',
+      ),
       body: RefreshIndicator(
         color: Colors.white,
         backgroundColor: Colors.white30,
@@ -125,8 +146,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     currentDate: ref
                         .read(homeViewModelProvider.notifier)
                         .getCurrentDate(),
-                    userAvatarUrl:
-                        ref.watch(_userStreamProvider).value?.avatarUrl,
+                    userAvatarUrl: user?.avatarUrl,
                   ),
                   if (shouldShowLoading)
                     LoadingIndicatorWidget(shouldIgnoreOtherGestures: false)
