@@ -1,17 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey/api/response/converter/response_converter.dart';
 
-part 'login_response.g.dart';
+part 'token_response.g.dart';
 
 @JsonSerializable()
-class LoginResponse {
+class TokenResponse {
   final String accessToken;
   final String tokenType;
   final int expiresIn;
   final String refreshToken;
   final int createdAt;
 
-  LoginResponse({
+  TokenResponse({
     required this.accessToken,
     required this.tokenType,
     required this.expiresIn,
@@ -19,6 +19,6 @@ class LoginResponse {
     required this.createdAt,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$LoginResponseFromJson(fromDataJsonApi(json));
+  factory TokenResponse.fromJson(Map<String, dynamic> json) =>
+      _$TokenResponseFromJson(fromDataJsonApi(json));
 }
