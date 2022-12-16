@@ -14,6 +14,8 @@ abstract class SharedPreferencesUtils {
 
   String get authToken;
 
+  bool get isLoggedIn;
+
   void saveAccessToken(String accessToken);
 
   void saveTokenType(String tokenType);
@@ -41,6 +43,11 @@ class SharedPreferencesUtilsImpl extends SharedPreferencesUtils {
 
   @override
   String get authToken => '$tokenType $accessToken';
+
+  @override
+  bool get isLoggedIn =>
+      _sharedPreferences.containsKey(_accessTokenKey) &&
+      _sharedPreferences.containsKey(_tokenTypeKey);
 
   @override
   void saveAccessToken(String accessToken) async {

@@ -71,7 +71,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     ) {
       newState.maybeWhen(
         logoutSuccess: () =>
-            _appNavigator.navigateToLoginAndClearStack(context),
+            _appNavigator.navigateToStartAndClearStack(context),
         orElse: () {},
       );
     });
