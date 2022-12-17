@@ -4,17 +4,19 @@ import 'package:survey/resource/dimens.dart';
 class RoundedButtonWidget extends StatelessWidget {
   final String buttonText;
   final VoidCallback onPressed;
+  final bool shouldExpandedWidth;
 
   const RoundedButtonWidget({
     Key? key,
     required this.buttonText,
     required this.onPressed,
+    this.shouldExpandedWidth = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: shouldExpandedWidth ? double.infinity : null,
       height: Dimens.roundedButtonHeight,
       child: TextButton(
         style: ButtonStyle(
@@ -25,6 +27,8 @@ class RoundedButtonWidget extends StatelessWidget {
                   BorderRadius.circular(Dimens.roundedButtonBorderRadius),
             ),
           ),
+          padding: MaterialStateProperty.all<EdgeInsets>(
+              EdgeInsets.symmetric(horizontal: Dimens.space20)),
         ),
         onPressed: onPressed,
         child: Text(
