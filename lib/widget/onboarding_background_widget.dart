@@ -1,33 +1,31 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:survey/gen/assets.gen.dart';
 
 class OnboardingBackgroundWidget extends StatelessWidget {
+  final ImageProvider background;
   final bool shouldBlur;
-  final Widget content;
 
   const OnboardingBackgroundWidget({
     Key? key,
+    required this.background,
     required this.shouldBlur,
-    required this.content,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(Assets.images.bgOnboarding.path),
-          fit: BoxFit.cover,
-        ),
+        image: DecorationImage(image: background, fit: BoxFit.cover),
       ),
       child: shouldBlur
           ? BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-              child: content,
+              filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+              child: const SizedBox(),
             )
-          : content,
+          : const SizedBox(),
     );
   }
 }

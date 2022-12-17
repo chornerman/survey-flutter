@@ -53,52 +53,53 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       body: Stack(
         children: [
           OnboardingBackgroundWidget(
+            background: AssetImage(Assets.images.bgOnboarding.path),
             shouldBlur: true,
-            content: Container(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space120),
-                      child: Assets.images.icNimble.svg(),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
+            decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space120),
+                    child: Assets.images.icNimble.svg(),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space110),
+                    child: TextInputWidget(
+                      hintText: AppLocalizations.of(context)!.email,
+                      controller: _emailController,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space110),
-                      child: TextInputWidget(
-                        hintText: AppLocalizations.of(context)!.email,
-                        controller: _emailController,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space20),
-                      child: TextInputWidget(
-                        hintText: AppLocalizations.of(context)!.loginPassword,
-                        isPasswordInput: true,
-                        controller: _passwordController,
-                        endWidget: LoginTextInputForgotPasswordWidget(
-                          onPressed: () {
-                            _navigateToResetPassword();
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space20),
-                      child: RoundedButtonWidget(
-                        buttonText: AppLocalizations.of(context)!.login,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space20),
+                    child: TextInputWidget(
+                      hintText: AppLocalizations.of(context)!.loginPassword,
+                      isPasswordInput: true,
+                      controller: _passwordController,
+                      endWidget: LoginTextInputForgotPasswordWidget(
                         onPressed: () {
-                          _hideKeyboard();
-                          ref.read(loginViewModelProvider.notifier).login(
-                                _emailController.text,
-                                _passwordController.text,
-                              );
+                          _navigateToResetPassword();
                         },
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space20),
+                    child: RoundedButtonWidget(
+                      buttonText: AppLocalizations.of(context)!.login,
+                      onPressed: () {
+                        _hideKeyboard();
+                        ref.read(loginViewModelProvider.notifier).login(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

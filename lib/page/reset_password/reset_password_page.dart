@@ -17,45 +17,46 @@ class ResetPasswordPage extends StatelessWidget {
       body: Stack(
         children: [
           OnboardingBackgroundWidget(
+            background: AssetImage(Assets.images.bgOnboarding.path),
             shouldBlur: true,
-            content: Container(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space120),
-                      child: Assets.images.icNimble.svg(),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
+            decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space120),
+                    child: Assets.images.icNimble.svg(),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space24),
+                    child: Text(
+                      AppLocalizations.of(context)!.resetPasswordDescription,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Colors.white.withOpacity(0.7),
+                          ),
+                      textAlign: TextAlign.center,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space24),
-                      child: Text(
-                        AppLocalizations.of(context)!.resetPasswordDescription,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: Colors.white.withOpacity(0.7),
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space96),
+                    child: TextInputWidget(
+                      hintText: AppLocalizations.of(context)!.email,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space96),
-                      child: TextInputWidget(
-                        hintText: AppLocalizations.of(context)!.email,
-                      ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Dimens.space20),
+                    child: RoundedButtonWidget(
+                      buttonText:
+                          AppLocalizations.of(context)!.resetPasswordReset,
+                      onPressed: () {
+                        // TODO: Call reset password use case
+                      },
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space20),
-                      child: RoundedButtonWidget(
-                        buttonText:
-                            AppLocalizations.of(context)!.resetPasswordReset,
-                        onPressed: () {
-                          // TODO: Call reset password use case
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
