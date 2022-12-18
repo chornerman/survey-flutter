@@ -43,9 +43,9 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   Stream<void> get jumpToFirstSurveysPage => _jumpToFirstSurveysPage.stream;
 
-  final PublishSubject<String> _error = PublishSubject();
+  final PublishSubject<String?> _error = PublishSubject();
 
-  Stream<String> get error => _error.stream;
+  Stream<String?> get error => _error.stream;
 
   Stream<String> get appVersion => _getFormattedAppVersion().asStream();
 
@@ -118,6 +118,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   String getCurrentDate() =>
       DateFormat(_homeCurrentDatePattern).format(clock.now()).toUpperCase();
+
+  void clearError() {
+    _error.add(null);
+  }
 
   Future<String> _getFormattedAppVersion() async {
     try {

@@ -77,7 +77,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       onPressed: () {
                         _navigateToResetPassword();
                       },
-                      shouldExpandedWidth: true,
                     ),
                   ),
                   const SizedBox(height: Dimens.space20),
@@ -90,6 +89,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             _passwordController.text,
                           );
                     },
+                    shouldExpandedWidth: true,
                   ),
                 ],
               ),
