@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:survey/api/request/submit_survey_request.dart';
 import 'package:survey/api/response/survey_detail_response.dart';
 import 'package:survey/api/response/surveys_response.dart';
 
@@ -19,4 +20,7 @@ abstract class SurveyService {
   Future<SurveyDetailResponse> getSurveyDetail(
     @Path('surveyId') String surveyId,
   );
+
+  @POST('/api/v1/responses')
+  Future<void> submitSurvey(@Body() SubmitSurveyRequest body);
 }
