@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/repository/survey_repository.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
@@ -28,7 +29,7 @@ class GetSurveysUseCase extends UseCase<List<SurveyModel>, GetSurveysInput> {
         )
         // ignore: unnecessary_cast
         .then((value) => Success(value) as Result<List<SurveyModel>>)
-        .onError<Exception>(
+        .onError<NetworkExceptions>(
             (exception, stackTrace) => Failed(UseCaseException(exception)));
   }
 }

@@ -2,6 +2,7 @@ import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/home/home_state.dart';
@@ -12,8 +13,10 @@ import '../../mock/mock_dependencies.mocks.dart';
 
 void main() {
   group('HomeViewModelTest', () {
+    late MockGetUserUseCase mockGetUserUseCase;
     late MockGetSurveysUseCase mockGetSurveysUseCase;
     late MockGetCachedSurveysUseCase mockGetCachedSurveysUseCase;
+    late MockUseCaseException mockException;
     late ProviderContainer providerContainer;
     late HomeViewModel homeViewModel;
 
@@ -35,14 +38,19 @@ void main() {
     ];
 
     setUp(() {
+      mockGetUserUseCase = MockGetUserUseCase();
       mockGetSurveysUseCase = MockGetSurveysUseCase();
       mockGetCachedSurveysUseCase = MockGetCachedSurveysUseCase();
+      mockException = MockUseCaseException();
 
       when(mockGetCachedSurveysUseCase.call()).thenAnswer((_) => cachedSurveys);
+      when(mockException.actualException)
+          .thenReturn(NetworkExceptions.badRequest());
 
       providerContainer = ProviderContainer(
         overrides: [
           homeViewModelProvider.overrideWithValue(HomeViewModel(
+            mockGetUserUseCase,
             mockGetSurveysUseCase,
             mockGetCachedSurveysUseCase,
           )),
@@ -59,9 +67,38 @@ void main() {
       final stateStream = homeViewModel.stream;
 
       expect(surveysStream, emitsInOrder([cachedSurveys]));
-      expect(stateStream, emitsInOrder([HomeState.cacheLoadingSuccess()]));
+      expect(
+          stateStream, emitsInOrder([const HomeState.cacheLoadingSuccess()]));
 
       homeViewModel.loadSurveysFromCache();
+    });
+
+    test(
+        'When getting user with Success result, it emits UserModel correspondingly',
+        () async {
+      final user = MockUserModel();
+      when(mockGetUserUseCase.call()).thenAnswer((_) async => Success(user));
+      final userStream = homeViewModel.user;
+
+      expect(userStream, emitsInOrder([user]));
+
+      homeViewModel.getUser();
+    });
+
+    test(
+        'When getting user with Failed result, it emits corresponding errorMessage',
+        () async {
+      when(mockGetUserUseCase.call())
+          .thenAnswer((_) async => Failed(mockException));
+      final errorStream = homeViewModel.error;
+
+      expect(
+          errorStream,
+          emitsInOrder([
+            NetworkExceptions.getErrorMessage(NetworkExceptions.badRequest())
+          ]));
+
+      homeViewModel.getUser();
     });
 
     test(
@@ -73,20 +110,25 @@ void main() {
       final stateStream = homeViewModel.stream;
 
       expect(surveysStream, emitsInOrder([surveys]));
-      expect(stateStream, emitsInOrder([HomeState.apiLoadingSuccess()]));
+      expect(stateStream, emitsInOrder([const HomeState.apiLoadingSuccess()]));
 
       homeViewModel.loadSurveysFromApi();
     });
 
     test(
-        'When loading surveys from api with Failed result, it returns Error state',
+        'When loading surveys from api with Failed result, it returns LoadSurveysError state and emits corresponding errorMessage',
         () {
-      final exception = UseCaseException(Exception());
       when(mockGetSurveysUseCase.call(any))
-          .thenAnswer((_) async => Failed(exception));
+          .thenAnswer((_) async => Failed(mockException));
+      final errorStream = homeViewModel.error;
       final stateStream = homeViewModel.stream;
 
-      expect(stateStream, emitsInOrder([HomeState.error(exception)]));
+      expect(
+          errorStream,
+          emitsInOrder([
+            NetworkExceptions.getErrorMessage(NetworkExceptions.badRequest())
+          ]));
+      expect(stateStream, emitsInOrder([const HomeState.loadSurveysError()]));
 
       homeViewModel.loadSurveysFromApi();
     });

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/model/survey_model.dart';
+import 'package:survey/model/user_model.dart';
 import 'package:survey/page/home/home_state.dart';
 import 'package:survey/page/home/home_view_model.dart';
 import 'package:survey/page/home/widget/home_header_widget.dart';
@@ -11,10 +12,12 @@ import 'package:survey/page/home/widget/home_surveys_indicators_widget.dart';
 import 'package:survey/page/home/widget/home_surveys_page_view_widget.dart';
 import 'package:survey/usecase/get_cached_surveys_use_case.dart';
 import 'package:survey/usecase/get_surveys_use_case.dart';
+import 'package:survey/usecase/get_user_use_case.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>((ref) {
   return HomeViewModel(
+    getIt.get<GetUserUseCase>(),
     getIt.get<GetSurveysUseCase>(),
     getIt.get<GetCachedSurveysUseCase>(),
   );
@@ -22,6 +25,12 @@ final homeViewModelProvider =
 
 final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyModel>>(
     (ref) => ref.watch(homeViewModelProvider.notifier).surveys);
+
+final _userStreamProvider = StreamProvider.autoDispose<UserModel>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).user);
+
+final _errorStreamProvider = StreamProvider.autoDispose<String>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).error);
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -36,12 +45,16 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    ref.read(homeViewModelProvider.notifier).getUser();
     ref.read(homeViewModelProvider.notifier).loadSurveysFromCache();
     ref.read(homeViewModelProvider.notifier).loadSurveysFromApi();
   }
 
   @override
   Widget build(BuildContext context) {
+    final error = ref.watch(_errorStreamProvider).value;
+    if (error != null) _showError(error);
+
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
     return ref.watch(homeViewModelProvider).when(
           init: () => HomeSkeletonLoadingWidget(),
@@ -49,12 +62,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           cacheLoadingSuccess: () => _buildHomePage(surveys),
           apiLoadingSuccess: () =>
               _buildHomePage(surveys, shouldEnablePagination: true),
-          error: (exception) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              _showError(AppLocalizations.of(context)!.homeLoadSurveysError);
-            });
-            return _buildHomePage(surveys);
-          },
+          loadSurveysError: () => _buildHomePage(surveys),
         );
   }
 
@@ -83,8 +91,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
           SafeArea(
             child: HomeHeaderWidget(
-                currentDate:
-                    ref.read(homeViewModelProvider.notifier).getCurrentDate()),
+              currentDate:
+                  ref.read(homeViewModelProvider.notifier).getCurrentDate(),
+              userAvatarUrl: ref.watch(_userStreamProvider).value?.avatarUrl,
+            ),
           ),
           if (shouldShowLoading)
             const Center(
@@ -96,10 +106,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   void _showError(String errorMessage) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 2),
-      content: Text(errorMessage),
-    ));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: Constants.snackBarDurationInSecond),
+        content: Text(errorMessage),
+      ));
+    });
   }
 
   @override

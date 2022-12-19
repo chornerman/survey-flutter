@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/repository/survey_repository.dart';
 import 'package:survey/api/response/surveys_response.dart';
 import 'package:survey/model/survey_model.dart';
@@ -40,12 +41,13 @@ void main() {
       verify(mockHiveUtils.saveSurveys(result)).called(1);
     });
 
-    test('When calling getSurveys failed, it returns error', () async {
+    test('When calling getSurveys failed, it returns NetworkExceptions error',
+        () async {
       when(mockSurveyService.getSurveys(any, any)).thenThrow(MockDioError());
 
       result() => repository.getSurveys(pageNumber: 1, pageSize: 2);
 
-      expect(result, throwsA(isA<Exception>()));
+      expect(result, throwsA(isA<NetworkExceptions>()));
     });
   });
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/repository/auth_repository.dart';
 import 'package:survey/api/response/login_response.dart';
 import 'package:survey/model/login_model.dart';
@@ -47,12 +48,13 @@ void main() {
       expect(result, expected);
     });
 
-    test('When calling login failed, it returns error', () async {
+    test('When calling login failed, it returns NetworkExceptions error',
+        () async {
       when(mockAuthService.login(any)).thenThrow(MockDioError());
 
       result() => repository.login(email: "email", password: "password");
 
-      expect(result, throwsA(isA<Exception>()));
+      expect(result, throwsA(isA<NetworkExceptions>()));
     });
   });
 }

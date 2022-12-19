@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/service/user_service.dart';
 import 'package:survey/model/user_model.dart';
 
@@ -14,7 +15,11 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<UserModel> getUser() async {
-    final response = await _userService.getUser();
-    return UserModel.fromResponse(response);
+    try {
+      final response = await _userService.getUser();
+      return UserModel.fromResponse(response);
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
   }
 }

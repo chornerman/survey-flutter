@@ -3,8 +3,6 @@
     "loginPassword": "Password",
     "loginForgotPassword": "Forgot?",
     "login": "Log In",
-    "loginError": "Login failed, please recheck your email and password",
     "loginInvalidEmailPassword": "Invalid email or password",
-    "homeToday": "Today",
-    "homeLoadSurveysError": "These are all surveys we can bring to you at the moment"
+    "homeToday": "Today"
 }

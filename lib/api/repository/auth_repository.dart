@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/grant_type.dart';
 import 'package:survey/api/request/login_request.dart';
 import 'package:survey/api/service/auth_service.dart';
@@ -23,15 +24,19 @@ class AuthRepositoryImpl extends AuthRepository {
     required String email,
     required String password,
   }) async {
-    final response = await _authService.login(
-      LoginRequest(
-        grantType: GrantType.password.value,
-        email: email,
-        password: password,
-        clientId: EnvVariables.clientId,
-        clientSecret: EnvVariables.clientSecret,
-      ),
-    );
-    return LoginModel.fromResponse(response);
+    try {
+      final response = await _authService.login(
+        LoginRequest(
+          grantType: GrantType.password.value,
+          email: email,
+          password: password,
+          clientId: EnvVariables.clientId,
+          clientSecret: EnvVariables.clientSecret,
+        ),
+      );
+      return LoginModel.fromResponse(response);
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
   }
 }
