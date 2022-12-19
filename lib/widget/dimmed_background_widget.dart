@@ -1,14 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:survey/constants.dart';
 
 class DimmedBackgroundWidget extends StatelessWidget {
   final ImageProvider background;
+  final double opacity;
   final bool shouldBlur;
 
   const DimmedBackgroundWidget({
     Key? key,
     required this.background,
+    this.opacity = Constants.defaultDimmedBackgroundOpacity,
     this.shouldBlur = false,
   }) : super(key: key);
 
@@ -21,7 +24,7 @@ class DimmedBackgroundWidget extends StatelessWidget {
         image: DecorationImage(
           image: background,
           colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.4),
+            Colors.black.withOpacity(opacity),
             BlendMode.darken,
           ),
           fit: BoxFit.cover,

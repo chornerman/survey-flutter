@@ -42,7 +42,7 @@ class HomeSurveysPageViewWidget extends ConsumerWidget {
         return HomeSurveysItemWidget(
           survey: surveys[index],
           onNextButtonPressed: () =>
-              _appNavigator.navigateToSurveyDetail(context, surveys[index].id),
+              _appNavigator.navigateToSurveyDetail(context, surveys[index]),
         );
       },
       onPageChanged: (int index) {

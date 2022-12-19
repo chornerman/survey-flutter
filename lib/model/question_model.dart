@@ -43,7 +43,7 @@ class QuestionModel extends Equatable {
       displayType: response.displayType ?? DisplayType.unknown,
       imageUrl: response.imageUrl ?? '',
       coverImageOpacity: response.coverImageOpacity ?? 0,
-      coverImageUrl: response.coverImageUrl ?? '',
+      coverImageUrl: response.getHdCoverImageUrl(),
       answers: response.answers
           .map((answer) => AnswerModel.fromResponse(answer))
           .toList(),

@@ -10,7 +10,7 @@ class ResetPasswordState with _$ResetPasswordState {
 
   const factory ResetPasswordState.success() = _Success;
 
-  const factory ResetPasswordState.apiError(String errorMessage) = _Error;
+  const factory ResetPasswordState.apiError(String errorMessage) = _ApiError;
 
   const factory ResetPasswordState.invalidInputError() = _InvalidInputError;
 }
