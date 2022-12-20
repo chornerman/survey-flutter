@@ -59,7 +59,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       SurveyDetailState newState,
     ) {
       newState.maybeWhen(
-        retrySuccess: (surveyDetail) => _navigateToQuestion(surveyDetail),
+        retrySuccess: (surveyDetail) => _navigateToQuestions(surveyDetail),
         orElse: () {},
       );
     });
@@ -140,7 +140,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
                           AppLocalizations.of(context)!.surveyDetailStartSurvey,
                       onPressed: () {
                         if (surveyDetail != null) {
-                          _navigateToQuestion(surveyDetail);
+                          _navigateToQuestions(surveyDetail);
                         } else {
                           if (survey != null)
                             ref
@@ -161,8 +161,8 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     );
   }
 
-  void _navigateToQuestion(SurveyDetailModel surveyDetail) =>
-      _appNavigator.navigateToQuestion(context, surveyDetail);
+  void _navigateToQuestions(SurveyDetailModel surveyDetail) => _appNavigator
+      .navigateToQuestionsAndQuitCurrentPage(context, surveyDetail);
 
   void _showError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {

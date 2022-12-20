@@ -12,5 +12,10 @@
     "homeToday": "Today",
     "homeUser": "User",
     "homeLogout": "Logout",
-    "surveyDetailStartSurvey": "Start Survey"
+    "surveyDetailStartSurvey": "Start Survey",
+    "questionsSubmit": "Submit",
+    "questionsQuitSurveyDialogTitle": "Warning!",
+    "questionsQuitSurveyDialogDescription": "Are you sure you want to quit the survey?",
+    "questionsQuitSurveyDialogPositiveButtonText": "Yes",
+    "questionsQuitSurveyDialogNegativeButtonText": "Cancel"
 }

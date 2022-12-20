@@ -12,5 +12,10 @@
     "homeToday": "วันนี้",
     "homeUser": "ผู้ใช้",
     "homeLogout": "ออกจากระบบ",
-    "surveyDetailStartSurvey": "เริ่มทำแบบสอบถาม"
+    "surveyDetailStartSurvey": "เริ่มทำแบบสอบถาม",
+    "questionsSubmit": "ส่งแบบสอบถาม",
+    "questionsQuitSurveyDialogTitle": "คำเตือน!",
+    "questionsQuitSurveyDialogDescription": "คุณต้องการยกเลิกการตอบแบบสอบถามนี้หรือไม่",
+    "questionsQuitSurveyDialogPositiveButtonText": "ใช่",
+    "questionsQuitSurveyDialogNegativeButtonText": "ไม่"
 }
