@@ -40,4 +40,5 @@ class Dimens {
   static const double homeDrawerSeparatorHeight = 0.5;
 
   static const double questionsQuitSurveyDialogBorderRadius = 14;
+  static const double questionsDropdownAnswerSeparatorWidth = 0.5;
 }

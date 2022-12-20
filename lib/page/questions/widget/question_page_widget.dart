@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey/model/question_model.dart';
+import 'package:survey/page/questions/widget/questions_survey_answers_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/next_button_widget.dart';
@@ -57,7 +58,12 @@ class QuestionPageWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                const Expanded(child: SizedBox.shrink()),
+                const Expanded(child: const SizedBox.shrink()),
+                Align(
+                  alignment: Alignment.center,
+                  child: QuestionsSurveyAnswersWidget(question: question),
+                ),
+                const Expanded(child: const SizedBox.shrink()),
                 Align(
                   alignment: Alignment.centerRight,
                   child: isLastQuestion

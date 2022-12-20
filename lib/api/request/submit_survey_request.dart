@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey/model/answer_model.dart';
 
 part 'submit_survey_request.g.dart';
 
@@ -48,4 +49,11 @@ class SubmitSurveyAnswerRequest {
       _$SubmitSurveyAnswerRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$SubmitSurveyAnswerRequestToJson(this);
+
+  factory SubmitSurveyAnswerRequest.fromAnswerModel(AnswerModel answer) {
+    return SubmitSurveyAnswerRequest(
+      id: answer.id,
+      answer: answer.text,
+    );
+  }
 }
