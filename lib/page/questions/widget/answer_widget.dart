@@ -8,6 +8,7 @@ import 'package:survey/model/question_model.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/questions/widget/answer/dropdown_answer_widget.dart';
 import 'package:survey/page/questions/widget/answer/number_rating_bar_answer_widget.dart';
+import 'package:survey/page/questions/widget/answer/smiley_rating_bar_answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
 
 class AnswerWidget extends ConsumerStatefulWidget {
@@ -41,6 +42,10 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
           activeIcon: Assets.images.icHeartActive,
           inactiveIcon: Assets.images.icHeartInactive,
           itemCount: widget.question.answers.length,
+          onRatingUpdate: (rating) => _saveRatingBarsAnswer(rating),
+        );
+      case DisplayType.smiley:
+        return _buildSmileyRatingBarAnswer(
           onRatingUpdate: (rating) => _saveRatingBarsAnswer(rating),
         );
       case DisplayType.nps:
@@ -84,6 +89,17 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
       ),
       itemPadding: const EdgeInsets.symmetric(horizontal: Dimens.space10),
       glow: false,
+      onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
+    );
+  }
+
+  Widget _buildSmileyRatingBarAnswer({
+    required Function onRatingUpdate,
+  }) {
+    // Select default value
+    onRatingUpdate(ref.read(selectedEmojiIndexProvider.notifier).state + 1);
+
+    return SmileyRatingBarAnswerWidget(
       onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
     );
   }
