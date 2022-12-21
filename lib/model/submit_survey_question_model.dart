@@ -14,9 +14,10 @@ class SubmitSurveyQuestionModel extends Equatable {
   List<Object?> get props => [id, answers];
 }
 
+//ignore: must_be_immutable
 class SubmitSurveyAnswerModel extends Equatable {
   final String id;
-  final String answer;
+  String answer;
 
   SubmitSurveyAnswerModel({
     required this.id,

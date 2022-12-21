@@ -12,6 +12,7 @@ import 'package:survey/page/questions/widget/answer/multiple_choices_answer_widg
 import 'package:survey/page/questions/widget/answer/number_rating_bar_answer_widget.dart';
 import 'package:survey/page/questions/widget/answer/smiley_rating_bar_answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
+import 'package:survey/widget/text_input_widget.dart';
 
 class AnswerWidget extends ConsumerStatefulWidget {
   final QuestionModel question;
@@ -64,6 +65,11 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
                     SubmitSurveyAnswerModel(id: item.id, answer: item.text))
                 .toList(),
           ),
+        );
+      case DisplayType.textfield:
+        return _buildTextFieldsAnswer(
+          answers: widget.question.answers,
+          onChanged: (answerId, text) => _saveTextFieldsAnswer(answerId, text),
         );
       default:
         return const SizedBox();
@@ -142,6 +148,34 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     );
   }
 
+  Widget _buildTextFieldsAnswer({
+    required List<AnswerModel> answers,
+    required Function onChanged,
+  }) {
+    return SingleChildScrollView(
+      child: Column(
+        children: answers
+            .map(
+              (answer) => Padding(
+                padding: const EdgeInsets.only(
+                  top: Dimens.space16,
+                  left: Dimens.space4,
+                  right: Dimens.space4,
+                ),
+                child: TextInputWidget(
+                  hintText: answer.text,
+                  textInputAction: answer.id != answers.last.id
+                      ? TextInputAction.next
+                      : TextInputAction.done,
+                  onChanged: (text) => onChanged(answer.id, text),
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+
   void saveDropdownAnswer(AnswerModel answer) {
     ref
         .read(questionsViewModelProvider.notifier)
@@ -158,5 +192,11 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     ref
         .read(questionsViewModelProvider.notifier)
         .saveMultipleChoicesAnswer(widget.question.id, answers);
+  }
+
+  void _saveTextFieldsAnswer(String answerId, String text) {
+    ref
+        .read(questionsViewModelProvider.notifier)
+        .saveTextFieldsAnswer(widget.question.id, answerId, text);
   }
 }

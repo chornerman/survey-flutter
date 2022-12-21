@@ -66,11 +66,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   const SizedBox(height: Dimens.space110),
                   TextInputWidget(
                     hintText: AppLocalizations.of(context)!.email,
+                    textInputAction: TextInputAction.next,
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: Dimens.space20),
                   TextInputWidget(
                     hintText: AppLocalizations.of(context)!.loginPassword,
+                    textInputAction: TextInputAction.done,
                     isPasswordInput: true,
                     controller: _passwordController,
                     endWidget: LoginTextInputForgotPasswordWidget(
@@ -78,6 +81,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         _navigateToResetPassword();
                       },
                     ),
+                    keyboardType: TextInputType.visiblePassword,
                   ),
                   const SizedBox(height: Dimens.space20),
                   RoundedButtonWidget(
