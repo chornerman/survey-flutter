@@ -16,6 +16,7 @@ class Dimens {
   static const double space30 = 30;
   static const double space35 = 35;
   static const double space50 = 50;
+  static const double space60 = 60;
   static const double space64 = 64;
   static const double space80 = 80;
   static const double space96 = 96;
@@ -46,4 +47,9 @@ class Dimens {
   static const double questionsNumberRatingBarAnswerBorderWidth = 0.5;
   static const double questionsNumberRatingBarAnswerHeight = 56;
   static const double questionsSmileyRatingBarAnswerHeight = 70;
+  static const double questionsMultipleChoicesAnswerHeight = 200;
+  static const double questionsMultipleChoicesAnswerSeparatorHeight = 0.5;
+  static const double questionsMultipleChoicesAnswerCheckboxSize = 24;
+  static const double questionsMultipleChoicesAnswerCheckboxBorderWidth = 2;
+  static const double questionsMultipleChoicesAnswerCheckboxIconSize = 18;
 }

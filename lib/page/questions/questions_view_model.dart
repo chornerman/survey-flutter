@@ -46,6 +46,13 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     _saveAnswers(questionId, submitAnswers);
   }
 
+  void saveMultipleChoicesAnswer(
+    String questionId,
+    List<SubmitSurveyAnswerModel> submitAnswers,
+  ) {
+    _saveAnswers(questionId, submitAnswers);
+  }
+
   void _saveAnswers(
     String questionId,
     List<SubmitSurveyAnswerModel> answers,

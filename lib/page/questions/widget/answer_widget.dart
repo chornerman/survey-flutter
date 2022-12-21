@@ -5,8 +5,10 @@ import 'package:survey/api/response/question_response.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/model/answer_model.dart';
 import 'package:survey/model/question_model.dart';
+import 'package:survey/model/submit_survey_question_model.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/questions/widget/answer/dropdown_answer_widget.dart';
+import 'package:survey/page/questions/widget/answer/multiple_choices_answer_widget.dart';
 import 'package:survey/page/questions/widget/answer/number_rating_bar_answer_widget.dart';
 import 'package:survey/page/questions/widget/answer/smiley_rating_bar_answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
@@ -52,6 +54,16 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
         return _buildNumberRatingBarAnswer(
           itemCount: widget.question.answers.length,
           onRatingUpdate: (rating) => _saveRatingBarsAnswer(rating),
+        );
+      case DisplayType.choice:
+        return _buildMultipleChoicesAnswer(
+          answers: widget.question.answers,
+          onItemsChanged: (items) => _saveMultipleChoicesAnswer(
+            items
+                .map((item) =>
+                    SubmitSurveyAnswerModel(id: item.id, answer: item.text))
+                .toList(),
+          ),
         );
       default:
         return const SizedBox();
@@ -115,6 +127,21 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     );
   }
 
+  Widget _buildMultipleChoicesAnswer({
+    required List<AnswerModel> answers,
+    required Function(List<MultipleChoicesItemModel>) onItemsChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.space60),
+      child: MultipleChoicesAnswerWidget(
+        items: answers
+            .map((answer) => MultipleChoicesItemModel(answer.id, answer.text))
+            .toList(),
+        onItemsChanged: (items) => onItemsChanged(items),
+      ),
+    );
+  }
+
   void saveDropdownAnswer(AnswerModel answer) {
     ref
         .read(questionsViewModelProvider.notifier)
@@ -125,5 +152,11 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     ref
         .read(questionsViewModelProvider.notifier)
         .saveRatingBarsAnswer(widget.question.id, rating);
+  }
+
+  void _saveMultipleChoicesAnswer(List<SubmitSurveyAnswerModel> answers) {
+    ref
+        .read(questionsViewModelProvider.notifier)
+        .saveMultipleChoicesAnswer(widget.question.id, answers);
   }
 }

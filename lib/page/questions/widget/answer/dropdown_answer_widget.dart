@@ -16,7 +16,7 @@ class DropdownAnswerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.space80),
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.space60),
       child: Picker(
         adapter: PickerDataAdapter<String>(
           pickerdata: answers.map((answer) => answer.text).toList(),
