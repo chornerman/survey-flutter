@@ -19,5 +19,6 @@
     "questionsQuitSurveyDialogPositiveButtonText": "Yes",
     "questionsQuitSurveyDialogNegativeButtonText": "Cancel",
     "numberRatingBarAnswerPositiveText": "Extremely Likely",
-    "numberRatingBarAnswerNegativeText": "Not at all Likely"
+    "numberRatingBarAnswerNegativeText": "Not at all Likely",
+    "textAreaAnswerHint": "Your thoughts"
 }

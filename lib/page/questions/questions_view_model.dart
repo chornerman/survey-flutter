@@ -79,6 +79,16 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     }
   }
 
+  void saveTextAreaAnswer(String questionId, String text) {
+    final answers = _getAnswersByQuestionId(questionId);
+    if (answers == null || answers.isEmpty) return;
+
+    final submitAnswers = text.isNotEmpty
+        ? [SubmitSurveyAnswerModel(id: answers.first.id, answer: text)]
+        : <SubmitSurveyAnswerModel>[];
+    _saveAnswers(questionId, submitAnswers);
+  }
+
   void _saveAnswers(
     String questionId,
     List<SubmitSurveyAnswerModel> answers,

@@ -23,6 +23,8 @@ class QuestionsPageViewWidget extends StatelessWidget {
             questionNumber: index + 1,
             totalQuestions: totalQuestions,
             onNextQuestion: () {
+              _hideKeyboard(context);
+
               _pageController.animateToPage(
                 index + 1,
                 duration: const Duration(milliseconds: 400),
@@ -30,9 +32,17 @@ class QuestionsPageViewWidget extends StatelessWidget {
               );
             },
             onSubmitSurvey: () {
+              _hideKeyboard(context);
               // TODO: Submit answers
             },
           );
         });
+  }
+
+  void _hideKeyboard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 }

@@ -24,8 +24,8 @@ class Dimens {
   static const double space120 = 120;
   static const double space170 = 170;
 
-  static const double textInputHeight = 56;
-  static const double textInputBorderRadius = 12;
+  static const double singleLineTextInputHeight = 56;
+  static const double textInputBorderRadius = 10;
 
   static const double roundedButtonBorderRadius = 10;
   static const double roundedButtonHeight = 56;

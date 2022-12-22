@@ -13,7 +13,7 @@ import 'package:survey/usecase/login_use_case.dart';
 import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/loading_indicator_widget.dart';
 import 'package:survey/widget/rounded_button_widget.dart';
-import 'package:survey/widget/text_input_widget.dart';
+import 'package:survey/widget/single_line_text_input_widget.dart';
 
 final loginViewModelProvider =
     StateNotifierProvider.autoDispose<LoginViewModel, LoginState>((ref) {
@@ -64,14 +64,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   const SizedBox(height: Dimens.space120),
                   Assets.images.icNimble.svg(),
                   const SizedBox(height: Dimens.space110),
-                  TextInputWidget(
+                  SingleLineTextInputWidget(
                     hintText: AppLocalizations.of(context)!.email,
                     textInputAction: TextInputAction.next,
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: Dimens.space20),
-                  TextInputWidget(
+                  SingleLineTextInputWidget(
                     hintText: AppLocalizations.of(context)!.loginPassword,
                     textInputAction: TextInputAction.done,
                     isPasswordInput: true,
