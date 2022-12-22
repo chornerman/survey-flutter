@@ -37,4 +37,11 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
       state = SurveyDetailState.error((result as Failed).getErrorMessage());
     }
   }
+
+  @override
+  void dispose() async {
+    await _survey.close();
+    await _surveyDetail.close();
+    super.dispose();
+  }
 }

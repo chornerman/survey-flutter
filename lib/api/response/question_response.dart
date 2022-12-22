@@ -13,8 +13,6 @@ enum DisplayType {
   textarea,
   textfield,
   dropdown,
-  money,
-  slider,
   intro,
   outro,
   unknown,

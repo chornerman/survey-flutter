@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey/api/response/question_response.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/model/answer_model.dart';
 import 'package:survey/model/question_model.dart';
@@ -97,6 +98,9 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     required int itemCount,
     required Function onRatingUpdate,
   }) {
+    final initialRating = (itemCount / 2).ceil();
+    onRatingUpdate(initialRating);
+
     return RatingBar(
       itemCount: itemCount,
       ratingWidget: RatingWidget(
@@ -113,14 +117,19 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
       itemPadding: const EdgeInsets.symmetric(horizontal: Dimens.space10),
       glow: false,
       onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
+      minRating: 1,
+      initialRating: initialRating.toDouble(),
     );
   }
 
   Widget _buildSmileyRatingBarAnswer({
-    required Function onRatingUpdate,
+    required Function(int) onRatingUpdate,
   }) {
-    // Select default value
-    onRatingUpdate(ref.read(selectedEmojiIndexProvider.notifier).state + 1);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(selectedEmojiIndexProvider.notifier).state =
+          Constants.defaultSmileyRatingBarIndex;
+    });
+    onRatingUpdate(Constants.defaultSmileyRatingBarIndex + 1);
 
     return SmileyRatingBarAnswerWidget(
       onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
@@ -129,12 +138,17 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
 
   Widget _buildNumberRatingBarAnswer({
     required int itemCount,
-    required Function onRatingUpdate,
+    required Function(int) onRatingUpdate,
   }) {
+    final initialRating = (itemCount / 2).ceil();
+    onRatingUpdate(initialRating);
+
     return NumberRatingBarAnswerWidget(
       itemCount: itemCount,
       onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
       glow: false,
+      minRating: 1,
+      initialRating: initialRating.toDouble(),
     );
   }
 
@@ -142,6 +156,8 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     required List<AnswerModel> answers,
     required Function(List<MultipleChoicesItemModel>) onItemsChanged,
   }) {
+    onItemsChanged([]);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimens.space60),
       child: MultipleChoicesAnswerWidget(
@@ -155,35 +171,41 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
 
   Widget _buildTextFieldsAnswer({
     required List<AnswerModel> answers,
-    required Function onChanged,
+    required Function(String, String) onChanged,
   }) {
-    return SingleChildScrollView(
-      child: Column(
-        children: answers
-            .map(
-              (answer) => Padding(
-                padding: const EdgeInsets.only(
-                  top: Dimens.space16,
-                  left: Dimens.space4,
-                  right: Dimens.space4,
-                ),
-                child: SingleLineTextInputWidget(
-                  hintText: answer.text,
-                  textInputAction: answer.id != answers.last.id
-                      ? TextInputAction.next
-                      : TextInputAction.done,
-                  onChanged: (text) => onChanged(answer.id, text),
-                ),
+    answers.forEach((answer) {
+      onChanged(answer.id, '');
+    });
+
+    return Column(
+      children: answers
+          .asMap()
+          .entries
+          .map(
+            (answer) => Padding(
+              padding: EdgeInsets.only(
+                top: answer.key == 0 ? 0 : Dimens.space16,
+                left: Dimens.space4,
+                right: Dimens.space4,
               ),
-            )
-            .toList(),
-      ),
+              child: SingleLineTextInputWidget(
+                hintText: answer.value.text,
+                textInputAction: answer.value.id != answers.last.id
+                    ? TextInputAction.next
+                    : TextInputAction.done,
+                onChanged: (text) => onChanged(answer.value.id, text),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
   Widget _buildTextAreaAnswer({
-    required Function onChanged,
+    required Function(String) onChanged,
   }) {
+    onChanged('');
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimens.space4),
       child: TextAreaAnswerWidget(onChanged: (text) => onChanged(text)),

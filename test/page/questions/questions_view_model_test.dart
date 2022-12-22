@@ -1,5 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/response/question_response.dart';
 import 'package:survey/api/response/survey_detail_response.dart';
 import 'package:survey/model/submit_survey_question_model.dart';
@@ -7,17 +10,23 @@ import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/questions/questions_state.dart';
 import 'package:survey/page/questions/questions_view_model.dart';
+import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
+import 'package:survey/usecase/base/base_use_case.dart';
 
+import '../../mock/mock_dependencies.mocks.dart';
 import '../../utils/file_utils.dart';
 
 void main() {
   group('QuestionsViewModelTest', () {
+    late MockSubmitSurveyUseCase mockSubmitSurveyUseCase;
     late ProviderContainer providerContainer;
     late QuestionsViewModel questionsViewModel;
 
     late SurveyDetailModel surveyDetail;
 
     setUp(() async {
+      mockSubmitSurveyUseCase = MockSubmitSurveyUseCase();
+
       final surveyDetailJson = await FileUtils.loadFile(
           'test/mock/mock_response/survey_detail.json');
       final surveyDetailResponse =
@@ -26,7 +35,9 @@ void main() {
 
       providerContainer = ProviderContainer(
         overrides: [
-          questionsViewModelProvider.overrideWithValue(QuestionsViewModel()),
+          questionsViewModelProvider.overrideWithValue(QuestionsViewModel(
+            mockSubmitSurveyUseCase,
+          )),
         ],
       );
       addTearDown(providerContainer.dispose);
@@ -42,22 +53,22 @@ void main() {
     });
 
     test(
-        'When calling get questions, it emits list of QuestionModel and returns Success state',
-        () {
-      final expectedQuestions = surveyDetail.questions;
+        'When calling get questions, it emits list of QuestionModel and returns InitSuccess state',
+        () async {
+      final questionsUiModel = await getQuestionsUiModel();
+      final expectedQuestions = questionsUiModel.questions;
       expectedQuestions.removeWhere((question) =>
           question.displayType == DisplayType.intro ||
           question.displayType == DisplayType.outro);
       expectedQuestions.sort((question1, question2) =>
           question1.displayOrder.compareTo(question2.displayOrder));
-
       final stateStream = questionsViewModel.stream;
       final questionsStream = questionsViewModel.questions;
 
-      expect(stateStream, emitsInOrder([const QuestionsState.success()]));
+      expect(stateStream, emitsInOrder([const QuestionsState.initSuccess()]));
       expect(questionsStream, emitsInOrder([expectedQuestions]));
 
-      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.getQuestions(questionsUiModel);
     });
 
     test(
@@ -176,5 +187,62 @@ void main() {
         ),
       ]);
     });
+
+    test(
+        'When calling submit survey with Success result, it returns SubmitSurveySuccess state with corresponding outroMessage',
+        () async {
+      final questionsUiModel = await getQuestionsUiModel();
+      final outroMessage = questionsUiModel.questions
+          .firstWhereOrNull(
+              (question) => question.displayType == DisplayType.outro)
+          ?.text;
+      when(mockSubmitSurveyUseCase.call(any))
+          .thenAnswer((_) async => Success(null));
+      final stateStream = questionsViewModel.stream;
+
+      expect(
+          stateStream,
+          emitsInOrder([
+            const QuestionsState.initSuccess(),
+            const QuestionsState.loading(),
+            QuestionsState.submitSurveySuccess(outroMessage),
+          ]));
+
+      questionsViewModel.getQuestions(questionsUiModel);
+      questionsViewModel.submitSurvey();
+    });
+
+    test(
+        'When calling submit survey with Failed result, it returns Error state with corresponding errorMessage',
+        () {
+      final mockException = MockUseCaseException();
+      when(mockException.actualException)
+          .thenReturn(NetworkExceptions.badRequest());
+      when(mockSubmitSurveyUseCase.call(any))
+          .thenAnswer((_) async => Failed(mockException));
+      final stateStream = questionsViewModel.stream;
+
+      expect(
+          stateStream,
+          emitsInOrder([
+            const QuestionsState.loading(),
+            QuestionsState.error(
+              NetworkExceptions.getErrorMessage(NetworkExceptions.badRequest()),
+            ),
+          ]));
+
+      questionsViewModel.submitSurvey();
+    });
   });
+}
+
+Future<QuestionsUiModel> getQuestionsUiModel() async {
+  final surveyDetailJson =
+      await FileUtils.loadFile('test/mock/mock_response/survey_detail.json');
+  final surveyDetailResponse = SurveyDetailResponse.fromJson(surveyDetailJson);
+  final surveyDetail = SurveyDetailModel.fromResponse(surveyDetailResponse);
+  return QuestionsUiModel(
+    surveyId: 'surveyId',
+    questions: surveyDetail.questions,
+  );
 }

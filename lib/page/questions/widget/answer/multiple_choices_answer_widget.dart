@@ -54,6 +54,7 @@ class _MultipleChoicesAnswerWidgetState
 
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Dimens.space24),
         child: Row(

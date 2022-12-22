@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/resource/dimens.dart';
 
-final selectedEmojiIndexProvider = StateProvider.autoDispose<int>((_) => 2);
+final selectedEmojiIndexProvider = StateProvider.autoDispose<int>(
+    (_) => Constants.defaultSmileyRatingBarIndex);
 const _emojis = ['😡', '😕', '😐', '🙂', '😄'];
 
 class SmileyRatingBarAnswerWidget extends ConsumerWidget {

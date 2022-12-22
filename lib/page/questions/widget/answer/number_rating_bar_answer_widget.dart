@@ -379,7 +379,7 @@ class _NumberRatingBarAnswerWidgetState
 
   void _onDragEnd(DragEndDetails details) {
     _glow.value = false;
-    widget.onRatingUpdate(iconRating);
+    widget.onRatingUpdate(iconRating + 1);
     iconRating = 0.0;
   }
 }

@@ -58,12 +58,15 @@ class QuestionPageWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                const Expanded(child: const SizedBox.shrink()),
-                Align(
-                  alignment: Alignment.center,
-                  child: AnswerWidget(question: question),
+                const SizedBox(height: Dimens.space20),
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: AnswerWidget(question: question),
+                    ),
+                  ),
                 ),
-                const Expanded(child: const SizedBox.shrink()),
+                const SizedBox(height: Dimens.space20),
                 Align(
                   alignment: Alignment.centerRight,
                   child: isLastQuestion

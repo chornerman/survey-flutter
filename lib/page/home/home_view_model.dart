@@ -139,7 +139,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   @override
   void dispose() async {
+    await _user.close();
     await _surveys.close();
+    await _jumpToFirstSurveysPage.close();
+    await _error.close();
     super.dispose();
   }
 }

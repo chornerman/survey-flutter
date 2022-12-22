@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
+import 'package:survey/page/completion/completion_page.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/questions/questions_page.dart';
+import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
 import 'package:survey/page/resetpassword/reset_password_page.dart';
 import 'package:survey/page/start/start_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
@@ -13,6 +14,7 @@ const String _routeHome = '/home';
 const String _routeResetPassword = '/reset-password';
 const String _routeSurveyDetail = '/survey-detail';
 const String _routeQuestions = '/questions';
+const String _routeCompletion = '/completion';
 
 class Routes {
   static final routes = <String, WidgetBuilder>{
@@ -21,6 +23,7 @@ class Routes {
     _routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
     _routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
     _routeQuestions: (BuildContext context) => const QuestionsPage(),
+    _routeCompletion: (BuildContext context) => const CompletionPage(),
   };
 }
 
@@ -37,7 +40,12 @@ abstract class AppNavigator {
 
   void navigateToQuestions(
     BuildContext context,
-    SurveyDetailModel surveyDetail,
+    QuestionsUiModel questionsUiModel,
+  );
+
+  void navigateToCompletionAndQuitCurrentPage(
+    BuildContext context,
+    String? outroMessage,
   );
 }
 
@@ -68,11 +76,20 @@ class AppNavigatorImpl extends AppNavigator {
   @override
   void navigateToQuestions(
     BuildContext context,
-    SurveyDetailModel surveyDetail,
+    QuestionsUiModel questionsUiModel,
   ) =>
       Navigator.pushReplacementNamed(
         context,
         _routeQuestions,
-        arguments: surveyDetail,
+        arguments: questionsUiModel,
+      );
+
+  @override
+  void navigateToCompletionAndQuitCurrentPage(
+          BuildContext context, String? outroMessage) =>
+      Navigator.pushReplacementNamed(
+        context,
+        _routeCompletion,
+        arguments: outroMessage,
       );
 }
