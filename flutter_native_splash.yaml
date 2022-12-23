@@ -1,0 +1,5 @@
+flutter_native_splash:
+  background_image: "assets/images/bg_onboarding.png"
+  image: assets/images/ic_nimble_splash.png
+  android_12:
+    color: "#15151A"
