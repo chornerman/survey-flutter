@@ -8,9 +8,25 @@ import 'package:survey/api/response/token_response.dart';
 
 part 'auth_service.g.dart';
 
-@RestApi()
 abstract class AuthService {
-  factory AuthService(Dio dio, {String baseUrl}) = _AuthService;
+  Future<TokenResponse> login(
+    @Body() LoginRequest body,
+  );
+
+  Future<void> logout(@Body() LogoutRequest body);
+
+  Future<TokenResponse> refreshToken(
+    @Body() RefreshTokenRequest body,
+  );
+
+  Future<void> resetPassword(
+    @Body() ResetPasswordRequest body,
+  );
+}
+
+@RestApi()
+abstract class AuthServiceImpl extends AuthService {
+  factory AuthServiceImpl(Dio dio, {String baseUrl}) = _AuthServiceImpl;
 
   @POST('/api/v1/oauth/token')
   Future<TokenResponse> login(

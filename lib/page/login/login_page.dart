@@ -5,6 +5,7 @@ import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/navigator.dart';
+import 'package:survey/page/login/login_page_key.dart';
 import 'package:survey/page/login/login_state.dart';
 import 'package:survey/page/login/login_view_model.dart';
 import 'package:survey/page/login/widget/login_text_input_forgot_password_widget.dart';
@@ -65,6 +66,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   Assets.images.icNimble.svg(),
                   const SizedBox(height: Dimens.space110),
                   SingleLineTextInputWidget(
+                    key: LoginPageKey.sltiLoginEmail,
                     hintText: AppLocalizations.of(context)!.email,
                     textInputAction: TextInputAction.next,
                     controller: _emailController,
@@ -72,6 +74,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                   const SizedBox(height: Dimens.space20),
                   SingleLineTextInputWidget(
+                    key: LoginPageKey.sltiLoginPassword,
                     hintText: AppLocalizations.of(context)!.loginPassword,
                     textInputAction: TextInputAction.done,
                     isPasswordInput: true,
@@ -85,6 +88,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                   const SizedBox(height: Dimens.space20),
                   RoundedButtonWidget(
+                    key: LoginPageKey.rbLogin,
                     buttonText: AppLocalizations.of(context)!.login,
                     onPressed: () {
                       _hideKeyboard();
