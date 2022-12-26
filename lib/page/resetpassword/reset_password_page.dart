@@ -95,9 +95,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
             child: AppBarBackButtonWidget(),
           ),
           ref.watch(resetPasswordViewModelProvider).maybeWhen(
-                loading: () => const LoadingIndicatorWidget(
-                  shouldIgnoreOtherGestures: true,
-                ),
+                loading: () => const LoadingIndicatorWidget(),
                 orElse: () => const SizedBox(),
               )
         ],

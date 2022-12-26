@@ -7,7 +7,7 @@ class LoadingIndicatorWidget extends StatelessWidget {
 
   const LoadingIndicatorWidget({
     Key? key,
-    required this.shouldIgnoreOtherGestures,
+    this.shouldIgnoreOtherGestures = true,
   }) : super(key: key);
 
   @override

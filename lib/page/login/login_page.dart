@@ -96,9 +96,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
           ),
           ref.watch(loginViewModelProvider).maybeWhen(
-                loading: () => const LoadingIndicatorWidget(
-                  shouldIgnoreOtherGestures: true,
-                ),
+                loading: () => const LoadingIndicatorWidget(),
                 orElse: () => const SizedBox(),
               )
         ],
