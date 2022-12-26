@@ -26,35 +26,27 @@ class ResetPasswordPage extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space120),
-                    child: Assets.images.icNimble.svg(),
+                  const SizedBox(height: Dimens.space120),
+                  Assets.images.icNimble.svg(),
+                  const SizedBox(height: Dimens.space24),
+                  Text(
+                    AppLocalizations.of(context)!.resetPasswordDescription,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Colors.white.withOpacity(0.7),
+                        ),
+                    textAlign: TextAlign.center,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space24),
-                    child: Text(
-                      AppLocalizations.of(context)!.resetPasswordDescription,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Colors.white.withOpacity(0.7),
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
+                  const SizedBox(height: Dimens.space96),
+                  TextInputWidget(
+                    hintText: AppLocalizations.of(context)!.email,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space96),
-                    child: TextInputWidget(
-                      hintText: AppLocalizations.of(context)!.email,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space20),
-                    child: RoundedButtonWidget(
-                      buttonText:
-                          AppLocalizations.of(context)!.resetPasswordReset,
-                      onPressed: () {
-                        // TODO: Call reset password use case
-                      },
-                    ),
+                  const SizedBox(height: Dimens.space20),
+                  RoundedButtonWidget(
+                    buttonText:
+                        AppLocalizations.of(context)!.resetPasswordReset,
+                    onPressed: () {
+                      // TODO: Call reset password use case
+                    },
                   ),
                 ],
               ),
