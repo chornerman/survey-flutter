@@ -24,7 +24,7 @@ void main() {
     });
 
     test(
-        'When calling getSurveys with pageNumber equal to 1 successfully, it returns corresponding mapped result and clear surveys cache',
+        'When calling getSurveys on the first page successfully, it returns corresponding mapped result and clear surveys cache',
         () async {
       final surveysJson =
           await FileUtils.loadFile('test/mock/mock_response/surveys.json');
@@ -42,7 +42,7 @@ void main() {
     });
 
     test(
-        'When calling getSurveys with pageNumber not equal to 1 successfully, it returns corresponding mapped result',
+        'When calling getSurveys not on the first page successfully, it returns corresponding mapped result',
         () async {
       final surveysJson =
           await FileUtils.loadFile('test/mock/mock_response/surveys.json');
