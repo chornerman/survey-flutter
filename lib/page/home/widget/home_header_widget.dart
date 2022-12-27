@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey/gen/colors.gen.dart';
+import 'package:survey/page/home/widget/home_user_avatar_widget.dart';
 import 'package:survey/resource/dimens.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
@@ -32,21 +32,15 @@ class HomeHeaderWidget extends StatelessWidget {
                   const SizedBox(height: Dimens.space4),
                   Text(
                     AppLocalizations.of(context)!.homeToday,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ],
               ),
               const Expanded(child: const SizedBox.shrink()),
-              CircleAvatar(
-                backgroundImage: userAvatarUrl != null
-                    ? Image.network(userAvatarUrl!).image
-                    : null,
-                child: userAvatarUrl == null
-                    ? Icon(Icons.person, color: Colors.white38)
-                    : null,
-                backgroundColor: ColorName.chineseBlack,
-                radius: Dimens.homeUserAvatarSize / 2,
-              )
+              GestureDetector(
+                onTap: () => Scaffold.of(context).openEndDrawer(),
+                child: HomeUserAvatarWidget(userAvatarUrl: userAvatarUrl),
+              ),
             ],
           ),
         ),

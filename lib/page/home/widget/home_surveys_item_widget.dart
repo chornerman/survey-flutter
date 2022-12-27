@@ -40,7 +40,7 @@ class HomeSurveysItemWidget extends StatelessWidget {
                 survey.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Row(

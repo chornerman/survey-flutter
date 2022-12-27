@@ -9,5 +9,7 @@
     "resetPasswordSuccessTitle": "Check your email.",
     "resetPasswordSuccessDescription": "We’ve email you instructions to reset your password.",
     "resetPasswordInvalidEmail": "Invalid email",
-    "homeToday": "Today"
+    "homeToday": "Today",
+    "homeUser": "User",
+    "homeLogout": "Logout"
 }
