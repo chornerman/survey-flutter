@@ -3,16 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
-import 'package:survey/dimens.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/page/login/login_state.dart';
 import 'package:survey/page/login/login_view_model.dart';
-import 'package:survey/page/login/widget/text_input_forgot_password_widget.dart';
+import 'package:survey/page/login/widget/login_text_input_forgot_password_widget.dart';
+import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/login_use_case.dart';
 import 'package:survey/widget/circular_progress_bar_widget.dart';
-import 'package:survey/widget/custom_button_widget.dart';
+import 'package:survey/widget/rounded_button_widget.dart';
 import 'package:survey/widget/text_input_widget.dart';
 
 final loginViewModelProvider =
@@ -21,7 +22,7 @@ final loginViewModelProvider =
 });
 
 class LoginPage extends ConsumerStatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -35,17 +36,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = ref.watch(loginViewModelProvider);
     ref.listen<LoginState>(loginViewModelProvider, (
       LoginState? previousLoginState,
       LoginState newLoginState,
     ) {
       newLoginState.maybeWhen(
         success: () => _navigateToHome(),
-        apiError: (error) =>
-            _showError(AppLocalizations.of(context)!.loginError),
+        apiError: (errorMessage) => _showError(errorMessage),
         invalidInputsError: () =>
-            _showError(AppLocalizations.of(context)!.invalidEmailPassword),
+            _showError(AppLocalizations.of(context)!.loginInvalidEmailPassword),
         orElse: () {},
       );
     });
@@ -67,54 +66,56 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
               decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space120),
-                    child: Assets.images.icNimble.svg(),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space110),
-                    child: TextInputWidget(
-                      hintText: AppLocalizations.of(context)!.loginEmail,
-                      controller: _emailController,
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimens.space120),
+                      child: Assets.images.icNimble.svg(),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space20),
-                    child: TextInputWidget(
-                      hintText: AppLocalizations.of(context)!.loginPassword,
-                      isPasswordInput: true,
-                      controller: _passwordController,
-                      endWidget: TextInputForgotPasswordWidget(
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimens.space110),
+                      child: TextInputWidget(
+                        hintText: AppLocalizations.of(context)!.loginEmail,
+                        controller: _emailController,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimens.space20),
+                      child: TextInputWidget(
+                        hintText: AppLocalizations.of(context)!.loginPassword,
+                        isPasswordInput: true,
+                        controller: _passwordController,
+                        endWidget: LoginTextInputForgotPasswordWidget(
+                          onPressed: () {
+                            _navigateToResetPassword();
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimens.space20),
+                      child: RoundedButtonWidget(
+                        buttonText: AppLocalizations.of(context)!.login,
                         onPressed: () {
-                          _navigateToResetPassword();
+                          _hideKeyboard();
+                          ref.read(loginViewModelProvider.notifier).login(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
                         },
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: Dimens.space20),
-                    child: CustomButtonWidget(
-                      buttonText: AppLocalizations.of(context)!.login,
-                      onPressed: () {
-                        _hideKeyboard();
-                        ref.read(loginViewModelProvider.notifier).login(
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-                      },
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
-        loginViewModel.maybeWhen(
-          loading: () => const CircularProgressBar(),
-          orElse: () => const SizedBox(),
-        )
+        ref.watch(loginViewModelProvider).maybeWhen(
+              loading: () => const CircularProgressBarWidget(),
+              orElse: () => const SizedBox(),
+            )
       ],
     );
   }
@@ -126,7 +127,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   void _showError(String errorMessage) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: Constants.snackBarDurationInSecond),
       content: Text(errorMessage),
     ));
   }

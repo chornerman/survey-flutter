@@ -3,6 +3,6 @@
     "loginPassword": "รหัสผ่าน",
     "loginForgotPassword": "ลืมรหัสผ่าน?",
     "login": "เข้าสู่ระบบ",
-    "loginError": "เข้าสู่ระบบไม่สำเร็จ โปรดตรวจสอบอีเมลล์และรหัสผ่านอีกครั้ง",
-    "invalidEmailPassword": "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง"
+    "loginInvalidEmailPassword": "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง",
+    "homeToday": "วันนี้"
 }

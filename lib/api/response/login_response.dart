@@ -20,7 +20,5 @@ class LoginResponse {
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$LoginResponseFromJson(fromJsonApi(json));
-
-  Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
+      _$LoginResponseFromJson(fromDataJsonApi(json));
 }

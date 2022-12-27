@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/model/login_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/usecase/login_use_case.dart';
@@ -42,7 +43,7 @@ void main() {
     test(
         'When executing use case with incorrect email or password, it returns Failed result',
         () async {
-      final exception = Exception();
+      final exception = NetworkExceptions.badRequest();
       when(mockRepository.login(
         email: anyNamed('email'),
         password: anyNamed('password'),

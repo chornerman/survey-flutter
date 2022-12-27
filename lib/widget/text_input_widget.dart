@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey/dimens.dart';
+import 'package:survey/resource/dimens.dart';
 
 class TextInputWidget extends StatelessWidget {
   final String hintText;
@@ -18,11 +18,11 @@ class TextInputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimens.space56,
+      height: Dimens.textInputHeight,
       padding: const EdgeInsets.symmetric(horizontal: Dimens.space12),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(Dimens.space12),
+        borderRadius: BorderRadius.circular(Dimens.textInputBorderRadius),
       ),
       child: Row(
         children: [
@@ -33,16 +33,12 @@ class TextInputWidget extends StatelessWidget {
               obscureText: isPasswordInput,
               enableSuggestions: !isPasswordInput,
               autocorrect: !isPasswordInput,
-              style: const TextStyle(
-                fontSize: 17,
-                color: Colors.white,
-              ),
+              style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration(
                 hintText: hintText,
-                hintStyle: TextStyle(
-                  fontSize: 17,
-                  color: Colors.white.withOpacity(0.2),
-                ),
+                hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      color: Colors.white.withOpacity(0.2),
+                    ),
                 border: InputBorder.none,
               ),
             ),
