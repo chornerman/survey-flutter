@@ -41,8 +41,8 @@ void main() {
       when(mockAuthService.login(any)).thenAnswer((_) async => response);
 
       final result = await repository.login(
-        email: "email",
-        password: "password",
+        email: 'email',
+        password: 'password',
       );
 
       expect(result, expected);
@@ -52,7 +52,24 @@ void main() {
         () async {
       when(mockAuthService.login(any)).thenThrow(MockDioError());
 
-      result() => repository.login(email: "email", password: "password");
+      result() => repository.login(email: 'email', password: 'password');
+
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
+
+    test('When calling reset password successfully, it returns empty result',
+        () async {
+      when(mockAuthService.resetPassword(any)).thenAnswer((_) async => null);
+
+      await repository.resetPassword(email: 'email');
+    });
+
+    test(
+        'When calling reset password failed, it returns NetworkExceptions error',
+        () async {
+      when(mockAuthService.resetPassword(any)).thenThrow(MockDioError());
+
+      result() => repository.resetPassword(email: 'email');
 
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
