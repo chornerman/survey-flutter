@@ -47,11 +47,8 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<QuestionsState>(questionsViewModelProvider, (
-      QuestionsState? previousState,
-      QuestionsState newState,
-    ) {
-      newState.maybeWhen(
+    ref.listen<QuestionsState>(questionsViewModelProvider, (_, state) {
+      state.maybeWhen(
         submitSurveySuccess: (outroMessage) =>
             _appNavigator.navigateToCompletion(context, outroMessage),
         orElse: () {},

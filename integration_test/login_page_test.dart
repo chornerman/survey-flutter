@@ -82,7 +82,7 @@ void main() {
     });
 
     testWidgets(
-        'When logging in fails, it shows the corresponding error message',
+        'When logging in failed, it shows the corresponding error message',
         (WidgetTester tester) async {
       FakeData.addErrorResponse(loginKey);
       await tester.pumpWidget(IntegrationTestUtils.prepareTestApp(LoginPage()));

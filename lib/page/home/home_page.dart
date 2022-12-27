@@ -65,11 +65,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<HomeState>(homeViewModelProvider, (
-      HomeState? previousState,
-      HomeState newState,
-    ) {
-      newState.maybeWhen(
+    ref.listen<HomeState>(homeViewModelProvider, (_, state) {
+      state.maybeWhen(
         logoutSuccess: () =>
             _appNavigator.navigateToStartAndClearStack(context),
         orElse: () {},

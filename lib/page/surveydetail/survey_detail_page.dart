@@ -54,11 +54,8 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     final survey = ref.watch(_surveyStreamProvider).value;
     final surveyDetail = ref.watch(_surveyDetailStreamProvider).value;
 
-    ref.listen<SurveyDetailState>(surveyDetailViewModelProvider, (
-      SurveyDetailState? previousState,
-      SurveyDetailState newState,
-    ) {
-      newState.maybeWhen(
+    ref.listen<SurveyDetailState>(surveyDetailViewModelProvider, (_, state) {
+      state.maybeWhen(
         retrySuccess: (surveyDetail) => _navigateToQuestions(surveyDetail),
         orElse: () {},
       );

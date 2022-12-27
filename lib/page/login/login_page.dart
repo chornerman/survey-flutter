@@ -36,11 +36,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<LoginState>(loginViewModelProvider, (
-      LoginState? previousLoginState,
-      LoginState newLoginState,
-    ) {
-      newLoginState.maybeWhen(
+    ref.listen<LoginState>(loginViewModelProvider, (_, state) {
+      state.maybeWhen(
         success: () => _navigateToHome(),
         apiError: (errorMessage) => _showError(errorMessage),
         invalidInputsError: () =>
