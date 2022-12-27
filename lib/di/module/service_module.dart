@@ -15,17 +15,17 @@ abstract class ServiceModule {
     );
   }
 
-  @Singleton()
-  SurveyService provideSurveyService(DioProvider dioProvider) {
-    return SurveyService(
+  @Singleton(as: SurveyService)
+  SurveyServiceImpl provideSurveyService(DioProvider dioProvider) {
+    return SurveyServiceImpl(
       dioProvider.getAuthenticatedDio(),
       baseUrl: EnvVariables.apiEndpoint,
     );
   }
 
-  @Singleton()
-  UserService provideUserService(DioProvider dioProvider) {
-    return UserService(
+  @Singleton(as: UserService)
+  UserServiceImpl provideUserService(DioProvider dioProvider) {
+    return UserServiceImpl(
       dioProvider.getAuthenticatedDio(),
       baseUrl: EnvVariables.apiEndpoint,
     );
