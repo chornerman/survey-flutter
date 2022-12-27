@@ -28,10 +28,7 @@ class App extends StatelessWidget {
       theme: AppTheme.defaultTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: LoginPage(),
-      ),
+      home: LoginPage(),
       routes: Routes.routes,
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +11,7 @@ import 'package:survey/page/login/widget/login_text_input_forgot_password_widget
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/login_use_case.dart';
 import 'package:survey/widget/circular_progress_bar_widget.dart';
+import 'package:survey/widget/onboarding_background_widget.dart';
 import 'package:survey/widget/rounded_button_widget.dart';
 import 'package:survey/widget/text_input_widget.dart';
 
@@ -49,74 +48,59 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       );
     });
 
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(Assets.images.bgLogin.path),
-              fit: BoxFit.cover,
-            ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          OnboardingBackgroundWidget(
+            background: AssetImage(Assets.images.bgOnboarding.path),
+            shouldBlur: true,
           ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 30,
-              sigmaY: 30,
-            ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space120),
-                      child: Assets.images.icNimble.svg(),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
+            decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  const SizedBox(height: Dimens.space120),
+                  Assets.images.icNimble.svg(),
+                  const SizedBox(height: Dimens.space110),
+                  TextInputWidget(
+                    hintText: AppLocalizations.of(context)!.email,
+                    controller: _emailController,
+                  ),
+                  const SizedBox(height: Dimens.space20),
+                  TextInputWidget(
+                    hintText: AppLocalizations.of(context)!.loginPassword,
+                    isPasswordInput: true,
+                    controller: _passwordController,
+                    endWidget: LoginTextInputForgotPasswordWidget(
+                      onPressed: () {
+                        _navigateToResetPassword();
+                      },
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space110),
-                      child: TextInputWidget(
-                        hintText: AppLocalizations.of(context)!.loginEmail,
-                        controller: _emailController,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space20),
-                      child: TextInputWidget(
-                        hintText: AppLocalizations.of(context)!.loginPassword,
-                        isPasswordInput: true,
-                        controller: _passwordController,
-                        endWidget: LoginTextInputForgotPasswordWidget(
-                          onPressed: () {
-                            _navigateToResetPassword();
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimens.space20),
-                      child: RoundedButtonWidget(
-                        buttonText: AppLocalizations.of(context)!.login,
-                        onPressed: () {
-                          _hideKeyboard();
-                          ref.read(loginViewModelProvider.notifier).login(
-                                _emailController.text,
-                                _passwordController.text,
-                              );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: Dimens.space20),
+                  RoundedButtonWidget(
+                    buttonText: AppLocalizations.of(context)!.login,
+                    onPressed: () {
+                      _hideKeyboard();
+                      ref.read(loginViewModelProvider.notifier).login(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                    },
+                  ),
+                ],
               ),
             ),
           ),
-        ),
-        ref.watch(loginViewModelProvider).maybeWhen(
-              loading: () => const CircularProgressBarWidget(),
-              orElse: () => const SizedBox(),
-            )
-      ],
+          ref.watch(loginViewModelProvider).maybeWhen(
+                loading: () => const CircularProgressBarWidget(),
+                orElse: () => const SizedBox(),
+              )
+        ],
+      ),
     );
   }
 

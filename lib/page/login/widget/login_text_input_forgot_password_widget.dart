@@ -21,7 +21,7 @@ class LoginTextInputForgotPasswordWidget extends StatelessWidget {
       child: Text(
         AppLocalizations.of(context)!.loginForgotPassword,
         style: Theme.of(context).textTheme.bodyText2?.copyWith(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withOpacity(0.5),
             ),
       ),
     );

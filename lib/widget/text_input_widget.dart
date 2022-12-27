@@ -37,7 +37,7 @@ class TextInputWidget extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withOpacity(0.3),
                     ),
                 border: InputBorder.none,
               ),

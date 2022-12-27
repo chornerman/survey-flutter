@@ -1,8 +1,10 @@
 {
-    "loginEmail": "Email",
+    "email": "Email",
     "loginPassword": "Password",
     "loginForgotPassword": "Forgot?",
     "login": "Log In",
     "loginInvalidEmailPassword": "Invalid email or password",
+    "resetPasswordDescription": "Enter your email to receive instructions for resetting your password.",
+    "resetPasswordReset": "Reset",
     "homeToday": "Today"
 }

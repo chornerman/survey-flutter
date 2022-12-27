@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/login/login_page.dart';
-import 'package:survey/page/reset_password/reset_password_page.dart';
+import 'package:survey/page/resetpassword/reset_password_page.dart';
 
 const String _routeLogin = 'login';
 const String _routeHome = 'home';
@@ -17,6 +17,8 @@ class Routes {
 }
 
 abstract class AppNavigator {
+  void navigateBack(BuildContext context);
+
   void navigateToHome(BuildContext context);
 
   void navigateToResetPassword(BuildContext context);
@@ -24,6 +26,9 @@ abstract class AppNavigator {
 
 @Injectable(as: AppNavigator)
 class AppNavigatorImpl extends AppNavigator {
+  @override
+  void navigateBack(BuildContext context) => Navigator.of(context).pop();
+
   @override
   void navigateToHome(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeHome);

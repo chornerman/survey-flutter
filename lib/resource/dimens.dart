@@ -9,7 +9,9 @@ class Dimens {
   static const double space15 = 15;
   static const double space16 = 16;
   static const double space20 = 20;
+  static const double space22 = 22;
   static const double space24 = 24;
+  static const double space96 = 96;
   static const double space110 = 110;
   static const double space120 = 120;
   static const double space170 = 170;
