@@ -10,7 +10,7 @@ import 'package:survey/page/login/login_view_model.dart';
 import 'package:survey/page/login/widget/login_text_input_forgot_password_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/login_use_case.dart';
-import 'package:survey/widget/circular_progress_bar_widget.dart';
+import 'package:survey/widget/loading_indicator_widget.dart';
 import 'package:survey/widget/onboarding_background_widget.dart';
 import 'package:survey/widget/rounded_button_widget.dart';
 import 'package:survey/widget/text_input_widget.dart';
@@ -96,7 +96,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
           ),
           ref.watch(loginViewModelProvider).maybeWhen(
-                loading: () => const CircularProgressBarWidget(),
+                loading: () => const LoadingIndicatorWidget(),
                 orElse: () => const SizedBox(),
               )
         ],

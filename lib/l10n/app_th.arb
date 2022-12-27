@@ -6,5 +6,8 @@
     "loginInvalidEmailPassword": "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง",
     "resetPasswordDescription": "กรุณากรอกอีเมลล์เพื่อรับคำแนะนำในการรีเซ็ตรหัสผ่าน",
     "resetPasswordReset": "รีเซ็ต",
+    "resetPasswordSuccessTitle": "ตรวจสอบอีเมลล์ของคุณ",
+    "resetPasswordSuccessDescription": "เราได้ส่งขั้นตอนการรีเซ็ตรหัสผ่านให้คุณทางอีเมลล์แล้ว",
+    "resetPasswordInvalidEmail": "อีเมลล์ไม่ถูกต้อง",
     "homeToday": "วันนี้"
 }

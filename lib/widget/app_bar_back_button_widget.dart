@@ -12,7 +12,7 @@ class AppBarBackButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: IconButton(
-        icon: Assets.images.icBackArrow.svg(),
+        icon: Assets.images.icArrowBack.svg(),
         padding: EdgeInsets.zero,
         constraints: BoxConstraints(),
         onPressed: () => _appNavigator.navigateBack(context),
