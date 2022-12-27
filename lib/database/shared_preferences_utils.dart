@@ -19,6 +19,8 @@ abstract class SharedPreferencesUtils {
   void saveTokenType(String tokenType);
 
   void saveRefreshToken(String refreshToken);
+
+  void clear();
 }
 
 @Singleton(as: SharedPreferencesUtils)
@@ -53,5 +55,10 @@ class SharedPreferencesUtilsImpl extends SharedPreferencesUtils {
   @override
   void saveRefreshToken(String refreshToken) async {
     await _sharedPreferences.setString(_refreshTokenKey, refreshToken);
+  }
+
+  @override
+  void clear() async {
+    await _sharedPreferences.clear();
   }
 }
