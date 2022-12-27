@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey/model/survey_model.dart';
+import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/home/widget/home_surveys_item_widget.dart';
 
-class HomeSurveysPageViewWidget extends StatelessWidget {
+class HomeSurveysPageViewWidget extends ConsumerWidget {
   final List<SurveyModel> surveys;
   final VoidCallback loadMoreSurveys;
   final ValueNotifier<int> currentSurveysPage;
@@ -15,7 +17,12 @@ class HomeSurveysPageViewWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<void>>(jumpToFirstSurveysPageStreamProvider,
+        (oldValue, newValue) {
+      _pageController.jumpToPage(0);
+    });
+
     if (currentSurveysPage.value > surveys.length - 1) {
       currentSurveysPage.value = surveys.length - 1;
     }

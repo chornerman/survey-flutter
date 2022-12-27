@@ -2,6 +2,7 @@ import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/model/user_model.dart';
 import 'package:survey/page/home/home_state.dart';
@@ -33,6 +34,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final BehaviorSubject<List<SurveyModel>> _surveys = BehaviorSubject();
 
   Stream<List<SurveyModel>> get surveys => _surveys.stream;
+
+  final PublishSubject<void> _jumpToFirstSurveysPage = PublishSubject();
+
+  Stream<void> get jumpToFirstSurveysPage => _jumpToFirstSurveysPage.stream;
 
   final PublishSubject<String> _error = PublishSubject();
 
@@ -74,13 +79,33 @@ class HomeViewModel extends StateNotifier<HomeState> {
       state = const HomeState.apiLoadingSuccess();
       _surveysPageNumber++;
     } else {
-      _error.add((result as Failed).getErrorMessage());
-      state = HomeState.loadSurveysError();
+      _handleLoadSurveysError((result as Failed).getErrorMessage());
+    }
+  }
+
+  Future<void> refreshSurveys() async {
+    if (_surveys.hasValue) _jumpToFirstSurveysPage.add(Object);
+
+    final result = await _getSurveysUseCase.call(GetSurveysInput(
+      pageNumber: Constants.firstSurveysPageNumber,
+      pageSize: _surveys.hasValue ? _surveys.value.length : _surveysPageSize,
+    ));
+    if (result is Success<List<SurveyModel>>) {
+      final surveys = result.value;
+      _surveys.add(surveys);
+      state = const HomeState.apiLoadingSuccess();
+    } else {
+      _handleLoadSurveysError((result as Failed).getErrorMessage());
     }
   }
 
   String getCurrentDate() =>
       DateFormat(_homeCurrentDatePattern).format(clock.now()).toUpperCase();
+
+  void _handleLoadSurveysError(String errorMessage) {
+    _error.add(errorMessage);
+    state = HomeState.loadSurveysError();
+  }
 
   @override
   void dispose() async {
