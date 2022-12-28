@@ -13,8 +13,8 @@ const String _routeStart = '/';
 const String routeHome = '/home';
 const String routeResetPassword = '/reset-password';
 const String routeSurveyDetail = '/survey-detail';
-const String _routeQuestions = '/questions';
-const String _routeCompletion = '/completion';
+const String routeQuestions = '/questions';
+const String routeCompletion = '/completion';
 
 class Routes {
   static final routes = <String, WidgetBuilder>{
@@ -22,8 +22,8 @@ class Routes {
     routeHome: (BuildContext context) => const HomePage(),
     routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
     routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
-    _routeQuestions: (BuildContext context) => const QuestionsPage(),
-    _routeCompletion: (BuildContext context) => const CompletionPage(),
+    routeQuestions: (BuildContext context) => const QuestionsPage(),
+    routeCompletion: (BuildContext context) => const CompletionPage(),
   };
 }
 
@@ -74,7 +74,7 @@ class AppNavigatorImpl extends AppNavigator {
   ) =>
       Navigator.pushReplacementNamed(
         context,
-        _routeQuestions,
+        routeQuestions,
         arguments: surveyDetail,
       );
 
@@ -82,7 +82,7 @@ class AppNavigatorImpl extends AppNavigator {
   void navigateToCompletion(BuildContext context, String? outroMessage) =>
       Navigator.pushReplacementNamed(
         context,
-        _routeCompletion,
+        routeCompletion,
         arguments: outroMessage,
       );
 }
