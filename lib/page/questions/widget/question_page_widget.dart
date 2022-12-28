@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey/model/question_model.dart';
+import 'package:survey/page/questions/questions_page_key.dart';
 import 'package:survey/page/questions/widget/answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/widget/dimmed_background_widget.dart';
@@ -71,11 +72,13 @@ class QuestionPageWidget extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: isLastQuestion
                       ? RoundedButtonWidget(
+                          key: QuestionsPageKey.rbQuestionsSubmitSurvey,
                           buttonText:
                               AppLocalizations.of(context)!.questionsSubmit,
                           onPressed: () => onSubmitSurveyPressed.call(),
                         )
                       : NextButtonWidget(
+                          key: QuestionsPageKey.nbQuestionsNext,
                           onPressed: () => onNextQuestionPressed.call(),
                         ),
                 ),

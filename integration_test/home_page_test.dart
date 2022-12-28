@@ -61,19 +61,17 @@ void main() {
       await tester.pumpWidget(IntegrationTestUtils.prepareTestApp(HomePage()));
 
       await tester.pumpAndSettle();
-      // Verify first survey page
-      final survey1 = surveysJson['data'][0];
-      expect(find.text(survey1['title']), findsOneWidget);
-      expect(find.text(survey1['description']), findsOneWidget);
+      final firstSurvey = surveysJson['data'][0];
+      expect(find.text(firstSurvey['title']), findsOneWidget);
+      expect(find.text(firstSurvey['description']), findsOneWidget);
 
       // Swipe to next page
       await tester.flingFrom(Offset(100, 300), Offset(-100, 0), 500);
 
       await tester.pumpAndSettle();
-      // Verify second survey page
-      final survey2 = surveysJson['data'][1];
-      expect(find.text(survey2['title']), findsOneWidget);
-      expect(find.text(survey2['description']), findsOneWidget);
+      final secondSurvey = surveysJson['data'][1];
+      expect(find.text(secondSurvey['title']), findsOneWidget);
+      expect(find.text(secondSurvey['description']), findsOneWidget);
     });
 
     testWidgets(

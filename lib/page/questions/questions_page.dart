@@ -8,6 +8,7 @@ import 'package:survey/gen/colors.gen.dart';
 import 'package:survey/model/question_model.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/navigator.dart';
+import 'package:survey/page/questions/questions_page_key.dart';
 import 'package:survey/page/questions/questions_state.dart';
 import 'package:survey/page/questions/questions_view_model.dart';
 import 'package:survey/page/questions/widget/questions_page_view_widget.dart';
@@ -95,6 +96,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                     right: Dimens.space20,
                   ),
                   child: IconButton(
+                    key: QuestionsPageKey.ibQuestionsQuitSurvey,
                     icon: Assets.images.icClose.svg(),
                     padding: EdgeInsets.zero,
                     constraints: BoxConstraints(),
@@ -140,6 +142,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
         ),
         actions: <Widget>[
           TextButton(
+            key: QuestionsPageKey.tbQuestionsQuitSurveyDialogPositive,
             onPressed: () {
               // Close the dialog
               _appNavigator.navigateBack(context);
@@ -156,6 +159,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
             ),
           ),
           TextButton(
+            key: QuestionsPageKey.tbQuestionsQuitSurveyDialogNegative,
             onPressed: () => _appNavigator.navigateBack(context),
             child: Text(
               AppLocalizations.of(context)!

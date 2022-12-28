@@ -64,9 +64,10 @@ void main() {
       await tester.tap(nbHomeTakeSurvey);
 
       await tester.pumpAndSettle();
-      expect(find.text(surveysJson['data'][0]['title']), findsOneWidget);
-      expect(find.text(surveyDetailJson['data']['questions'][0]['text']),
-          findsOneWidget);
+      final survey = surveysJson['data'][0];
+      expect(find.text(survey['title']), findsOneWidget);
+      final introQuestion = surveyDetailJson['data']['questions'][0];
+      expect(find.text(introQuestion['text']), findsOneWidget);
     });
 
     testWidgets(
