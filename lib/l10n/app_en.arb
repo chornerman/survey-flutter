@@ -1,8 +1,15 @@
 {
-    "loginEmail": "Email",
+    "email": "Email",
     "loginPassword": "Password",
     "loginForgotPassword": "Forgot?",
     "login": "Log In",
     "loginInvalidEmailPassword": "Invalid email or password",
-    "homeToday": "Today"
+    "resetPasswordDescription": "Enter your email to receive instructions for resetting your password.",
+    "resetPasswordReset": "Reset",
+    "resetPasswordSuccessTitle": "Check your email.",
+    "resetPasswordSuccessDescription": "We’ve email you instructions to reset your password.",
+    "resetPasswordInvalidEmail": "Invalid email",
+    "homeToday": "Today",
+    "homeUser": "User",
+    "homeLogout": "Logout"
 }

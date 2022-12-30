@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:survey/api/response/login_response.dart';
+import 'package:survey/api/response/token_response.dart';
 
-class LoginModel extends Equatable {
+class TokenModel extends Equatable {
   final String accessToken;
   final String tokenType;
   final String refreshToken;
 
-  const LoginModel({
+  const TokenModel({
     required this.accessToken,
     required this.tokenType,
     required this.refreshToken,
@@ -15,8 +15,8 @@ class LoginModel extends Equatable {
   @override
   List<Object> get props => [accessToken, tokenType, refreshToken];
 
-  factory LoginModel.fromResponse(LoginResponse response) {
-    return LoginModel(
+  factory TokenModel.fromResponse(TokenResponse response) {
+    return TokenModel(
       accessToken: response.accessToken,
       tokenType: response.tokenType,
       refreshToken: response.refreshToken,

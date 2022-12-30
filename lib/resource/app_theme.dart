@@ -24,12 +24,17 @@ class AppTheme {
             fontSize: 13,
             fontWeight: FontWeight.w800,
           ),
-          headline6: TextStyle(
+          caption: TextStyle(
+            color: Colors.white,
+            fontSize: 11,
+            fontWeight: FontWeight.w400,
+          ),
+          headline5: TextStyle(
             color: Colors.white,
             fontSize: 34,
             fontWeight: FontWeight.w800,
           ),
-          headline5: TextStyle(
+          headline6: TextStyle(
             color: Colors.white,
             fontSize: 28,
             fontWeight: FontWeight.w800,

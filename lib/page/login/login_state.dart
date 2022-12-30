@@ -12,5 +12,5 @@ class LoginState with _$LoginState {
 
   const factory LoginState.apiError(String errorMessage) = _Error;
 
-  const factory LoginState.invalidInputsError() = _InvalidInputError;
+  const factory LoginState.invalidInputsError() = _InvalidInputsError;
 }

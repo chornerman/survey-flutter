@@ -40,7 +40,7 @@ class HomeSurveysItemWidget extends StatelessWidget {
                 survey.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Row(
@@ -60,7 +60,7 @@ class HomeSurveysItemWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: Dimens.space20),
                   child: ElevatedButton(
-                    child: Assets.images.icArrowRight.svg(),
+                    child: Assets.images.icArrowNext.svg(),
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       shape: const CircleBorder(),

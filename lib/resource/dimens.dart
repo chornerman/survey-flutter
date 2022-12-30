@@ -9,7 +9,11 @@ class Dimens {
   static const double space15 = 15;
   static const double space16 = 16;
   static const double space20 = 20;
+  static const double space22 = 22;
   static const double space24 = 24;
+  static const double space35 = 35;
+  static const double space50 = 50;
+  static const double space96 = 96;
   static const double space110 = 110;
   static const double space120 = 120;
   static const double space170 = 170;
@@ -20,9 +24,13 @@ class Dimens {
   static const double roundedButtonBorderRadius = 10;
   static const double roundedButtonHeight = 56;
 
+  static const double circularProgressBarBackgroundSize = 56;
+
   static const double homeSurveysIndicatorsSize = 8;
   static const double homeSurveysNextButtonSize = 56;
   static const double homeUserAvatarSize = 36;
   static const double homeSkeletonLoadingTextHeight = 18;
   static const double homeSkeletonLoadingTextBorderRadius = 14;
+  static const double homeDrawerWidthFactor = 0.64;
+  static const double homeDrawerSeparatorHeight = 0.5;
 }

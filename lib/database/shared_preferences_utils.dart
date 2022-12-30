@@ -14,11 +14,15 @@ abstract class SharedPreferencesUtils {
 
   String get authToken;
 
+  bool get isLoggedIn;
+
   void saveAccessToken(String accessToken);
 
   void saveTokenType(String tokenType);
 
   void saveRefreshToken(String refreshToken);
+
+  void clear();
 }
 
 @Singleton(as: SharedPreferencesUtils)
@@ -41,6 +45,11 @@ class SharedPreferencesUtilsImpl extends SharedPreferencesUtils {
   String get authToken => '$tokenType $accessToken';
 
   @override
+  bool get isLoggedIn =>
+      _sharedPreferences.containsKey(_accessTokenKey) &&
+      _sharedPreferences.containsKey(_tokenTypeKey);
+
+  @override
   void saveAccessToken(String accessToken) async {
     await _sharedPreferences.setString(_accessTokenKey, accessToken);
   }
@@ -53,5 +62,10 @@ class SharedPreferencesUtilsImpl extends SharedPreferencesUtils {
   @override
   void saveRefreshToken(String refreshToken) async {
     await _sharedPreferences.setString(_refreshTokenKey, refreshToken);
+  }
+
+  @override
+  void clear() async {
+    await _sharedPreferences.clear();
   }
 }
