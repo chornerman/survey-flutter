@@ -4,9 +4,9 @@ import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/login/login_page.dart';
 import 'package:survey/page/resetpassword/reset_password_page.dart';
 
-const String _routeLogin = 'login';
-const String _routeHome = 'home';
-const String _routeResetPassword = 'resetPassword';
+const String _routeLogin = '/';
+const String _routeHome = '/home';
+const String _routeResetPassword = '/reset-password';
 
 class Routes {
   static final routes = <String, WidgetBuilder>{
@@ -22,6 +22,8 @@ abstract class AppNavigator {
   void navigateToHome(BuildContext context);
 
   void navigateToResetPassword(BuildContext context);
+
+  void navigateToLoginAndClearStack(BuildContext context);
 }
 
 @Injectable(as: AppNavigator)
@@ -36,4 +38,8 @@ class AppNavigatorImpl extends AppNavigator {
   @override
   void navigateToResetPassword(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeResetPassword);
+
+  @override
+  void navigateToLoginAndClearStack(BuildContext context) =>
+      Navigator.pushNamedAndRemoveUntil(context, _routeLogin, (r) => false);
 }

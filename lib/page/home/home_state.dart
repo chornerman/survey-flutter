@@ -13,4 +13,6 @@ class HomeState with _$HomeState {
   const factory HomeState.apiLoadingSuccess() = _ApiLoadingSuccess;
 
   const factory HomeState.loadSurveysError() = _LoadSurveysError;
+
+  const factory HomeState.logoutSuccess() = _LogoutSuccess;
 }

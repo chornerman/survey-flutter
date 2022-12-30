@@ -6,7 +6,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/navigator.dart';
-import 'package:survey/page/login/login_page.dart';
 import 'package:survey/resource/app_theme.dart';
 
 void main() async {
@@ -28,7 +27,6 @@ class App extends StatelessWidget {
       theme: AppTheme.defaultTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: LoginPage(),
       routes: Routes.routes,
     );
   }

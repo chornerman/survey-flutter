@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="chinese_black">#15151A</color>
-    <color name="raisin_black">#252525</color>
     <color name="eerie_black_90">#E61E1E1E</color>
+    <color name="raisin_black">#252525</color>
 </resources>

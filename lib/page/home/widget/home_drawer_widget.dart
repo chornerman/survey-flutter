@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey/gen/colors.gen.dart';
+import 'package:survey/model/user_model.dart';
 import 'package:survey/page/home/widget/home_user_avatar_widget.dart';
 import 'package:survey/resource/dimens.dart';
 
 class HomeDrawerWidget extends StatelessWidget {
-  const HomeDrawerWidget({super.key});
+  final UserModel? user;
+  final VoidCallback logout;
+  final String appVersion;
+
+  const HomeDrawerWidget({
+    Key? key,
+    required this.user,
+    required this.logout,
+    required this.appVersion,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +40,14 @@ class HomeDrawerWidget extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(right: Dimens.space8),
                       child: Text(
-                        // TODO: Display user name from API
-                        AppLocalizations.of(context)!.homeUser,
+                        user?.name ?? AppLocalizations.of(context)!.homeUser,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
                   ),
-                  // TODO: Display user avatar from API
-                  HomeUserAvatarWidget(userAvatarUrl: null),
+                  HomeUserAvatarWidget(userAvatarUrl: user?.avatarUrl),
                 ]),
                 const SizedBox(height: Dimens.space20),
                 Container(
@@ -49,7 +57,7 @@ class HomeDrawerWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: Dimens.space35),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => logout.call(),
                   child: Text(
                     AppLocalizations.of(context)!.homeLogout,
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -60,8 +68,7 @@ class HomeDrawerWidget extends StatelessWidget {
                 ),
                 const Expanded(child: const SizedBox.shrink()),
                 Text(
-                  // TODO: Display version number
-                  'v0.1.0 (1562903885)',
+                  appVersion,
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         color: Colors.white.withOpacity(0.5),
                       ),
