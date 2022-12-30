@@ -11,10 +11,6 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_sharedPreferencesUtils.isLoggedIn) {
-      return HomePage();
-    } else {
-      return LoginPage();
-    }
+    return _sharedPreferencesUtils.isLoggedIn ? HomePage() : LoginPage();
   }
 }
