@@ -104,7 +104,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  void _navigateToHome() => _appNavigator.navigateToHome(context);
+  void _navigateToHome() => _appNavigator.navigateToHomeAndClearStack(context);
 
   void _navigateToResetPassword() =>
       _appNavigator.navigateToResetPassword(context);
