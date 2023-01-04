@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey/di/di.dart';
 import 'package:survey/model/survey_model.dart';
+import 'package:survey/navigator.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/home/widget/home_surveys_item_widget.dart';
 
@@ -8,6 +10,9 @@ class HomeSurveysPageViewWidget extends ConsumerWidget {
   final List<SurveyModel> surveys;
   final VoidCallback loadMoreSurveys;
   final ValueNotifier<int> currentSurveysPage;
+
+  final _appNavigator = getIt.get<AppNavigator>();
+
   final _pageController = PageController();
 
   HomeSurveysPageViewWidget({
@@ -36,9 +41,8 @@ class HomeSurveysPageViewWidget extends ConsumerWidget {
         });
         return HomeSurveysItemWidget(
           survey: surveys[index],
-          onNextButtonPressed: () => {
-            // TODO: Navigate to Survey Detail screen
-          },
+          onNextButtonPressed: () =>
+              _appNavigator.navigateToSurveyDetail(context, surveys[index].id),
         );
       },
       onPageChanged: (int index) {

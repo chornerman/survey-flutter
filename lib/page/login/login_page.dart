@@ -10,8 +10,8 @@ import 'package:survey/page/login/login_view_model.dart';
 import 'package:survey/page/login/widget/login_text_input_forgot_password_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/login_use_case.dart';
+import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/loading_indicator_widget.dart';
-import 'package:survey/widget/onboarding_background_widget.dart';
 import 'package:survey/widget/rounded_button_widget.dart';
 import 'package:survey/widget/text_input_widget.dart';
 
@@ -52,14 +52,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          OnboardingBackgroundWidget(
+          DimmedBackgroundWidget(
             background: AssetImage(Assets.images.bgOnboarding.path),
             shouldBlur: true,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
-            decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-            child: SafeArea(
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
               child: Column(
                 children: [
                   const SizedBox(height: Dimens.space120),
@@ -90,6 +89,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             _passwordController.text,
                           );
                     },
+                    shouldExpandedWidth: true,
                   ),
                 ],
               ),

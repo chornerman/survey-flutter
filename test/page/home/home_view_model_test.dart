@@ -206,5 +206,13 @@ void main() {
         expect(homeViewModel.getCurrentDate(), "SATURDAY, JANUARY 01");
       });
     });
+
+    test('When clearing error, it emits null to error', () async {
+      final errorStream = homeViewModel.error;
+
+      expect(errorStream, emitsInOrder([null]));
+
+      homeViewModel.clearError();
+    });
   });
 }

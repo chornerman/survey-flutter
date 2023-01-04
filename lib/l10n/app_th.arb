@@ -11,5 +11,6 @@
     "resetPasswordInvalidEmail": "อีเมลล์ไม่ถูกต้อง",
     "homeToday": "วันนี้",
     "homeUser": "ผู้ใช้",
-    "homeLogout": "ออกจากระบบ"
+    "homeLogout": "ออกจากระบบ",
+    "surveyDetailStartSurvey": "เริ่มทำแบบสอบถาม"
 }

@@ -12,16 +12,16 @@ class HomeSkeletonLoadingWidget extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.all(Dimens.space20),
-        child: Shimmer.fromColors(
-          baseColor: Colors.white12,
-          highlightColor: Colors.white30,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SafeArea(
-                child: Row(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.space20),
+          child: Shimmer.fromColors(
+            baseColor: Colors.white12,
+            highlightColor: Colors.white30,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Column(
@@ -40,18 +40,18 @@ class HomeSkeletonLoadingWidget extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
-              const Expanded(child: const SizedBox.shrink()),
-              _buildSkeleton(dividedScreenWidth),
-              const SizedBox(height: Dimens.space16),
-              _buildSkeleton(dividedScreenWidth * 7),
-              const SizedBox(height: Dimens.space8),
-              _buildSkeleton(dividedScreenWidth * 3),
-              const SizedBox(height: Dimens.space16),
-              _buildSkeleton(dividedScreenWidth * 8.5),
-              const SizedBox(height: Dimens.space8),
-              _buildSkeleton(dividedScreenWidth * 6),
-            ],
+                const Expanded(child: const SizedBox.shrink()),
+                _buildSkeleton(dividedScreenWidth),
+                const SizedBox(height: Dimens.space16),
+                _buildSkeleton(dividedScreenWidth * 7),
+                const SizedBox(height: Dimens.space8),
+                _buildSkeleton(dividedScreenWidth * 3),
+                const SizedBox(height: Dimens.space16),
+                _buildSkeleton(dividedScreenWidth * 8.5),
+                const SizedBox(height: Dimens.space8),
+                _buildSkeleton(dividedScreenWidth * 6),
+              ],
+            ),
           ),
         ),
       ),

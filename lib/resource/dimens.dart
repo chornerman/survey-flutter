@@ -1,6 +1,7 @@
 class Dimens {
   Dimens._();
 
+  static const double space2 = 2;
   static const double space4 = 4;
   static const double space5 = 5;
   static const double space8 = 8;
@@ -11,8 +12,10 @@ class Dimens {
   static const double space20 = 20;
   static const double space22 = 22;
   static const double space24 = 24;
+  static const double space30 = 30;
   static const double space35 = 35;
   static const double space50 = 50;
+  static const double space64 = 64;
   static const double space96 = 96;
   static const double space110 = 110;
   static const double space120 = 120;

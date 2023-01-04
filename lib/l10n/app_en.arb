@@ -11,5 +11,6 @@
     "resetPasswordInvalidEmail": "Invalid email",
     "homeToday": "Today",
     "homeUser": "User",
-    "homeLogout": "Logout"
+    "homeLogout": "Logout",
+    "surveyDetailStartSurvey": "Start Survey"
 }

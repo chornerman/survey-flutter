@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class OnboardingBackgroundWidget extends StatelessWidget {
+class DimmedBackgroundWidget extends StatelessWidget {
   final ImageProvider background;
   final bool shouldBlur;
 
-  const OnboardingBackgroundWidget({
+  const DimmedBackgroundWidget({
     Key? key,
     required this.background,
-    required this.shouldBlur,
+    this.shouldBlur = false,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,14 @@ class OnboardingBackgroundWidget extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        image: DecorationImage(image: background, fit: BoxFit.cover),
+        image: DecorationImage(
+          image: background,
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.4),
+            BlendMode.darken,
+          ),
+          fit: BoxFit.cover,
+        ),
       ),
       child: shouldBlur
           ? BackdropFilter(
