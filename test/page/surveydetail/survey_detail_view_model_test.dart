@@ -61,21 +61,19 @@ void main() {
     });
 
     test(
-        'When calling get survey detail with Success result and isRetry is true, it emits SurveyDetailModel and returns RetrySuccess state',
+        'When calling get survey detail with Success result and isRetry is true, it returns RetrySuccess state with SurveyDetailModel',
         () {
       final surveyDetail = MockSurveyDetailModel();
       when(mockGetSurveyDetailUseCase.call(any))
           .thenAnswer((_) async => Success(surveyDetail));
       final stateStream = surveyDetailViewModel.stream;
-      final surveyDetailStream = surveyDetailViewModel.surveyDetail;
 
       expect(
           stateStream,
           emitsInOrder([
             const SurveyDetailState.loading(),
-            const SurveyDetailState.retrySuccess(),
+            SurveyDetailState.retrySuccess(surveyDetail),
           ]));
-      expect(surveyDetailStream, emitsInOrder([surveyDetail]));
 
       surveyDetailViewModel.getSurveyDetail(survey, isRetry: true);
     });

@@ -26,11 +26,12 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
     Result<SurveyDetailModel> result =
         await _getSurveyDetailUseCase.call(survey.id);
     if (result is Success<SurveyDetailModel>) {
-      _surveyDetail.add(result.value);
+      final surveyDetail = result.value;
       if (!isRetry) {
+        _surveyDetail.add(surveyDetail);
         state = SurveyDetailState.success();
       } else {
-        state = SurveyDetailState.retrySuccess();
+        state = SurveyDetailState.retrySuccess(surveyDetail);
       }
     } else {
       state = SurveyDetailState.error((result as Failed).getErrorMessage());

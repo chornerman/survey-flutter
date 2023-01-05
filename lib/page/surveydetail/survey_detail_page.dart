@@ -59,9 +59,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       SurveyDetailState newState,
     ) {
       newState.maybeWhen(
-        retrySuccess: () {
-          if (surveyDetail != null) _navigateToQuestion(surveyDetail);
-        },
+        retrySuccess: (surveyDetail) => _navigateToQuestion(surveyDetail),
         orElse: () {},
       );
     });
@@ -76,7 +74,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
             _showError(errorMessage);
             return _buildSurveyDetailPage(survey);
           },
-          retrySuccess: () => const SizedBox(),
+          retrySuccess: (_) => const SizedBox(),
         );
   }
 
