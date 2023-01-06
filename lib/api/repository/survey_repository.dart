@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:survey/api/exception/network_exceptions.dart';
+import 'package:survey/api/request/submit_survey_request.dart';
 import 'package:survey/api/service/survey_service.dart';
 import 'package:survey/constants.dart';
 import 'package:survey/database/hive_utils.dart';
@@ -14,6 +15,11 @@ abstract class SurveyRepository {
 
   Future<SurveyDetailModel> getSurveyDetail({
     required String surveyId,
+  });
+
+  Future<void> submitSurvey({
+    required String surveyId,
+    required List<SubmitSurveyQuestionRequest> questions,
   });
 }
 
@@ -51,6 +57,21 @@ class SurveyRepositoryImpl extends SurveyRepository {
     try {
       final response = await _surveyService.getSurveyDetail(surveyId);
       return SurveyDetailModel.fromResponse(response);
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<void> submitSurvey({
+    required String surveyId,
+    required List<SubmitSurveyQuestionRequest> questions,
+  }) async {
+    try {
+      return await _surveyService.submitSurvey(SubmitSurveyRequest(
+        surveyId: surveyId,
+        questions: questions,
+      ));
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
