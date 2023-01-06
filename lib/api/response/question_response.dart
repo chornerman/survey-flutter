@@ -44,4 +44,12 @@ class QuestionResponse {
 
   factory QuestionResponse.fromJson(Map<String, dynamic> json) =>
       _$QuestionResponseFromJson(fromDataJsonApi(json));
+
+  String getHdCoverImageUrl() {
+    if (coverImageUrl != null) {
+      return "${coverImageUrl}l";
+    } else {
+      return "";
+    }
+  }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:survey/model/survey_detail_model.dart';
+import 'package:survey/model/survey_model.dart';
 import 'package:survey/page/home/home_page.dart';
+import 'package:survey/page/question/question_page.dart';
 import 'package:survey/page/resetpassword/reset_password_page.dart';
 import 'package:survey/page/start/start_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
@@ -9,6 +12,7 @@ const String _routeStart = '/';
 const String _routeHome = '/home';
 const String _routeResetPassword = '/reset-password';
 const String _routeSurveyDetail = '/survey-detail';
+const String _routeQuestion = '/question';
 
 class Routes {
   static final routes = <String, WidgetBuilder>{
@@ -16,6 +20,7 @@ class Routes {
     _routeHome: (BuildContext context) => const HomePage(),
     _routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
     _routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
+    _routeQuestion: (BuildContext context) => const QuestionPage(),
   };
 }
 
@@ -28,7 +33,9 @@ abstract class AppNavigator {
 
   void navigateToStartAndClearStack(BuildContext context);
 
-  void navigateToSurveyDetail(BuildContext context, String surveyId);
+  void navigateToSurveyDetail(BuildContext context, SurveyModel survey);
+
+  void navigateToQuestion(BuildContext context, SurveyDetailModel surveyDetail);
 }
 
 @Injectable(as: AppNavigator)
@@ -49,9 +56,14 @@ class AppNavigatorImpl extends AppNavigator {
       Navigator.pushNamedAndRemoveUntil(context, _routeStart, (r) => false);
 
   @override
-  void navigateToSurveyDetail(BuildContext context, String surveyId) =>
+  void navigateToSurveyDetail(BuildContext context, SurveyModel survey) =>
       Navigator.of(context).pushNamed(
         _routeSurveyDetail,
-        arguments: surveyId,
+        arguments: survey,
       );
+
+  @override
+  void navigateToQuestion(
+          BuildContext context, SurveyDetailModel surveyDetail) =>
+      Navigator.of(context).pushNamed(_routeQuestion);
 }
