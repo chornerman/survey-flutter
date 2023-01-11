@@ -6,18 +6,20 @@ import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/next_button_widget.dart';
 import 'package:survey/widget/rounded_button_widget.dart';
 
-class QuestionsItemWidget extends StatelessWidget {
+class QuestionPageWidget extends StatelessWidget {
   final QuestionModel question;
   final int questionNumber;
   final int totalQuestions;
-  final VoidCallback onButtonPressed;
+  final VoidCallback onNextQuestion;
+  final VoidCallback onSubmitSurvey;
 
-  const QuestionsItemWidget({
+  const QuestionPageWidget({
     Key? key,
     required this.question,
     required this.questionNumber,
     required this.totalQuestions,
-    required this.onButtonPressed,
+    required this.onNextQuestion,
+    required this.onSubmitSurvey,
   }) : super(key: key);
 
   @override
@@ -62,10 +64,10 @@ class QuestionsItemWidget extends StatelessWidget {
                       ? RoundedButtonWidget(
                           buttonText:
                               AppLocalizations.of(context)!.questionsSubmit,
-                          onPressed: () => onButtonPressed.call(),
+                          onPressed: () => onSubmitSurvey.call(),
                         )
                       : NextButtonWidget(
-                          onPressed: () => onButtonPressed.call(),
+                          onPressed: () => onNextQuestion.call(),
                         ),
                 ),
               ],

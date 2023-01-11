@@ -35,7 +35,7 @@ abstract class AppNavigator {
 
   void navigateToSurveyDetail(BuildContext context, SurveyModel survey);
 
-  void navigateToQuestionsAndQuitCurrentPage(
+  void navigateToQuestions(
     BuildContext context,
     SurveyDetailModel surveyDetail,
   );
@@ -66,8 +66,10 @@ class AppNavigatorImpl extends AppNavigator {
       );
 
   @override
-  void navigateToQuestionsAndQuitCurrentPage(
-          BuildContext context, SurveyDetailModel surveyDetail) =>
+  void navigateToQuestions(
+    BuildContext context,
+    SurveyDetailModel surveyDetail,
+  ) =>
       Navigator.pushReplacementNamed(
         context,
         _routeQuestions,

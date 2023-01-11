@@ -161,8 +161,8 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     );
   }
 
-  void _navigateToQuestions(SurveyDetailModel surveyDetail) => _appNavigator
-      .navigateToQuestionsAndQuitCurrentPage(context, surveyDetail);
+  void _navigateToQuestions(SurveyDetailModel surveyDetail) =>
+      _appNavigator.navigateToQuestions(context, surveyDetail);
 
   void _showError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {

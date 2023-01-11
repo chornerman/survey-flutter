@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey/model/question_model.dart';
-import 'package:survey/page/questions/widget/questions_item_widget.dart';
+import 'package:survey/page/questions/widget/question_page_widget.dart';
 
 class QuestionsPageViewWidget extends StatelessWidget {
   final List<QuestionModel> questions;
@@ -18,23 +18,19 @@ class QuestionsPageViewWidget extends StatelessWidget {
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          final questionNumber = index + 1;
-          final isLastQuestion = questionNumber == totalQuestions;
-
-          return QuestionsItemWidget(
+          return QuestionPageWidget(
             question: questions[index],
-            questionNumber: questionNumber,
+            questionNumber: index + 1,
             totalQuestions: totalQuestions,
-            onButtonPressed: () {
-              if (isLastQuestion) {
-                // TODO: Submit answers
-              } else {
-                _pageController.animateToPage(
-                  index + 1,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeInOut,
-                );
-              }
+            onNextQuestion: () {
+              _pageController.animateToPage(
+                index + 1,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
+            },
+            onSubmitSurvey: () {
+              // TODO: Submit answers
             },
           );
         });
