@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/widget/dimmed_background_widget.dart';
+import 'package:survey/widget/next_button_widget.dart';
 
 class HomeSurveysItemWidget extends StatelessWidget {
   final SurveyModel survey;
@@ -54,19 +54,7 @@ class HomeSurveysItemWidget extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: Dimens.space20),
-                    child: ElevatedButton(
-                      child: Assets.images.icArrowNext.svg(),
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        shape: const CircleBorder(),
-                        backgroundColor: Colors.white,
-                        minimumSize: Size(
-                          Dimens.homeSurveysNextButtonSize,
-                          Dimens.homeSurveysNextButtonSize,
-                        ),
-                      ),
-                      onPressed: onNextButtonPressed,
-                    ),
+                    child: NextButtonWidget(onPressed: onNextButtonPressed),
                   ),
                 ],
               )

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:survey/api/response/question_response.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/model/answer_model.dart';
 
 class QuestionModel extends Equatable {
@@ -42,7 +43,8 @@ class QuestionModel extends Equatable {
       displayOrder: response.displayOrder ?? 0,
       displayType: response.displayType ?? DisplayType.unknown,
       imageUrl: response.imageUrl ?? '',
-      coverImageOpacity: response.coverImageOpacity ?? 0,
+      coverImageOpacity: response.coverImageOpacity ??
+          Constants.defaultDimmedBackgroundOpacity,
       coverImageUrl: response.getHdCoverImageUrl(),
       answers: response.answers
           .map((answer) => AnswerModel.fromResponse(answer))

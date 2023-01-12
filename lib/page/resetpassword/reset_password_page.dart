@@ -92,7 +92,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: Dimens.space24,
                 left: Dimens.space22,
               ),
