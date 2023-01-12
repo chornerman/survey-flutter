@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey/model/question_model.dart';
-import 'package:survey/page/questions/widget/questions_survey_answers_widget.dart';
+import 'package:survey/page/questions/widget/answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/next_button_widget.dart';
@@ -61,7 +61,7 @@ class QuestionPageWidget extends StatelessWidget {
                 const Expanded(child: const SizedBox.shrink()),
                 Align(
                   alignment: Alignment.center,
-                  child: QuestionsSurveyAnswersWidget(question: question),
+                  child: AnswerWidget(question: question),
                 ),
                 const Expanded(child: const SizedBox.shrink()),
                 Align(
