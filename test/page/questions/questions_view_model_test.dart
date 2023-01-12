@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:survey/api/response/question_response.dart';
@@ -79,6 +80,25 @@ void main() {
           answers: [
             SubmitSurveyAnswerModel.fromAnswerModel(dropdownQuestionFirstAnswer)
           ],
+        ),
+      ]);
+    });
+
+    test(
+        'When calling save rating bars answer, it adds SubmitSurveyQuestionModel correctly',
+        () {
+      final iconsRatingBarQuestion = surveyDetail.questions[1];
+      final iconsRatingBarQuestionId = iconsRatingBarQuestion.id;
+      final expectedAnswer = iconsRatingBarQuestion.answers
+          .firstWhereOrNull((answer) => answer.displayOrder == 0);
+
+      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.saveRatingBarsAnswer(iconsRatingBarQuestionId, 1);
+
+      expect(questionsViewModel.submitSurveyQuestions, [
+        SubmitSurveyQuestionModel(
+          id: iconsRatingBarQuestionId,
+          answers: [SubmitSurveyAnswerModel.fromAnswerModel(expectedAnswer!)],
         ),
       ]);
     });

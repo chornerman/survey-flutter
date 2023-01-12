@@ -35,6 +35,17 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     );
   }
 
+  void saveRatingBarsAnswer(String questionId, int rating) {
+    final answers = _getAnswersByQuestionId(questionId);
+    final selectedAnswer = answers
+        ?.firstWhereOrNull((answer) => answer.displayOrder == rating - 1);
+    final submitAnswers = selectedAnswer != null
+        ? [SubmitSurveyAnswerModel.fromAnswerModel(selectedAnswer)]
+        : <SubmitSurveyAnswerModel>[];
+
+    _saveAnswers(questionId, submitAnswers);
+  }
+
   void _saveAnswers(
     String questionId,
     List<SubmitSurveyAnswerModel> answers,
@@ -52,4 +63,9 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
       question.answers.addAll(answers);
     }
   }
+
+  List<AnswerModel>? _getAnswersByQuestionId(String questionId) =>
+      _questions.value
+          .firstWhereOrNull((question) => question.id == questionId)
+          ?.answers;
 }
