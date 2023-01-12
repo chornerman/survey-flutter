@@ -62,6 +62,10 @@
             "type": "question"
           },
           {
+            "id": "dfca51c6be36d3519fe3",
+            "type": "question"
+          },
+          {
             "id": "4372463ce56db58c0983",
             "type": "question"
           }
@@ -619,12 +623,51 @@
       }
     },
     {
+      "id": "dfca51c6be36d3519fe3",
+      "type": "question",
+      "attributes": {
+        "text": "Please Select Location",
+        "help_text": null,
+        "display_order": 11,
+        "short_text": "Location",
+        "pick": "one",
+        "display_type": "dropdown",
+        "is_mandatory": false,
+        "correct_answer_id": null,
+        "facebook_profile": null,
+        "twitter_profile": null,
+        "image_url": null,
+        "cover_image_url": "https://dhdbhh0jsld0o.cloudfront.net/m/59e9e7327354006c1ebc_",
+        "cover_image_opacity": 0.65,
+        "cover_background_color": null,
+        "is_shareable_on_facebook": false,
+        "is_shareable_on_twitter": false,
+        "font_face": null,
+        "font_size": null,
+        "tag_list": ""
+      },
+      "relationships": {
+        "answers": {
+          "data": [
+            {
+              "id": "c929621b5857bf4e4196",
+              "type": "answer"
+            },
+            {
+              "id": "6bfa792ab02a591efc79",
+              "type": "answer"
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": "4372463ce56db58c0983",
       "type": "question",
       "attributes": {
         "text": "Thank you for taking the time to share your feedback!",
         "help_text": null,
-        "display_order": 11,
+        "display_order": 12,
         "short_text": "thanks_message",
         "pick": "none",
         "display_type": "outro",
@@ -1995,6 +2038,58 @@
         "date_constraint": null,
         "default_value": null,
         "response_class": "string",
+        "reference_identifier": null,
+        "score": null,
+        "alerts": []
+      }
+    },
+    {
+      "id": "c929621b5857bf4e4196",
+      "type": "answer",
+      "attributes": {
+        "text": "Asoke",
+        "help_text": null,
+        "input_mask_placeholder": null,
+        "short_text": "answer_1",
+        "is_mandatory": false,
+        "is_customer_first_name": false,
+        "is_customer_last_name": false,
+        "is_customer_title": false,
+        "is_customer_email": false,
+        "prompt_custom_answer": false,
+        "weight": null,
+        "display_order": 0,
+        "display_type": "default",
+        "input_mask": null,
+        "date_constraint": null,
+        "default_value": null,
+        "response_class": "answer",
+        "reference_identifier": null,
+        "score": null,
+        "alerts": []
+      }
+    },
+    {
+      "id": "6bfa792ab02a591efc79",
+      "type": "answer",
+      "attributes": {
+        "text": "Chaeng Wattana",
+        "help_text": null,
+        "input_mask_placeholder": null,
+        "short_text": "answer_2",
+        "is_mandatory": false,
+        "is_customer_first_name": false,
+        "is_customer_last_name": false,
+        "is_customer_title": false,
+        "is_customer_email": false,
+        "prompt_custom_answer": false,
+        "weight": null,
+        "display_order": 1,
+        "display_type": "default",
+        "input_mask": null,
+        "date_constraint": null,
+        "default_value": null,
+        "response_class": "answer",
         "reference_identifier": null,
         "score": null,
         "alerts": []

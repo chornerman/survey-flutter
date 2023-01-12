@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:survey/api/response/question_response.dart';
 import 'package:survey/api/response/survey_detail_response.dart';
+import 'package:survey/model/submit_survey_question_model.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/questions/questions_state.dart';
@@ -14,7 +15,15 @@ void main() {
     late ProviderContainer providerContainer;
     late QuestionsViewModel questionsViewModel;
 
-    setUp(() {
+    late SurveyDetailModel surveyDetail;
+
+    setUp(() async {
+      final surveyDetailJson = await FileUtils.loadFile(
+          'test/mock/mock_response/survey_detail.json');
+      final surveyDetailResponse =
+          SurveyDetailResponse.fromJson(surveyDetailJson);
+      surveyDetail = SurveyDetailModel.fromResponse(surveyDetailResponse);
+
       providerContainer = ProviderContainer(
         overrides: [
           questionsViewModelProvider.overrideWithValue(QuestionsViewModel()),
@@ -34,13 +43,7 @@ void main() {
 
     test(
         'When calling get questions, it emits list of QuestionModel and returns Success state',
-        () async {
-      final surveyDetailJson = await FileUtils.loadFile(
-          'test/mock/mock_response/survey_detail.json');
-      final surveyDetailResponse =
-          SurveyDetailResponse.fromJson(surveyDetailJson);
-      final surveyDetail = SurveyDetailModel.fromResponse(surveyDetailResponse);
-
+        () {
       final expectedQuestions = surveyDetail.questions;
       expectedQuestions.removeWhere((question) =>
           question.displayType == DisplayType.intro ||
@@ -55,6 +58,29 @@ void main() {
       expect(questionsStream, emitsInOrder([expectedQuestions]));
 
       questionsViewModel.getQuestions(surveyDetail);
+    });
+
+    test(
+        'When calling save dropdown answer, it adds SubmitSurveyQuestionModel correctly',
+        () {
+      final dropdownQuestion = surveyDetail.questions[11];
+      final dropdownQuestionId = dropdownQuestion.id;
+      final dropdownQuestionFirstAnswer = dropdownQuestion.answers.first;
+
+      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.saveDropdownAnswer(
+        dropdownQuestionId,
+        dropdownQuestionFirstAnswer,
+      );
+
+      expect(questionsViewModel.submitSurveyQuestions, [
+        SubmitSurveyQuestionModel(
+          id: dropdownQuestionId,
+          answers: [
+            SubmitSurveyAnswerModel.fromAnswerModel(dropdownQuestionFirstAnswer)
+          ],
+        ),
+      ]);
     });
   });
 }
