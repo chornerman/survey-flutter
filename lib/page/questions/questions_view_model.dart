@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:survey/api/request/submit_survey_request.dart';
 import 'package:survey/api/response/question_response.dart';
 import 'package:survey/model/answer_model.dart';
 import 'package:survey/model/question_model.dart';
+import 'package:survey/model/submit_survey_question_model.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/page/questions/questions_state.dart';
 
@@ -15,7 +15,7 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
 
   Stream<List<QuestionModel>> get questions => _questions.stream;
 
-  final List<SubmitSurveyQuestionRequest> _submitSurveyQuestions = [];
+  final List<SubmitSurveyQuestionModel> submitSurveyQuestions = [];
 
   void getQuestions(SurveyDetailModel surveyDetail) {
     final questions = surveyDetail.questions;
@@ -31,19 +31,19 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
   void saveDropdownAnswer(String questionId, AnswerModel answer) {
     _saveAnswers(
       questionId,
-      [SubmitSurveyAnswerRequest.fromAnswerModel(answer)],
+      [SubmitSurveyAnswerModel.fromAnswerModel(answer)],
     );
   }
 
   void _saveAnswers(
     String questionId,
-    List<SubmitSurveyAnswerRequest> answers,
+    List<SubmitSurveyAnswerModel> answers,
   ) {
-    final question = _submitSurveyQuestions
+    final question = submitSurveyQuestions
         .firstWhereOrNull((question) => question.id == questionId);
 
     if (question == null) {
-      _submitSurveyQuestions.add(SubmitSurveyQuestionRequest(
+      submitSurveyQuestions.add(SubmitSurveyQuestionModel(
         id: questionId,
         answers: answers,
       ));
