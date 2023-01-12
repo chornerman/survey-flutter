@@ -17,5 +17,7 @@
     "questionsQuitSurveyDialogTitle": "คำเตือน!",
     "questionsQuitSurveyDialogDescription": "คุณต้องการยกเลิกการตอบแบบสอบถามนี้หรือไม่",
     "questionsQuitSurveyDialogPositiveButtonText": "ใช่",
-    "questionsQuitSurveyDialogNegativeButtonText": "ไม่"
+    "questionsQuitSurveyDialogNegativeButtonText": "ไม่",
+    "numberRatingBarAnswerPositiveText": "เป็นไปได้มาก",
+    "numberRatingBarAnswerNegativeText": "ไม่น่าจะเป็นไปได้"
 }

@@ -6,7 +6,8 @@ import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/model/answer_model.dart';
 import 'package:survey/model/question_model.dart';
 import 'package:survey/page/questions/questions_page.dart';
-import 'package:survey/page/questions/widget/dropdown_answer_widget.dart';
+import 'package:survey/page/questions/widget/answer/dropdown_answer_widget.dart';
+import 'package:survey/page/questions/widget/answer/number_rating_bar_answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
 
 class AnswerWidget extends ConsumerStatefulWidget {
@@ -39,6 +40,11 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
         return _buildIconsRatingBarAnswer(
           activeIcon: Assets.images.icHeartActive,
           inactiveIcon: Assets.images.icHeartInactive,
+          itemCount: widget.question.answers.length,
+          onRatingUpdate: (rating) => _saveRatingBarsAnswer(rating),
+        );
+      case DisplayType.nps:
+        return _buildNumberRatingBarAnswer(
           itemCount: widget.question.answers.length,
           onRatingUpdate: (rating) => _saveRatingBarsAnswer(rating),
         );
@@ -76,9 +82,20 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
           height: Dimens.questionsIconsRatingBarAnswerIconSize,
         ),
       ),
-      itemPadding: const EdgeInsets.symmetric(horizontal: Dimens.space8),
+      itemPadding: const EdgeInsets.symmetric(horizontal: Dimens.space10),
       glow: false,
       onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
+    );
+  }
+
+  Widget _buildNumberRatingBarAnswer({
+    required int itemCount,
+    required Function onRatingUpdate,
+  }) {
+    return NumberRatingBarAnswerWidget(
+      itemCount: itemCount,
+      onRatingUpdate: (rating) => onRatingUpdate(rating.toInt()),
+      glow: false,
     );
   }
 
