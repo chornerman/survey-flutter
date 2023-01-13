@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
-import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/gen/colors.gen.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/resource/dimens.dart';
+
+const _completionPageDurationInSecond = 2;
 
 class CompletionPage extends StatefulWidget {
   const CompletionPage({super.key});
@@ -26,7 +27,7 @@ class _CompletionPageState extends State<CompletionPage>
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
             // Wait for 2 seconds after animation is completed before navigating back to the Home screen
-            Timer(Duration(seconds: Constants.snackBarDurationInSecond), () {
+            Timer(Duration(seconds: _completionPageDurationInSecond), () {
               _appNavigator.navigateBack(context);
             });
           }
