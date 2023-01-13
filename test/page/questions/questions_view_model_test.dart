@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -10,7 +9,6 @@ import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/questions/questions_state.dart';
 import 'package:survey/page/questions/questions_view_model.dart';
-import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 
 import '../../mock/mock_dependencies.mocks.dart';
@@ -21,7 +19,6 @@ void main() {
     late MockSubmitSurveyUseCase mockSubmitSurveyUseCase;
     late ProviderContainer providerContainer;
     late QuestionsViewModel questionsViewModel;
-
     late SurveyDetailModel surveyDetail;
 
     setUp(() async {
@@ -54,9 +51,8 @@ void main() {
 
     test(
         'When calling get questions, it emits list of QuestionModel and returns InitSuccess state',
-        () async {
-      final questionsUiModel = await getQuestionsUiModel();
-      final expectedQuestions = questionsUiModel.questions;
+        () {
+      final expectedQuestions = surveyDetail.questions;
       expectedQuestions.removeWhere((question) =>
           question.displayType == DisplayType.intro ||
           question.displayType == DisplayType.outro);
@@ -68,7 +64,7 @@ void main() {
       expect(stateStream, emitsInOrder([const QuestionsState.initSuccess()]));
       expect(questionsStream, emitsInOrder([expectedQuestions]));
 
-      questionsViewModel.getQuestions(questionsUiModel);
+      questionsViewModel.getQuestions(surveyDetail);
     });
 
     test(
@@ -191,11 +187,7 @@ void main() {
     test(
         'When calling submit survey with Success result, it returns SubmitSurveySuccess state with corresponding outroMessage',
         () async {
-      final questionsUiModel = await getQuestionsUiModel();
-      final outroMessage = questionsUiModel.questions
-          .firstWhereOrNull(
-              (question) => question.displayType == DisplayType.outro)
-          ?.text;
+      final outroMessage = surveyDetail.questions[12].text;
       when(mockSubmitSurveyUseCase.call(any))
           .thenAnswer((_) async => Success(null));
       final stateStream = questionsViewModel.stream;
@@ -208,7 +200,7 @@ void main() {
             QuestionsState.submitSurveySuccess(outroMessage),
           ]));
 
-      questionsViewModel.getQuestions(questionsUiModel);
+      questionsViewModel.getQuestions(surveyDetail);
       questionsViewModel.submitSurvey();
     });
 
@@ -234,15 +226,4 @@ void main() {
       questionsViewModel.submitSurvey();
     });
   });
-}
-
-Future<QuestionsUiModel> getQuestionsUiModel() async {
-  final surveyDetailJson =
-      await FileUtils.loadFile('test/mock/mock_response/survey_detail.json');
-  final surveyDetailResponse = SurveyDetailResponse.fromJson(surveyDetailJson);
-  final surveyDetail = SurveyDetailModel.fromResponse(surveyDetailResponse);
-  return QuestionsUiModel(
-    surveyId: 'surveyId',
-    questions: surveyDetail.questions,
-  );
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/page/completion/completion_page.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/questions/questions_page.dart';
-import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
 import 'package:survey/page/resetpassword/reset_password_page.dart';
 import 'package:survey/page/start/start_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
@@ -40,13 +40,10 @@ abstract class AppNavigator {
 
   void navigateToQuestions(
     BuildContext context,
-    QuestionsUiModel questionsUiModel,
+    SurveyDetailModel surveyDetail,
   );
 
-  void navigateToCompletionAndQuitCurrentPage(
-    BuildContext context,
-    String? outroMessage,
-  );
+  void navigateToCompletion(BuildContext context, String? outroMessage);
 }
 
 @Injectable(as: AppNavigator)
@@ -76,17 +73,16 @@ class AppNavigatorImpl extends AppNavigator {
   @override
   void navigateToQuestions(
     BuildContext context,
-    QuestionsUiModel questionsUiModel,
+    SurveyDetailModel surveyDetail,
   ) =>
       Navigator.pushReplacementNamed(
         context,
         _routeQuestions,
-        arguments: questionsUiModel,
+        arguments: surveyDetail,
       );
 
   @override
-  void navigateToCompletionAndQuitCurrentPage(
-          BuildContext context, String? outroMessage) =>
+  void navigateToCompletion(BuildContext context, String? outroMessage) =>
       Navigator.pushReplacementNamed(
         context,
         _routeCompletion,

@@ -6,10 +6,10 @@ import 'package:survey/di/di.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/gen/colors.gen.dart';
 import 'package:survey/model/question_model.dart';
+import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/page/questions/questions_state.dart';
 import 'package:survey/page/questions/questions_view_model.dart';
-import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
 import 'package:survey/page/questions/widget/questions_page_view_widget.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/submit_survey_use_case.dart';
@@ -39,9 +39,9 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final uiModel =
-          ModalRoute.of(context)!.settings.arguments as QuestionsUiModel;
-      ref.read(questionsViewModelProvider.notifier).getQuestions(uiModel);
+      final surveyDetail =
+          ModalRoute.of(context)!.settings.arguments as SurveyDetailModel;
+      ref.read(questionsViewModelProvider.notifier).getQuestions(surveyDetail);
     });
   }
 
@@ -52,8 +52,8 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
       QuestionsState newState,
     ) {
       newState.maybeWhen(
-        submitSurveySuccess: (outroMessage) => _appNavigator
-            .navigateToCompletionAndQuitCurrentPage(context, outroMessage),
+        submitSurveySuccess: (outroMessage) =>
+            _appNavigator.navigateToCompletion(context, outroMessage),
         orElse: () {},
       );
     });
@@ -85,7 +85,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
           children: [
             QuestionsPageViewWidget(
               questions: questions,
-              submitSurvey: () {
+              onSubmitSurveyPressed: () {
                 ref.read(questionsViewModelProvider.notifier).submitSurvey();
               },
             ),

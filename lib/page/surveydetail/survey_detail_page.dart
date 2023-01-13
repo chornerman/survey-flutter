@@ -8,7 +8,6 @@ import 'package:survey/di/di.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/navigator.dart';
-import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
 import 'package:survey/page/surveydetail/survey_detail_state.dart';
 import 'package:survey/page/surveydetail/survey_detail_view_model.dart';
 import 'package:survey/resource/dimens.dart';
@@ -60,9 +59,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       SurveyDetailState newState,
     ) {
       newState.maybeWhen(
-        retrySuccess: (surveyDetail) {
-          if (survey != null) _navigateToQuestions(survey, surveyDetail);
-        },
+        retrySuccess: (surveyDetail) => _navigateToQuestions(surveyDetail),
         orElse: () {},
       );
     });
@@ -142,8 +139,8 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
                       buttonText:
                           AppLocalizations.of(context)!.surveyDetailStartSurvey,
                       onPressed: () {
-                        if (survey != null && surveyDetail != null) {
-                          _navigateToQuestions(survey, surveyDetail);
+                        if (surveyDetail != null) {
+                          _navigateToQuestions(surveyDetail);
                         } else {
                           if (survey != null)
                             ref
@@ -164,16 +161,8 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     );
   }
 
-  void _navigateToQuestions(
-    SurveyModel survey,
-    SurveyDetailModel surveyDetail,
-  ) {
-    final questionsUiModel = QuestionsUiModel(
-      surveyId: survey.id,
-      questions: surveyDetail.questions,
-    );
-    _appNavigator.navigateToQuestions(context, questionsUiModel);
-  }
+  void _navigateToQuestions(SurveyDetailModel surveyDetail) =>
+      _appNavigator.navigateToQuestions(context, surveyDetail);
 
   void _showError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {

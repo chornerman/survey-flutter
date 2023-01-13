@@ -5,8 +5,8 @@ import 'package:survey/api/response/question_response.dart';
 import 'package:survey/model/answer_model.dart';
 import 'package:survey/model/question_model.dart';
 import 'package:survey/model/submit_survey_question_model.dart';
+import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/page/questions/questions_state.dart';
-import 'package:survey/page/questions/uimodel/questions_ui_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 import 'package:survey/usecase/submit_survey_use_case.dart';
 
@@ -26,9 +26,9 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
 
   String? _outroMessage;
 
-  void getQuestions(QuestionsUiModel questionsUiModel) {
-    _surveyId = questionsUiModel.surveyId;
-    final questions = questionsUiModel.questions;
+  void getQuestions(SurveyDetailModel surveyDetail) {
+    _surveyId = surveyDetail.id;
+    final questions = surveyDetail.questions;
 
     // Store text from outro question to display in the Completion screen
     _outroMessage = questions

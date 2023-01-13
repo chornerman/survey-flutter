@@ -11,16 +11,16 @@ class QuestionPageWidget extends StatelessWidget {
   final QuestionModel question;
   final int questionNumber;
   final int totalQuestions;
-  final VoidCallback onNextQuestion;
-  final VoidCallback onSubmitSurvey;
+  final VoidCallback onNextQuestionPressed;
+  final VoidCallback onSubmitSurveyPressed;
 
   const QuestionPageWidget({
     Key? key,
     required this.question,
     required this.questionNumber,
     required this.totalQuestions,
-    required this.onNextQuestion,
-    required this.onSubmitSurvey,
+    required this.onNextQuestionPressed,
+    required this.onSubmitSurveyPressed,
   }) : super(key: key);
 
   @override
@@ -73,10 +73,10 @@ class QuestionPageWidget extends StatelessWidget {
                       ? RoundedButtonWidget(
                           buttonText:
                               AppLocalizations.of(context)!.questionsSubmit,
-                          onPressed: () => onSubmitSurvey.call(),
+                          onPressed: () => onSubmitSurveyPressed.call(),
                         )
                       : NextButtonWidget(
-                          onPressed: () => onNextQuestion.call(),
+                          onPressed: () => onNextQuestionPressed.call(),
                         ),
                 ),
               ],
