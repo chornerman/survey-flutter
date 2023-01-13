@@ -180,6 +180,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
         duration: const Duration(seconds: Constants.snackBarDurationInSecond),
         content: Text(errorMessage),
       ));
+      ref.read(questionsViewModelProvider.notifier).clearError();
     });
   }
 

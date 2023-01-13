@@ -140,6 +140,8 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     }
   }
 
+  void clearError() => state = const QuestionsState.initSuccess();
+
   List<AnswerModel>? _getAnswersByQuestionId(String questionId) =>
       _questions.value
           .firstWhereOrNull((question) => question.id == questionId)

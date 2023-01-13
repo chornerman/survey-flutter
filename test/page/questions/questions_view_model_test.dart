@@ -186,7 +186,7 @@ void main() {
 
     test(
         'When calling submit survey with Success result, it returns SubmitSurveySuccess state with corresponding outroMessage',
-        () async {
+        () {
       final outroMessage = surveyDetail.questions[12].text;
       when(mockSubmitSurveyUseCase.call(any))
           .thenAnswer((_) async => Success(null));
@@ -224,6 +224,14 @@ void main() {
           ]));
 
       questionsViewModel.submitSurvey();
+    });
+
+    test('When calling clear error, it returns InitSuccess state', () {
+      final stateStream = questionsViewModel.stream;
+
+      expect(stateStream, emitsInOrder([const QuestionsState.initSuccess()]));
+
+      questionsViewModel.clearError();
     });
   });
 }
