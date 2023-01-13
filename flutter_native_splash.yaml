@@ -3,3 +3,4 @@ flutter_native_splash:
   image: assets/images/ic_nimble_splash.png
   android_12:
     color: "#15151A"
+  android_screen_orientation: portrait
