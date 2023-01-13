@@ -45,4 +45,5 @@ class Dimens {
   static const double questionsIconsRatingBarAnswerIconSize = 28;
   static const double questionsNumberRatingBarAnswerBorderWidth = 0.5;
   static const double questionsNumberRatingBarAnswerHeight = 56;
+  static const double questionsSmileyRatingBarAnswerHeight = 70;
 }
