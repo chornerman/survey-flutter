@@ -155,5 +155,28 @@ void main() {
         ),
       ]);
     });
+
+    test(
+        'When calling save text area answer, it adds SubmitSurveyQuestionModel correctly',
+        () {
+      final textAreaQuestion = surveyDetail.questions[9];
+      final textAreaQuestionId = textAreaQuestion.id;
+      final textAreaAnswerId = textAreaQuestion.answers
+          .firstWhereOrNull((answer) => answer.displayOrder == 0)!
+          .id;
+      final input = 'text';
+
+      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.saveTextAreaAnswer(textAreaQuestionId, input);
+
+      expect(questionsViewModel.submitSurveyQuestions, [
+        SubmitSurveyQuestionModel(
+          id: textAreaQuestionId,
+          answers: [
+            SubmitSurveyAnswerModel(id: textAreaAnswerId, answer: input)
+          ],
+        ),
+      ]);
+    });
   });
 }
