@@ -53,6 +53,32 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     _saveAnswers(questionId, submitAnswers);
   }
 
+  void saveTextFieldsAnswer(String questionId, String answerId, String text) {
+    final submitQuestion = submitSurveyQuestions
+        .firstWhereOrNull((question) => question.id == questionId);
+    final submitAnswer = submitQuestion?.answers
+        .firstWhereOrNull((answer) => answer.id == answerId);
+
+    if (text.isNotEmpty) {
+      final newSubmitAnswer = SubmitSurveyAnswerModel(
+        id: answerId,
+        answer: text,
+      );
+      if (submitQuestion == null) {
+        submitSurveyQuestions.add(SubmitSurveyQuestionModel(
+          id: questionId,
+          answers: [newSubmitAnswer],
+        ));
+      } else if (submitAnswer == null) {
+        submitQuestion.answers.add(newSubmitAnswer);
+      } else {
+        submitAnswer.answer = text;
+      }
+    } else if (submitQuestion != null && submitAnswer != null) {
+      submitQuestion.answers.removeWhere((answer) => answer.id == answerId);
+    }
+  }
+
   void _saveAnswers(
     String questionId,
     List<SubmitSurveyAnswerModel> answers,

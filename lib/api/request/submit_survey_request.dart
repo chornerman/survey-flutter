@@ -37,7 +37,7 @@ class SubmitSurveyQuestionRequest {
 @JsonSerializable()
 class SubmitSurveyAnswerRequest {
   final String id;
-  final String answer;
+  String answer;
 
   SubmitSurveyAnswerRequest({
     required this.id,

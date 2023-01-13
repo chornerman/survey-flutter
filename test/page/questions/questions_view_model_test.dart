@@ -128,5 +128,32 @@ void main() {
         ),
       ]);
     });
+
+    test(
+        'When calling save text fields answer, it adds SubmitSurveyQuestionModel correctly',
+        () {
+      final textFieldsQuestion = surveyDetail.questions[10];
+      final textFieldsQuestionId = textFieldsQuestion.id;
+      final textFieldsAnswer = textFieldsQuestion.answers
+          .firstWhereOrNull((answer) => answer.displayOrder == 0)!;
+      final textFieldsAnswerId = textFieldsAnswer.id;
+      final input = 'text';
+
+      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.saveTextFieldsAnswer(
+        textFieldsQuestionId,
+        textFieldsAnswerId,
+        input,
+      );
+
+      expect(questionsViewModel.submitSurveyQuestions, [
+        SubmitSurveyQuestionModel(
+          id: textFieldsQuestionId,
+          answers: [
+            SubmitSurveyAnswerModel(id: textFieldsAnswerId, answer: input)
+          ],
+        ),
+      ]);
+    });
   });
 }

@@ -3,16 +3,22 @@ import 'package:survey/resource/dimens.dart';
 
 class TextInputWidget extends StatelessWidget {
   final String hintText;
+  final TextInputAction textInputAction;
   final bool isPasswordInput;
   final TextEditingController? controller;
   final Widget? endWidget;
+  final ValueChanged<String>? onChanged;
+  final TextInputType? keyboardType;
 
   const TextInputWidget({
     Key? key,
     required this.hintText,
+    required this.textInputAction,
     this.isPasswordInput = false,
     this.controller,
     this.endWidget,
+    this.onChanged,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -41,6 +47,9 @@ class TextInputWidget extends StatelessWidget {
                     ),
                 border: InputBorder.none,
               ),
+              onChanged: onChanged,
+              textInputAction: textInputAction,
+              keyboardType: keyboardType,
             ),
           ),
           if (endWidget != null) Expanded(flex: 0, child: endWidget!),

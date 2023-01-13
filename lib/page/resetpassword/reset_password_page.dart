@@ -72,7 +72,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                   const SizedBox(height: Dimens.space96),
                   TextInputWidget(
                     hintText: AppLocalizations.of(context)!.email,
+                    textInputAction: TextInputAction.done,
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: Dimens.space20),
                   RoundedButtonWidget(

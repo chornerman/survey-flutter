@@ -57,7 +57,6 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
         return true;
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             QuestionsPageViewWidget(questions: questions),
