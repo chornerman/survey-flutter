@@ -66,19 +66,19 @@ void main() {
         () {
       final dropdownQuestion = surveyDetail.questions[11];
       final dropdownQuestionId = dropdownQuestion.id;
-      final dropdownQuestionFirstAnswer = dropdownQuestion.answers.first;
+      final dropdownQuestionAnswer = dropdownQuestion.answers.first;
 
       questionsViewModel.getQuestions(surveyDetail);
       questionsViewModel.saveDropdownAnswer(
         dropdownQuestionId,
-        dropdownQuestionFirstAnswer,
+        dropdownQuestionAnswer,
       );
 
       expect(questionsViewModel.submitSurveyQuestions, [
         SubmitSurveyQuestionModel(
           id: dropdownQuestionId,
           answers: [
-            SubmitSurveyAnswerModel.fromAnswerModel(dropdownQuestionFirstAnswer)
+            SubmitSurveyAnswerModel.fromAnswerModel(dropdownQuestionAnswer)
           ],
         ),
       ]);
@@ -89,8 +89,8 @@ void main() {
         () {
       final iconsRatingBarQuestion = surveyDetail.questions[1];
       final iconsRatingBarQuestionId = iconsRatingBarQuestion.id;
-      final expectedAnswer = iconsRatingBarQuestion.answers
-          .firstWhereOrNull((answer) => answer.displayOrder == 0);
+      final iconsRatingBarAnswer = iconsRatingBarQuestion.answers
+          .firstWhereOrNull((answer) => answer.displayOrder == 0)!;
 
       questionsViewModel.getQuestions(surveyDetail);
       questionsViewModel.saveRatingBarsAnswer(iconsRatingBarQuestionId, 1);
@@ -98,7 +98,33 @@ void main() {
       expect(questionsViewModel.submitSurveyQuestions, [
         SubmitSurveyQuestionModel(
           id: iconsRatingBarQuestionId,
-          answers: [SubmitSurveyAnswerModel.fromAnswerModel(expectedAnswer!)],
+          answers: [
+            SubmitSurveyAnswerModel.fromAnswerModel(iconsRatingBarAnswer)
+          ],
+        ),
+      ]);
+    });
+
+    test(
+        'When calling save multiple choices answer, it adds SubmitSurveyQuestionModel correctly',
+        () {
+      final multipleChoicesQuestion = surveyDetail.questions[8];
+      final multipleChoicesQuestionId = multipleChoicesQuestion.id;
+      final multipleChoicesSubmitAnswers = [
+        SubmitSurveyAnswerModel.fromAnswerModel(multipleChoicesQuestion.answers
+            .firstWhereOrNull((answer) => answer.displayOrder == 0)!)
+      ];
+
+      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.saveMultipleChoicesAnswer(
+        multipleChoicesQuestionId,
+        multipleChoicesSubmitAnswers,
+      );
+
+      expect(questionsViewModel.submitSurveyQuestions, [
+        SubmitSurveyQuestionModel(
+          id: multipleChoicesQuestionId,
+          answers: multipleChoicesSubmitAnswers,
         ),
       ]);
     });
