@@ -57,7 +57,3 @@ app.*.map.json
 **/ios/.envfile
 .env
 .env.staging
-
-## Fastlane related
-/android/fastlane/report.xml
-/android/vendor/
