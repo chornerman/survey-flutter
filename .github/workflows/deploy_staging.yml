@@ -1,8 +1,11 @@
 name: Deploy staging
 on:
+  pull_request:
+    types: [ opened, synchronize, edited, reopened ]
   push:
-    branches:
+    branches-ignore:
       - develop
+      - main
       - 'release/**'
 jobs:
   deploy_android_staging_debug:
