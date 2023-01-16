@@ -85,7 +85,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
   Widget _buildDropdownAnswer({
     required BuildContext context,
     required List<AnswerModel> answers,
-    required Function(AnswerModel) onSelect,
+    required ValueChanged<AnswerModel> onSelect,
   }) {
     // Select first answer by default
     onSelect(answers.first);
@@ -96,7 +96,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     required AssetGenImage activeIcon,
     required AssetGenImage inactiveIcon,
     required int itemCount,
-    required Function onRatingUpdate,
+    required ValueChanged<int> onRatingUpdate,
   }) {
     final initialRating = (itemCount / 2).ceil();
     onRatingUpdate(initialRating);
@@ -123,7 +123,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
   }
 
   Widget _buildSmileyRatingBarAnswer({
-    required Function(int) onRatingUpdate,
+    required ValueChanged<int> onRatingUpdate,
   }) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(selectedEmojiIndexProvider.notifier).state =
@@ -138,7 +138,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
 
   Widget _buildNumberRatingBarAnswer({
     required int itemCount,
-    required Function(int) onRatingUpdate,
+    required ValueChanged<int> onRatingUpdate,
   }) {
     final initialRating = (itemCount / 2).ceil();
     onRatingUpdate(initialRating);
@@ -154,7 +154,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
 
   Widget _buildMultipleChoicesAnswer({
     required List<AnswerModel> answers,
-    required Function(List<MultipleChoicesItemModel>) onItemsChanged,
+    required ValueChanged<List<MultipleChoicesItemModel>> onItemsChanged,
   }) {
     onItemsChanged([]);
 
@@ -202,7 +202,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
   }
 
   Widget _buildTextAreaAnswer({
-    required Function(String) onChanged,
+    required ValueChanged<String> onChanged,
   }) {
     onChanged('');
 
