@@ -51,7 +51,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
     ref.listen<QuestionsState>(questionsViewModelProvider, (_, state) {
       state.maybeWhen(
         submitSurveySuccess: (outroMessage) =>
-            _appNavigator.navigateToCompletion(context, outroMessage),
+            _appNavigator.navigateToSurveyCompletion(context, outroMessage),
         orElse: () {},
       );
     });

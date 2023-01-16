@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:survey/navigator.dart';
-import 'package:survey/page/completion/completion_page.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/home/home_page_key.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/questions/questions_page_key.dart';
 import 'package:survey/page/questions/widget/answer_widget.dart';
+import 'package:survey/page/surveycompletion/survey_completion_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page_key.dart';
 
@@ -57,7 +57,8 @@ void main() {
         routes: <String, WidgetBuilder>{
           routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
           routeQuestions: (BuildContext context) => const QuestionsPage(),
-          routeCompletion: (BuildContext context) => const CompletionPage(),
+          routeSurveyCompletion: (BuildContext context) =>
+              const SurveyCompletionPage(),
         },
       );
 
@@ -88,7 +89,7 @@ void main() {
     });
 
     testWidgets(
-        'When answering all questions and submitting survey successfully, it navigates to Completion page then automatically returns to Home page',
+        'When answering all questions and submitting survey successfully, it navigates to Survey Completion page then automatically returns to Home page',
         (WidgetTester tester) async {
       FakeData.addSuccessResponse(submitSurveyKey, {});
       await tester.pumpWidget(homeWidget);
@@ -103,11 +104,11 @@ void main() {
           tester, nbQuestionsNext, rbQuestionsSubmitSurvey);
 
       await tester.pumpAndSettle();
-      expect(find.byType(CompletionPage), findsOneWidget);
+      expect(find.byType(SurveyCompletionPage), findsOneWidget);
       final outroQuestion = surveyDetailJson['data']['questions'][12];
       expect(find.text(outroQuestion['text']), findsOneWidget);
 
-      // Wait for the Completion page to close itself
+      // Wait for the Survey Completion page to close itself
       await tester.pump(Duration(milliseconds: 2500));
       expect(find.byType(HomePage), findsOneWidget);
     });
