@@ -11,8 +11,9 @@ import 'package:survey/page/questions/widget/answer/dropdown_answer_widget.dart'
 import 'package:survey/page/questions/widget/answer/multiple_choices_answer_widget.dart';
 import 'package:survey/page/questions/widget/answer/number_rating_bar_answer_widget.dart';
 import 'package:survey/page/questions/widget/answer/smiley_rating_bar_answer_widget.dart';
+import 'package:survey/page/questions/widget/answer/text_area_answer_widget.dart';
 import 'package:survey/resource/dimens.dart';
-import 'package:survey/widget/text_input_widget.dart';
+import 'package:survey/widget/single_line_text_input_widget.dart';
 
 class AnswerWidget extends ConsumerStatefulWidget {
   final QuestionModel question;
@@ -70,6 +71,10 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
         return _buildTextFieldsAnswer(
           answers: widget.question.answers,
           onChanged: (answerId, text) => _saveTextFieldsAnswer(answerId, text),
+        );
+      case DisplayType.textarea:
+        return _buildTextAreaAnswer(
+          onChanged: (text) => _saveTextAreaAnswer(text),
         );
       default:
         return const SizedBox();
@@ -162,7 +167,7 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
                   left: Dimens.space4,
                   right: Dimens.space4,
                 ),
-                child: TextInputWidget(
+                child: SingleLineTextInputWidget(
                   hintText: answer.text,
                   textInputAction: answer.id != answers.last.id
                       ? TextInputAction.next
@@ -173,6 +178,15 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
             )
             .toList(),
       ),
+    );
+  }
+
+  Widget _buildTextAreaAnswer({
+    required Function onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.space4),
+      child: TextAreaAnswerWidget(onChanged: (text) => onChanged(text)),
     );
   }
 
@@ -198,5 +212,11 @@ class _AnswerWidgetState extends ConsumerState<AnswerWidget> {
     ref
         .read(questionsViewModelProvider.notifier)
         .saveTextFieldsAnswer(widget.question.id, answerId, text);
+  }
+
+  void _saveTextAreaAnswer(String text) {
+    ref
+        .read(questionsViewModelProvider.notifier)
+        .saveTextAreaAnswer(widget.question.id, text);
   }
 }

@@ -19,5 +19,6 @@
     "questionsQuitSurveyDialogPositiveButtonText": "ใช่",
     "questionsQuitSurveyDialogNegativeButtonText": "ไม่",
     "numberRatingBarAnswerPositiveText": "เป็นไปได้มาก",
-    "numberRatingBarAnswerNegativeText": "ไม่น่าจะเป็นไปได้"
+    "numberRatingBarAnswerNegativeText": "ไม่น่าจะเป็นไปได้",
+    "textAreaAnswerHint": "ความคิดเห็นของคุณ"
 }

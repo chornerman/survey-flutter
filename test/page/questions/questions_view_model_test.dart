@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:survey/api/response/question_response.dart';
@@ -89,8 +88,6 @@ void main() {
         () {
       final iconsRatingBarQuestion = surveyDetail.questions[1];
       final iconsRatingBarQuestionId = iconsRatingBarQuestion.id;
-      final iconsRatingBarAnswer = iconsRatingBarQuestion.answers
-          .firstWhereOrNull((answer) => answer.displayOrder == 0)!;
 
       questionsViewModel.getQuestions(surveyDetail);
       questionsViewModel.saveRatingBarsAnswer(iconsRatingBarQuestionId, 1);
@@ -99,7 +96,9 @@ void main() {
         SubmitSurveyQuestionModel(
           id: iconsRatingBarQuestionId,
           answers: [
-            SubmitSurveyAnswerModel.fromAnswerModel(iconsRatingBarAnswer)
+            SubmitSurveyAnswerModel.fromAnswerModel(
+              iconsRatingBarQuestion.answers.first,
+            )
           ],
         ),
       ]);
@@ -111,8 +110,9 @@ void main() {
       final multipleChoicesQuestion = surveyDetail.questions[8];
       final multipleChoicesQuestionId = multipleChoicesQuestion.id;
       final multipleChoicesSubmitAnswers = [
-        SubmitSurveyAnswerModel.fromAnswerModel(multipleChoicesQuestion.answers
-            .firstWhereOrNull((answer) => answer.displayOrder == 0)!)
+        SubmitSurveyAnswerModel.fromAnswerModel(
+          multipleChoicesQuestion.answers.first,
+        )
       ];
 
       questionsViewModel.getQuestions(surveyDetail);
@@ -134,9 +134,7 @@ void main() {
         () {
       final textFieldsQuestion = surveyDetail.questions[10];
       final textFieldsQuestionId = textFieldsQuestion.id;
-      final textFieldsAnswer = textFieldsQuestion.answers
-          .firstWhereOrNull((answer) => answer.displayOrder == 0)!;
-      final textFieldsAnswerId = textFieldsAnswer.id;
+      final textFieldsAnswerId = textFieldsQuestion.answers.first.id;
       final input = 'text';
 
       questionsViewModel.getQuestions(surveyDetail);
@@ -151,6 +149,29 @@ void main() {
           id: textFieldsQuestionId,
           answers: [
             SubmitSurveyAnswerModel(id: textFieldsAnswerId, answer: input)
+          ],
+        ),
+      ]);
+    });
+
+    test(
+        'When calling save text area answer, it adds SubmitSurveyQuestionModel correctly',
+        () {
+      final textAreaQuestion = surveyDetail.questions[9];
+      final textAreaQuestionId = textAreaQuestion.id;
+      final input = 'text';
+
+      questionsViewModel.getQuestions(surveyDetail);
+      questionsViewModel.saveTextAreaAnswer(textAreaQuestionId, input);
+
+      expect(questionsViewModel.submitSurveyQuestions, [
+        SubmitSurveyQuestionModel(
+          id: textAreaQuestionId,
+          answers: [
+            SubmitSurveyAnswerModel(
+              id: textAreaQuestion.answers.first.id,
+              answer: input,
+            )
           ],
         ),
       ]);
