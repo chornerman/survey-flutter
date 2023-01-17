@@ -20,5 +20,6 @@
     "questionsQuitSurveyDialogNegativeButtonText": "Cancel",
     "numberRatingBarAnswerPositiveText": "Extremely Likely",
     "numberRatingBarAnswerNegativeText": "Not at all Likely",
-    "textAreaAnswerHint": "Your thoughts"
+    "textAreaAnswerHint": "Your thoughts",
+    "completionDefaultText": "Thanks for taking the survey."
 }
