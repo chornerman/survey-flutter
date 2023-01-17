@@ -36,11 +36,13 @@ platform :ios do
 
   desc "Build and deploy iOS"
   lane :build_and_deploy_ios do
+    xcode_select("/Applications/Xcode_13.4.1.app")
+
     keychain_name = TEMP_KEYCHAIN_NAME
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
 
-    match(
+    sync_code_signing(
       app_identifier: "#{APP_IDENTIFIER}",
       type: "adhoc",
       git_basic_authorization: Base64.strict_encode64("#{GIT_AUTHORIZATION}"),
