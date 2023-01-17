@@ -4,10 +4,15 @@ import 'package:survey/page/questions/widget/question_page_widget.dart';
 
 class QuestionsPageViewWidget extends StatelessWidget {
   final List<QuestionModel> questions;
+  final VoidCallback onSubmitSurveyPressed;
 
   final _pageController = PageController();
 
-  QuestionsPageViewWidget({required this.questions});
+  QuestionsPageViewWidget({
+    Key? key,
+    required this.questions,
+    required this.onSubmitSurveyPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +27,17 @@ class QuestionsPageViewWidget extends StatelessWidget {
             question: questions[index],
             questionNumber: index + 1,
             totalQuestions: totalQuestions,
-            onNextQuestion: () {
+            onNextQuestionPressed: () {
               _hideKeyboard(context);
-
               _pageController.animateToPage(
                 index + 1,
                 duration: const Duration(milliseconds: 400),
                 curve: Curves.easeInOut,
               );
             },
-            onSubmitSurvey: () {
+            onSubmitSurveyPressed: () {
               _hideKeyboard(context);
-              // TODO: Submit answers
+              onSubmitSurveyPressed.call();
             },
           );
         });

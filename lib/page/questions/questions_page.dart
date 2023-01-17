@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/gen/colors.gen.dart';
@@ -11,11 +12,13 @@ import 'package:survey/page/questions/questions_state.dart';
 import 'package:survey/page/questions/questions_view_model.dart';
 import 'package:survey/page/questions/widget/questions_page_view_widget.dart';
 import 'package:survey/resource/dimens.dart';
+import 'package:survey/usecase/submit_survey_use_case.dart';
+import 'package:survey/widget/loading_indicator_widget.dart';
 
 final questionsViewModelProvider =
     StateNotifierProvider.autoDispose<QuestionsViewModel, QuestionsState>(
         (ref) {
-  return QuestionsViewModel();
+  return QuestionsViewModel(getIt.get<SubmitSurveyUseCase>());
 });
 
 final _questionsStreamProvider =
@@ -44,13 +47,34 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<QuestionsState>(questionsViewModelProvider, (
+      QuestionsState? previousState,
+      QuestionsState newState,
+    ) {
+      newState.maybeWhen(
+        submitSurveySuccess: (outroMessage) =>
+            _appNavigator.navigateToCompletion(context, outroMessage),
+        orElse: () {},
+      );
+    });
+
     final questions = ref.watch(_questionsStreamProvider).value ?? [];
     return ref.watch(questionsViewModelProvider).when(
-        init: () => const SizedBox(),
-        success: () => _buildQuestionPage(questions));
+          init: () => const SizedBox(),
+          loading: () => _buildQuestionPage(questions, shouldShowLoading: true),
+          initSuccess: () => _buildQuestionPage(questions),
+          submitSurveySuccess: (outroMessage) => const SizedBox(),
+          error: (errorMessage) {
+            _showError(errorMessage);
+            return _buildQuestionPage(questions);
+          },
+        );
   }
 
-  Widget _buildQuestionPage(List<QuestionModel> questions) {
+  Widget _buildQuestionPage(
+    List<QuestionModel> questions, {
+    bool shouldShowLoading = false,
+  }) {
     return WillPopScope(
       onWillPop: () async {
         showQuitSurveyDialog();
@@ -59,7 +83,12 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
       child: Scaffold(
         body: Stack(
           children: [
-            QuestionsPageViewWidget(questions: questions),
+            QuestionsPageViewWidget(
+              questions: questions,
+              onSubmitSurveyPressed: () {
+                ref.read(questionsViewModelProvider.notifier).submitSurvey();
+              },
+            ),
             SafeArea(
               child: Align(
                 alignment: Alignment.topRight,
@@ -77,6 +106,8 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                 ),
               ),
             ),
+            if (shouldShowLoading)
+              LoadingIndicatorWidget(shouldIgnoreOtherGestures: true),
           ],
         ),
       ),
@@ -84,6 +115,8 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
   }
 
   void showQuitSurveyDialog() {
+    _hideKeyboard();
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -139,5 +172,22 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
         ],
       ),
     );
+  }
+
+  void _showError(String errorMessage) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: Constants.snackBarDurationInSecond),
+        content: Text(errorMessage),
+      ));
+      ref.read(questionsViewModelProvider.notifier).clearError();
+    });
+  }
+
+  void _hideKeyboard() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 }

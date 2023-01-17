@@ -1,12 +1,12 @@
 import 'package:injectable/injectable.dart';
 import 'package:survey/api/exception/network_exceptions.dart';
 import 'package:survey/api/repository/survey_repository.dart';
-import 'package:survey/api/request/submit_survey_request.dart';
+import 'package:survey/model/submit_survey_question_model.dart';
 import 'package:survey/usecase/base/base_use_case.dart';
 
 class SubmitSurveyInput {
   String surveyId;
-  List<SubmitSurveyQuestionRequest> questions;
+  List<SubmitSurveyQuestionModel> questions;
 
   SubmitSurveyInput({
     required this.surveyId,

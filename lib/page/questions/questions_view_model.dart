@@ -7,9 +7,14 @@ import 'package:survey/model/question_model.dart';
 import 'package:survey/model/submit_survey_question_model.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/page/questions/questions_state.dart';
+import 'package:survey/usecase/base/base_use_case.dart';
+import 'package:survey/usecase/submit_survey_use_case.dart';
 
 class QuestionsViewModel extends StateNotifier<QuestionsState> {
-  QuestionsViewModel() : super(const QuestionsState.init());
+  final SubmitSurveyUseCase _submitSurveyUseCase;
+
+  QuestionsViewModel(this._submitSurveyUseCase)
+      : super(const QuestionsState.init());
 
   final BehaviorSubject<List<QuestionModel>> _questions = BehaviorSubject();
 
@@ -17,15 +22,28 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
 
   final List<SubmitSurveyQuestionModel> submitSurveyQuestions = [];
 
+  String? _surveyId;
+
+  String? _outroMessage;
+
   void getQuestions(SurveyDetailModel surveyDetail) {
+    _surveyId = surveyDetail.id;
     final questions = surveyDetail.questions;
+
+    // Store text from outro question to display in the Completion screen
+    _outroMessage = questions
+        .firstWhereOrNull(
+            (question) => question.displayType == DisplayType.outro)
+        ?.text;
+
     questions.removeWhere((question) =>
         question.displayType == DisplayType.intro ||
         question.displayType == DisplayType.outro);
     questions.sort((question1, question2) =>
         question1.displayOrder.compareTo(question2.displayOrder));
     _questions.add(questions);
-    state = const QuestionsState.success();
+
+    state = const QuestionsState.initSuccess();
   }
 
   void saveDropdownAnswer(String questionId, AnswerModel answer) {
@@ -107,8 +125,31 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     }
   }
 
+  void submitSurvey() async {
+    state = const QuestionsState.loading();
+    final result = await _submitSurveyUseCase.call(
+      SubmitSurveyInput(
+        surveyId: _surveyId ?? '',
+        questions: submitSurveyQuestions,
+      ),
+    );
+    if (result is Success<void>) {
+      state = QuestionsState.submitSurveySuccess(_outroMessage);
+    } else {
+      state = QuestionsState.error((result as Failed).getErrorMessage());
+    }
+  }
+
+  void clearError() => state = const QuestionsState.initSuccess();
+
   List<AnswerModel>? _getAnswersByQuestionId(String questionId) =>
       _questions.value
           .firstWhereOrNull((question) => question.id == questionId)
           ?.answers;
+
+  @override
+  void dispose() async {
+    await _questions.close();
+    super.dispose();
+  }
 }

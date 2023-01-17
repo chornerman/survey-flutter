@@ -19,6 +19,7 @@ import 'package:survey/usecase/get_user_use_case.dart';
 import 'package:survey/usecase/login_use_case.dart';
 import 'package:survey/usecase/logout_use_case.dart';
 import 'package:survey/usecase/reset_password_use_case.dart';
+import 'package:survey/usecase/submit_survey_use_case.dart';
 
 @GenerateNiceMocks([
   MockSpec<AuthRepository>(),
@@ -36,6 +37,7 @@ import 'package:survey/usecase/reset_password_use_case.dart';
   MockSpec<ResetPasswordUseCase>(),
   MockSpec<LogoutUseCase>(),
   MockSpec<GetSurveyDetailUseCase>(),
+  MockSpec<SubmitSurveyUseCase>(),
   MockSpec<UserModel>(),
   MockSpec<SurveyModel>(),
   MockSpec<SurveyDetailModel>(),

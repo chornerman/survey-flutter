@@ -11,16 +11,16 @@ class QuestionPageWidget extends StatelessWidget {
   final QuestionModel question;
   final int questionNumber;
   final int totalQuestions;
-  final VoidCallback onNextQuestion;
-  final VoidCallback onSubmitSurvey;
+  final VoidCallback onNextQuestionPressed;
+  final VoidCallback onSubmitSurveyPressed;
 
   const QuestionPageWidget({
     Key? key,
     required this.question,
     required this.questionNumber,
     required this.totalQuestions,
-    required this.onNextQuestion,
-    required this.onSubmitSurvey,
+    required this.onNextQuestionPressed,
+    required this.onSubmitSurveyPressed,
   }) : super(key: key);
 
   @override
@@ -58,22 +58,25 @@ class QuestionPageWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                const Expanded(child: const SizedBox.shrink()),
-                Align(
-                  alignment: Alignment.center,
-                  child: AnswerWidget(question: question),
+                const SizedBox(height: Dimens.space20),
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: AnswerWidget(question: question),
+                    ),
+                  ),
                 ),
-                const Expanded(child: const SizedBox.shrink()),
+                const SizedBox(height: Dimens.space20),
                 Align(
                   alignment: Alignment.centerRight,
                   child: isLastQuestion
                       ? RoundedButtonWidget(
                           buttonText:
                               AppLocalizations.of(context)!.questionsSubmit,
-                          onPressed: () => onSubmitSurvey.call(),
+                          onPressed: () => onSubmitSurveyPressed.call(),
                         )
                       : NextButtonWidget(
-                          onPressed: () => onNextQuestion.call(),
+                          onPressed: () => onNextQuestionPressed.call(),
                         ),
                 ),
               ],

@@ -4,6 +4,7 @@ import 'package:survey/api/request/submit_survey_request.dart';
 import 'package:survey/api/service/survey_service.dart';
 import 'package:survey/constants.dart';
 import 'package:survey/database/hive_utils.dart';
+import 'package:survey/model/submit_survey_question_model.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
 
@@ -19,7 +20,7 @@ abstract class SurveyRepository {
 
   Future<void> submitSurvey({
     required String surveyId,
-    required List<SubmitSurveyQuestionRequest> questions,
+    required List<SubmitSurveyQuestionModel> questions,
   });
 }
 
@@ -65,12 +66,14 @@ class SurveyRepositoryImpl extends SurveyRepository {
   @override
   Future<void> submitSurvey({
     required String surveyId,
-    required List<SubmitSurveyQuestionRequest> questions,
+    required List<SubmitSurveyQuestionModel> questions,
   }) async {
     try {
       return await _surveyService.submitSurvey(SubmitSurveyRequest(
         surveyId: surveyId,
-        questions: questions,
+        questions: questions
+            .map((question) => SubmitSurveyQuestionRequest.fromModel(question))
+            .toList(),
       ));
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);

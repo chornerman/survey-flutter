@@ -8,7 +8,6 @@ class QuestionModel extends Equatable {
   final String text;
   final int displayOrder;
   final DisplayType displayType;
-  final String imageUrl;
   final String coverImageUrl;
   final double coverImageOpacity;
   final List<AnswerModel> answers;
@@ -18,7 +17,6 @@ class QuestionModel extends Equatable {
     required this.text,
     required this.displayOrder,
     required this.displayType,
-    required this.imageUrl,
     required this.coverImageOpacity,
     required this.coverImageUrl,
     required this.answers,
@@ -30,7 +28,6 @@ class QuestionModel extends Equatable {
         text,
         displayOrder,
         displayType,
-        imageUrl,
         coverImageOpacity,
         coverImageUrl,
         answers,
@@ -42,7 +39,6 @@ class QuestionModel extends Equatable {
       text: response.text ?? '',
       displayOrder: response.displayOrder ?? 0,
       displayType: response.displayType ?? DisplayType.unknown,
-      imageUrl: response.imageUrl ?? '',
       coverImageOpacity: response.coverImageOpacity ??
           Constants.defaultDimmedBackgroundOpacity,
       coverImageUrl: response.getHdCoverImageUrl(),
