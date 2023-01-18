@@ -1,0 +1,75 @@
+default_platform(:ios)
+
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "600"
+
+APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
+GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
+TEMP_KEYCHAIN_NAME = ENV["TEMP_KEYCHAIN_NAME"]
+TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+SCHEME = ENV["SCHEME"]
+BUILD_NUMBER = ENV["BUILD_NUMBER"]
+FIREBASE_APP_ID = ENV["FIREBASE_APP_ID"]
+FIREBASE_TOKEN = ENV["FIREBASE_TOKEN"]
+RELEASE_NOTES = ENV["RELEASE_NOTES"]
+
+def delete_temp_keychain(name)
+  delete_keychain(
+    name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+end
+
+def create_temp_keychain(name, password)
+  create_keychain(
+    name: name,
+    password: password,
+    unlock: false,
+    timeout: 0
+  )
+end
+
+def ensure_temp_keychain(name, password)
+  delete_temp_keychain(name)
+  create_temp_keychain(name, password)
+end
+
+platform :ios do
+
+  desc "Build and deploy iOS"
+  lane :build_and_deploy_ios do
+    keychain_name = TEMP_KEYCHAIN_NAME
+    keychain_password = TEMP_KEYCHAIN_PASSWORD
+    ensure_temp_keychain(keychain_name, keychain_password)
+
+    match(
+      app_identifier: "#{APP_IDENTIFIER}",
+      type: "adhoc",
+      git_basic_authorization: Base64.strict_encode64("#{GIT_AUTHORIZATION}"),
+      readonly: true,
+      keychain_name: keychain_name,
+      keychain_password: keychain_password
+    )
+
+    increment_build_number(
+      build_number: "#{BUILD_NUMBER}",
+      xcodeproj: "./Runner.xcodeproj"
+    )
+
+    build_app(
+      configuration: "Debug-#{SCHEME}",
+      scheme: "#{SCHEME}",
+      export_method: "ad-hoc",
+      clean: true,
+      output_name: "#{SCHEME}.ipa"
+    )
+
+    firebase_app_distribution(
+      app: "#{FIREBASE_APP_ID}",
+      firebase_cli_token: "#{FIREBASE_TOKEN}",
+      groups: "developer",
+      release_notes: "#{RELEASE_NOTES}",
+      ipa_path: "./#{SCHEME}.ipa"
+    )
+
+    delete_temp_keychain(keychain_name)
+  end
+end

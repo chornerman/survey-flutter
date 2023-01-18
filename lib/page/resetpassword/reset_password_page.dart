@@ -11,10 +11,10 @@ import 'package:survey/page/resetpassword/reset_password_view_model.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/usecase/reset_password_use_case.dart';
 import 'package:survey/widget/app_bar_back_button_widget.dart';
+import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/loading_indicator_widget.dart';
-import 'package:survey/widget/onboarding_background_widget.dart';
 import 'package:survey/widget/rounded_button_widget.dart';
-import 'package:survey/widget/text_input_widget.dart';
+import 'package:survey/widget/single_line_text_input_widget.dart';
 
 final resetPasswordViewModelProvider = StateNotifierProvider.autoDispose<
     ResetPasswordViewModel, ResetPasswordState>((ref) {
@@ -50,14 +50,13 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          OnboardingBackgroundWidget(
+          DimmedBackgroundWidget(
             background: AssetImage(Assets.images.bgOnboarding.path),
             shouldBlur: true,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
-            decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-            child: SafeArea(
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.space24),
               child: Column(
                 children: [
                   const SizedBox(height: Dimens.space120),
@@ -71,9 +70,11 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: Dimens.space96),
-                  TextInputWidget(
+                  SingleLineTextInputWidget(
                     hintText: AppLocalizations.of(context)!.email,
+                    textInputAction: TextInputAction.done,
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: Dimens.space20),
                   RoundedButtonWidget(
@@ -85,14 +86,20 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                           .read(resetPasswordViewModelProvider.notifier)
                           .resetPassword(_emailController.text);
                     },
+                    shouldExpandedWidth: true,
                   ),
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: Dimens.space24, left: Dimens.space22),
-            child: AppBarBackButtonWidget(),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: Dimens.space24,
+                left: Dimens.space22,
+              ),
+              child: AppBarBackButtonWidget(),
+            ),
           ),
           ref.watch(resetPasswordViewModelProvider).maybeWhen(
                 loading: () => const LoadingIndicatorWidget(),

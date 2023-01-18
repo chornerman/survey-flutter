@@ -11,5 +11,15 @@
     "resetPasswordInvalidEmail": "อีเมลล์ไม่ถูกต้อง",
     "homeToday": "วันนี้",
     "homeUser": "ผู้ใช้",
-    "homeLogout": "ออกจากระบบ"
+    "homeLogout": "ออกจากระบบ",
+    "surveyDetailStartSurvey": "เริ่มทำแบบสอบถาม",
+    "questionsSubmit": "ส่งแบบสอบถาม",
+    "questionsQuitSurveyDialogTitle": "คำเตือน!",
+    "questionsQuitSurveyDialogDescription": "คุณต้องการยกเลิกการตอบแบบสอบถามนี้หรือไม่",
+    "questionsQuitSurveyDialogPositiveButtonText": "ใช่",
+    "questionsQuitSurveyDialogNegativeButtonText": "ไม่",
+    "numberRatingBarAnswerPositiveText": "เป็นไปได้มาก",
+    "numberRatingBarAnswerNegativeText": "ไม่น่าจะเป็นไปได้",
+    "textAreaAnswerHint": "ความคิดเห็นของคุณ",
+    "completionDefaultText": "ขอบคุณที่สละเวลาตอบแบบสอบถาม"
 }

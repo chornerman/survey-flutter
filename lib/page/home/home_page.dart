@@ -34,7 +34,7 @@ final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyModel>>(
 final _userStreamProvider = StreamProvider.autoDispose<UserModel>(
     (ref) => ref.watch(homeViewModelProvider.notifier).user);
 
-final _errorStreamProvider = StreamProvider.autoDispose<String>(
+final _errorStreamProvider = StreamProvider.autoDispose<String?>(
     (ref) => ref.watch(homeViewModelProvider.notifier).error);
 
 final _appVersionStreamProvider = StreamProvider.autoDispose<String>(
@@ -76,8 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     });
 
-    final error = ref.watch(_errorStreamProvider).value;
-    if (error != null) _showError(error);
+    _handleError();
 
     final user = ref.watch(_userStreamProvider).value;
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
@@ -157,6 +156,14 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ),
     );
+  }
+
+  void _handleError() {
+    final error = ref.watch(_errorStreamProvider).value;
+    if (error != null) {
+      _showError(error);
+      ref.read(homeViewModelProvider.notifier).clearError();
+    }
   }
 
   void _showError(String errorMessage) {

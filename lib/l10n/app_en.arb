@@ -11,5 +11,15 @@
     "resetPasswordInvalidEmail": "Invalid email",
     "homeToday": "Today",
     "homeUser": "User",
-    "homeLogout": "Logout"
+    "homeLogout": "Logout",
+    "surveyDetailStartSurvey": "Start Survey",
+    "questionsSubmit": "Submit",
+    "questionsQuitSurveyDialogTitle": "Warning!",
+    "questionsQuitSurveyDialogDescription": "Are you sure you want to quit the survey?",
+    "questionsQuitSurveyDialogPositiveButtonText": "Yes",
+    "questionsQuitSurveyDialogNegativeButtonText": "Cancel",
+    "numberRatingBarAnswerPositiveText": "Extremely Likely",
+    "numberRatingBarAnswerNegativeText": "Not at all Likely",
+    "textAreaAnswerHint": "Your thoughts",
+    "completionDefaultText": "Thanks for taking the survey."
 }

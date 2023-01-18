@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:survey/resource/dimens.dart';
 
-class TextInputWidget extends StatelessWidget {
+class SingleLineTextInputWidget extends StatelessWidget {
   final String hintText;
+  final TextInputAction textInputAction;
   final bool isPasswordInput;
   final TextEditingController? controller;
   final Widget? endWidget;
+  final ValueChanged<String>? onChanged;
+  final TextInputType? keyboardType;
 
-  const TextInputWidget({
+  const SingleLineTextInputWidget({
     Key? key,
     required this.hintText,
+    required this.textInputAction,
     this.isPasswordInput = false,
     this.controller,
     this.endWidget,
+    this.onChanged,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimens.textInputHeight,
+      height: Dimens.singleLineTextInputHeight,
       padding: const EdgeInsets.symmetric(horizontal: Dimens.space12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(Dimens.textInputBorderRadius),
       ),
       child: Row(
@@ -41,9 +47,19 @@ class TextInputWidget extends StatelessWidget {
                     ),
                 border: InputBorder.none,
               ),
+              onChanged: onChanged,
+              textInputAction: textInputAction,
+              keyboardType: keyboardType,
             ),
           ),
-          if (endWidget != null) Expanded(flex: 0, child: endWidget!),
+          if (endWidget != null)
+            Expanded(
+              flex: 0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: Dimens.space8),
+                child: endWidget!,
+              ),
+            ),
         ],
       ),
     );
