@@ -21,8 +21,7 @@ void main() {
     test(
         'When calling getUser successfully, it returns corresponding mapped result',
         () async {
-      final userJson =
-          await FileUtils.loadFile('test/mock/mock_response/user.json');
+      final userJson = await FileUtils.loadFile('mock_response/user.json');
       final response = UserResponse.fromJson(userJson);
 
       when(mockUserService.getUser()).thenAnswer((_) async => response);

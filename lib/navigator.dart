@@ -10,8 +10,8 @@ import 'package:survey/page/start/start_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
 
 const String _routeStart = '/';
-const String _routeHome = '/home';
-const String _routeResetPassword = '/reset-password';
+const String routeHome = '/home';
+const String routeResetPassword = '/reset-password';
 const String _routeSurveyDetail = '/survey-detail';
 const String _routeQuestions = '/questions';
 const String _routeCompletion = '/completion';
@@ -19,8 +19,8 @@ const String _routeCompletion = '/completion';
 class Routes {
   static final routes = <String, WidgetBuilder>{
     _routeStart: (BuildContext context) => StartPage(),
-    _routeHome: (BuildContext context) => const HomePage(),
-    _routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
+    routeHome: (BuildContext context) => const HomePage(),
+    routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
     _routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
     _routeQuestions: (BuildContext context) => const QuestionsPage(),
     _routeCompletion: (BuildContext context) => const CompletionPage(),
@@ -53,11 +53,11 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   void navigateToHomeAndClearStack(BuildContext context) =>
-      Navigator.pushNamedAndRemoveUntil(context, _routeHome, (r) => false);
+      Navigator.pushNamedAndRemoveUntil(context, routeHome, (r) => false);
 
   @override
   void navigateToResetPassword(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeResetPassword);
+      Navigator.of(context).pushNamed(routeResetPassword);
 
   @override
   void navigateToStartAndClearStack(BuildContext context) =>

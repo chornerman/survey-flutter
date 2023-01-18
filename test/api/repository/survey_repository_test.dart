@@ -29,7 +29,7 @@ void main() {
         'When calling getSurveys on the first page successfully, it returns corresponding mapped result and clear surveys cache',
         () async {
       final surveysJson =
-          await FileUtils.loadFile('test/mock/mock_response/surveys.json');
+          await FileUtils.loadFile('mock_response/surveys.json');
       final response = SurveysResponse.fromJson(surveysJson);
       when(mockSurveyService.getSurveys(any, any))
           .thenAnswer((_) async => response);
@@ -47,7 +47,7 @@ void main() {
         'When calling getSurveys not on the first page successfully, it returns corresponding mapped result',
         () async {
       final surveysJson =
-          await FileUtils.loadFile('test/mock/mock_response/surveys.json');
+          await FileUtils.loadFile('mock_response/surveys.json');
       final response = SurveysResponse.fromJson(surveysJson);
       when(mockSurveyService.getSurveys(any, any))
           .thenAnswer((_) async => response);
@@ -72,8 +72,8 @@ void main() {
     test(
         'When calling getSurveyDetail successfully, it returns corresponding mapped result',
         () async {
-      final surveyDetailJson = await FileUtils.loadFile(
-          'test/mock/mock_response/survey_detail.json');
+      final surveyDetailJson =
+          await FileUtils.loadFile('mock_response/survey_detail.json');
       final response = SurveyDetailResponse.fromJson(surveyDetailJson);
       when(mockSurveyService.getSurveyDetail(any))
           .thenAnswer((_) async => response);

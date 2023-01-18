@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:survey/database/hive.dart';
 import 'package:survey/di/di.dart';
-import 'package:survey/model/survey_model.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/resource/app_theme.dart';
 
@@ -30,9 +29,4 @@ class App extends StatelessWidget {
       routes: Routes.routes,
     );
   }
-}
-
-Future<void> initHive() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(SurveyModelAdapter());
 }

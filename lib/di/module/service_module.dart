@@ -7,9 +7,9 @@ import 'package:survey/env_variables.dart';
 
 @module
 abstract class ServiceModule {
-  @Singleton()
-  AuthService provideAuthService(DioProvider dioProvider) {
-    return AuthService(
+  @Singleton(as: AuthService)
+  AuthServiceImpl provideAuthService(DioProvider dioProvider) {
+    return AuthServiceImpl(
       dioProvider.getNonAuthenticatedDio(),
       baseUrl: EnvVariables.apiEndpoint,
     );
