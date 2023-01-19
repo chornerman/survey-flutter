@@ -8,6 +8,7 @@ import 'package:survey/di/di.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
 import 'package:survey/navigator.dart';
+import 'package:survey/page/surveydetail/survey_detail_page_key.dart';
 import 'package:survey/page/surveydetail/survey_detail_state.dart';
 import 'package:survey/page/surveydetail/survey_detail_view_model.dart';
 import 'package:survey/resource/dimens.dart';
@@ -106,7 +107,9 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppBarBackButtonWidget(),
+                  AppBarBackButtonWidget(
+                    key: SurveyDetailPageKey.abbbSurveyDetail,
+                  ),
                   const SizedBox(height: Dimens.space30),
                   Expanded(
                     child: SingleChildScrollView(
@@ -133,6 +136,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: RoundedButtonWidget(
+                      key: SurveyDetailPageKey.rbSurveyDetailStartSurvey,
                       buttonText:
                           AppLocalizations.of(context)!.surveyDetailStartSurvey,
                       onPressed: () {
