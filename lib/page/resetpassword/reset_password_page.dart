@@ -6,6 +6,7 @@ import 'package:survey/constants.dart';
 import 'package:survey/di/di.dart';
 import 'package:survey/gen/assets.gen.dart';
 import 'package:survey/gen/colors.gen.dart';
+import 'package:survey/page/resetpassword/reset_password_page_key.dart';
 import 'package:survey/page/resetpassword/reset_password_state.dart';
 import 'package:survey/page/resetpassword/reset_password_view_model.dart';
 import 'package:survey/resource/dimens.dart';
@@ -33,11 +34,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<ResetPasswordState>(resetPasswordViewModelProvider, (
-      ResetPasswordState? previousState,
-      ResetPasswordState newState,
-    ) {
-      newState.maybeWhen(
+    ref.listen<ResetPasswordState>(resetPasswordViewModelProvider, (_, state) {
+      state.maybeWhen(
         success: () => _showResetPasswordSuccessFlushbar(),
         apiError: (errorMessage) => _showError(errorMessage),
         invalidInputError: () =>
@@ -71,6 +69,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                   ),
                   const SizedBox(height: Dimens.space96),
                   SingleLineTextInputWidget(
+                    key: ResetPasswordPageKey.sltiResetPasswordEmail,
                     hintText: AppLocalizations.of(context)!.email,
                     textInputAction: TextInputAction.done,
                     controller: _emailController,
@@ -78,6 +77,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                   ),
                   const SizedBox(height: Dimens.space20),
                   RoundedButtonWidget(
+                    key: ResetPasswordPageKey.rbResetPassword,
                     buttonText:
                         AppLocalizations.of(context)!.resetPasswordReset,
                     onPressed: () {
@@ -98,7 +98,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                 top: Dimens.space24,
                 left: Dimens.space22,
               ),
-              child: AppBarBackButtonWidget(),
+              child: AppBarBackButtonWidget(
+                key: ResetPasswordPageKey.abbbResetPassword,
+              ),
             ),
           ),
           ref.watch(resetPasswordViewModelProvider).maybeWhen(

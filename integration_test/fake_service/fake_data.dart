@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 
+const successStatusCode = 200;
+const _errorStatusCode = 400;
+
 class FakeResponse {
   final int statusCode;
   final Map<String, dynamic> json;
@@ -13,13 +16,13 @@ class FakeData {
   static Map<String, FakeResponse> fakeResponses = {};
 
   static void addSuccessResponse(String key, Map<String, dynamic> response) {
-    final newResponse = FakeResponse(200, response);
+    final newResponse = FakeResponse(successStatusCode, response);
     fakeResponses.update(key, (response) => newResponse,
         ifAbsent: () => newResponse);
   }
 
   static void addErrorResponse(String key) {
-    final newResponse = FakeResponse(400, {});
+    final newResponse = FakeResponse(_errorStatusCode, {});
     fakeResponses.update(key, (response) => newResponse,
         ifAbsent: () => newResponse);
   }
