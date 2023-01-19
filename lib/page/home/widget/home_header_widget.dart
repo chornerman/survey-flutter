@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey/page/home/home_page_key.dart';
 import 'package:survey/page/home/widget/home_user_avatar_widget.dart';
 import 'package:survey/resource/dimens.dart';
 
@@ -39,7 +40,10 @@ class HomeHeaderWidget extends StatelessWidget {
               const Expanded(child: const SizedBox.shrink()),
               GestureDetector(
                 onTap: () => Scaffold.of(context).openEndDrawer(),
-                child: HomeUserAvatarWidget(userAvatarUrl: userAvatarUrl),
+                child: HomeUserAvatarWidget(
+                  key: HomePageKey.huaHome,
+                  userAvatarUrl: userAvatarUrl,
+                ),
               ),
             ],
           ),

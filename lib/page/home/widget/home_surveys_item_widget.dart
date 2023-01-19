@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey/model/survey_model.dart';
+import 'package:survey/page/home/home_page_key.dart';
 import 'package:survey/resource/dimens.dart';
 import 'package:survey/widget/dimmed_background_widget.dart';
 import 'package:survey/widget/next_button_widget.dart';
@@ -54,7 +55,10 @@ class HomeSurveysItemWidget extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: Dimens.space20),
-                    child: NextButtonWidget(onPressed: onNextButtonPressed),
+                    child: NextButtonWidget(
+                      key: HomePageKey.nbHomeTakeSurvey,
+                      onPressed: onNextButtonPressed,
+                    ),
                   ),
                 ],
               )

@@ -12,7 +12,7 @@ import 'package:survey/page/surveydetail/survey_detail_page.dart';
 const String _routeStart = '/';
 const String routeHome = '/home';
 const String routeResetPassword = '/reset-password';
-const String _routeSurveyDetail = '/survey-detail';
+const String routeSurveyDetail = '/survey-detail';
 const String _routeQuestions = '/questions';
 const String _routeCompletion = '/completion';
 
@@ -21,7 +21,7 @@ class Routes {
     _routeStart: (BuildContext context) => StartPage(),
     routeHome: (BuildContext context) => const HomePage(),
     routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
-    _routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
+    routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
     _routeQuestions: (BuildContext context) => const QuestionsPage(),
     _routeCompletion: (BuildContext context) => const CompletionPage(),
   };
@@ -65,10 +65,7 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   void navigateToSurveyDetail(BuildContext context, SurveyModel survey) =>
-      Navigator.of(context).pushNamed(
-        _routeSurveyDetail,
-        arguments: survey,
-      );
+      Navigator.of(context).pushNamed(routeSurveyDetail, arguments: survey);
 
   @override
   void navigateToQuestions(

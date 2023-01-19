@@ -97,7 +97,7 @@ void main() {
     });
 
     testWidgets(
-        'When tapping on forgot password, it navigates to Reset Password page',
+        'When tapping on Forgot Password button, it navigates to Reset Password page',
         (WidgetTester tester) async {
       await tester.pumpWidget(IntegrationTestUtils.prepareTestApp(
         LoginPage(),

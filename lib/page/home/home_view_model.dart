@@ -13,7 +13,7 @@ import 'package:survey/usecase/get_surveys_use_case.dart';
 import 'package:survey/usecase/get_user_use_case.dart';
 import 'package:survey/usecase/logout_use_case.dart';
 
-const _homeCurrentDatePattern = 'EEEE, MMMM dd';
+const homeCurrentDatePattern = 'EEEE, MMMM dd';
 const _surveysPageSize = 5;
 
 class HomeViewModel extends StateNotifier<HomeState> {
@@ -117,7 +117,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   String getCurrentDate() =>
-      DateFormat(_homeCurrentDatePattern).format(clock.now()).toUpperCase();
+      DateFormat(homeCurrentDatePattern).format(clock.now()).toUpperCase();
 
   void clearError() {
     _error.add(null);
