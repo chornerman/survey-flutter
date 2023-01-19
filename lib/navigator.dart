@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
-import 'package:survey/page/completion/completion_page.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/resetpassword/reset_password_page.dart';
 import 'package:survey/page/start/start_page.dart';
+import 'package:survey/page/surveycompletion/survey_completion_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
 
 const String _routeStart = '/';
@@ -14,7 +14,7 @@ const String routeHome = '/home';
 const String routeResetPassword = '/reset-password';
 const String routeSurveyDetail = '/survey-detail';
 const String routeQuestions = '/questions';
-const String routeCompletion = '/completion';
+const String routeSurveyCompletion = '/survey-completion';
 
 class Routes {
   static final routes = <String, WidgetBuilder>{
@@ -23,7 +23,8 @@ class Routes {
     routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
     routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
     routeQuestions: (BuildContext context) => const QuestionsPage(),
-    routeCompletion: (BuildContext context) => const CompletionPage(),
+    routeSurveyCompletion: (BuildContext context) =>
+        const SurveyCompletionPage(),
   };
 }
 
@@ -43,7 +44,7 @@ abstract class AppNavigator {
     SurveyDetailModel surveyDetail,
   );
 
-  void navigateToCompletion(BuildContext context, String? outroMessage);
+  void navigateToSurveyCompletion(BuildContext context, String? outroMessage);
 }
 
 @Injectable(as: AppNavigator)
@@ -79,10 +80,10 @@ class AppNavigatorImpl extends AppNavigator {
       );
 
   @override
-  void navigateToCompletion(BuildContext context, String? outroMessage) =>
+  void navigateToSurveyCompletion(BuildContext context, String? outroMessage) =>
       Navigator.pushReplacementNamed(
         context,
-        routeCompletion,
+        routeSurveyCompletion,
         arguments: outroMessage,
       );
 }

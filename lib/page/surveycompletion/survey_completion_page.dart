@@ -9,16 +9,16 @@ import 'package:survey/gen/colors.gen.dart';
 import 'package:survey/navigator.dart';
 import 'package:survey/resource/dimens.dart';
 
-const _completionPageDurationInSecond = 2;
+const _surveyCompletionPageDurationInSecond = 2;
 
-class CompletionPage extends StatefulWidget {
-  const CompletionPage({super.key});
+class SurveyCompletionPage extends StatefulWidget {
+  const SurveyCompletionPage({super.key});
 
   @override
-  State<CompletionPage> createState() => _CompletionPageState();
+  State<SurveyCompletionPage> createState() => _SurveyCompletionPageState();
 }
 
-class _CompletionPageState extends State<CompletionPage>
+class _SurveyCompletionPageState extends State<SurveyCompletionPage>
     with TickerProviderStateMixin {
   final _appNavigator = getIt.get<AppNavigator>();
 
@@ -27,7 +27,7 @@ class _CompletionPageState extends State<CompletionPage>
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
             // Wait for 2 seconds after animation is completed before navigating back to the Home screen
-            Timer(Duration(seconds: _completionPageDurationInSecond), () {
+            Timer(Duration(seconds: _surveyCompletionPageDurationInSecond), () {
               _appNavigator.navigateBack(context);
             });
           }
@@ -46,8 +46,8 @@ class _CompletionPageState extends State<CompletionPage>
           const Expanded(child: const SizedBox.shrink()),
           Lottie.asset(
             Assets.lotties.surveyCompleted,
-            width: Dimens.completionSurveyCompletedLottieSize,
-            height: Dimens.completionSurveyCompletedLottieSize,
+            width: Dimens.surveyCompletionSurveyCompletedLottieSize,
+            height: Dimens.surveyCompletionSurveyCompletedLottieSize,
             fit: BoxFit.fill,
             controller: _animationController,
             onLoaded: (composition) {
@@ -57,7 +57,8 @@ class _CompletionPageState extends State<CompletionPage>
             },
           ),
           Text(
-            outroMessage ?? AppLocalizations.of(context)!.completionDefaultText,
+            outroMessage ??
+                AppLocalizations.of(context)!.surveyCompletionDefaultText,
             style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
             maxLines: 3,

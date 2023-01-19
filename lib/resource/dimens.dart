@@ -53,5 +53,5 @@ class Dimens {
   static const double questionsMultipleChoicesAnswerCheckboxBorderWidth = 2;
   static const double questionsMultipleChoicesAnswerCheckboxIconSize = 18;
 
-  static const double completionSurveyCompletedLottieSize = 200;
+  static const double surveyCompletionSurveyCompletedLottieSize = 200;
 }
