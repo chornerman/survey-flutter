@@ -7,25 +7,25 @@ import 'package:survey/env_variables.dart';
 
 @module
 abstract class ServiceModule {
-  @Singleton()
-  AuthService provideAuthService(DioProvider dioProvider) {
-    return AuthService(
+  @Singleton(as: AuthService)
+  AuthServiceImpl provideAuthService(DioProvider dioProvider) {
+    return AuthServiceImpl(
       dioProvider.getNonAuthenticatedDio(),
       baseUrl: EnvVariables.apiEndpoint,
     );
   }
 
-  @Singleton()
-  SurveyService provideSurveyService(DioProvider dioProvider) {
-    return SurveyService(
+  @Singleton(as: SurveyService)
+  SurveyServiceImpl provideSurveyService(DioProvider dioProvider) {
+    return SurveyServiceImpl(
       dioProvider.getAuthenticatedDio(),
       baseUrl: EnvVariables.apiEndpoint,
     );
   }
 
-  @Singleton()
-  UserService provideUserService(DioProvider dioProvider) {
-    return UserService(
+  @Singleton(as: UserService)
+  UserServiceImpl provideUserService(DioProvider dioProvider) {
+    return UserServiceImpl(
       dioProvider.getAuthenticatedDio(),
       baseUrl: EnvVariables.apiEndpoint,
     );

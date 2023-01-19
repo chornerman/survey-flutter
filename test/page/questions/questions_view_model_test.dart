@@ -24,8 +24,8 @@ void main() {
     setUp(() async {
       mockSubmitSurveyUseCase = MockSubmitSurveyUseCase();
 
-      final surveyDetailJson = await FileUtils.loadFile(
-          'test/mock/mock_response/survey_detail.json');
+      final surveyDetailJson =
+          await FileUtils.loadFile('mock_response/survey_detail.json');
       final surveyDetailResponse =
           SurveyDetailResponse.fromJson(surveyDetailJson);
       surveyDetail = SurveyDetailModel.fromResponse(surveyDetailResponse);

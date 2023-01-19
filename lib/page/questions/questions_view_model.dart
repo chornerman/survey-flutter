@@ -30,7 +30,7 @@ class QuestionsViewModel extends StateNotifier<QuestionsState> {
     _surveyId = surveyDetail.id;
     final questions = surveyDetail.questions;
 
-    // Store text from outro question to display in the Completion screen
+    // Store text from outro question to display in the Survey Completion page
     _outroMessage = questions
         .firstWhereOrNull(
             (question) => question.displayType == DisplayType.outro)

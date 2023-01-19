@@ -2,28 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:survey/model/survey_detail_model.dart';
 import 'package:survey/model/survey_model.dart';
-import 'package:survey/page/completion/completion_page.dart';
 import 'package:survey/page/home/home_page.dart';
 import 'package:survey/page/questions/questions_page.dart';
 import 'package:survey/page/resetpassword/reset_password_page.dart';
 import 'package:survey/page/start/start_page.dart';
+import 'package:survey/page/surveycompletion/survey_completion_page.dart';
 import 'package:survey/page/surveydetail/survey_detail_page.dart';
 
 const String _routeStart = '/';
-const String _routeHome = '/home';
-const String _routeResetPassword = '/reset-password';
-const String _routeSurveyDetail = '/survey-detail';
-const String _routeQuestions = '/questions';
-const String _routeCompletion = '/completion';
+const String routeHome = '/home';
+const String routeResetPassword = '/reset-password';
+const String routeSurveyDetail = '/survey-detail';
+const String routeQuestions = '/questions';
+const String routeSurveyCompletion = '/survey-completion';
 
 class Routes {
   static final routes = <String, WidgetBuilder>{
     _routeStart: (BuildContext context) => StartPage(),
-    _routeHome: (BuildContext context) => const HomePage(),
-    _routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
-    _routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
-    _routeQuestions: (BuildContext context) => const QuestionsPage(),
-    _routeCompletion: (BuildContext context) => const CompletionPage(),
+    routeHome: (BuildContext context) => const HomePage(),
+    routeResetPassword: (BuildContext context) => const ResetPasswordPage(),
+    routeSurveyDetail: (BuildContext context) => const SurveyDetailPage(),
+    routeQuestions: (BuildContext context) => const QuestionsPage(),
+    routeSurveyCompletion: (BuildContext context) =>
+        const SurveyCompletionPage(),
   };
 }
 
@@ -43,7 +44,7 @@ abstract class AppNavigator {
     SurveyDetailModel surveyDetail,
   );
 
-  void navigateToCompletion(BuildContext context, String? outroMessage);
+  void navigateToSurveyCompletion(BuildContext context, String? outroMessage);
 }
 
 @Injectable(as: AppNavigator)
@@ -53,11 +54,11 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   void navigateToHomeAndClearStack(BuildContext context) =>
-      Navigator.pushNamedAndRemoveUntil(context, _routeHome, (r) => false);
+      Navigator.pushNamedAndRemoveUntil(context, routeHome, (r) => false);
 
   @override
   void navigateToResetPassword(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeResetPassword);
+      Navigator.of(context).pushNamed(routeResetPassword);
 
   @override
   void navigateToStartAndClearStack(BuildContext context) =>
@@ -65,10 +66,7 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   void navigateToSurveyDetail(BuildContext context, SurveyModel survey) =>
-      Navigator.of(context).pushNamed(
-        _routeSurveyDetail,
-        arguments: survey,
-      );
+      Navigator.of(context).pushNamed(routeSurveyDetail, arguments: survey);
 
   @override
   void navigateToQuestions(
@@ -77,15 +75,15 @@ class AppNavigatorImpl extends AppNavigator {
   ) =>
       Navigator.pushReplacementNamed(
         context,
-        _routeQuestions,
+        routeQuestions,
         arguments: surveyDetail,
       );
 
   @override
-  void navigateToCompletion(BuildContext context, String? outroMessage) =>
+  void navigateToSurveyCompletion(BuildContext context, String? outroMessage) =>
       Navigator.pushReplacementNamed(
         context,
-        _routeCompletion,
+        routeSurveyCompletion,
         arguments: outroMessage,
       );
 }
