@@ -1,16 +1,48 @@
-# survey
+# Survey
 
 Nimble Flutter internal certification
 
+## Prerequisite
+
+- Flutter 3.3
+- [Recommended] [Flutter Version Management (fvm)](https://fvm.app/)
+
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Set up the project
+To set up this project locally, follow the steps below:
+- Create `.env` files inside the project's root directory and add the required environment variables into them. Take a look at the `.env.sample` to see the list of all required environment variables
+  - To set up the **staging** environment, create `.env.staging`
+  - To set up the **production** environment, create `.env`
+- Generate Flutter files using the below command:
+```
+fvm flutter packages pub run build_runner build --delete-conflicting-outputs
+```
 
-A few resources to get you started if this is your first Flutter project:
+### Run the app
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### Staging
+To run the staging flavor app, use the below command:
+```
+fvm flutter run --flavor staging
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### Production
+To run the production flavor app, use the below command:
+```
+fvm flutter run --flavor production
+```
+
+### Run tests
+
+#### Unit tests
+To run all unit tests, use the below command:
+```
+fvm flutter test
+```
+
+#### Integration tests
+To run integration tests with an emulator, use the below command:
+```
+fvm flutter drive --driver=integration_test_driver/integration_test_driver.dart --flavor staging --target=integration_test/{test_file}.dart
+```
