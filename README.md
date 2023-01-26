@@ -46,3 +46,17 @@ To run integration tests with an emulator, use the below command:
 ```
 fvm flutter drive --driver=integration_test_driver/integration_test_driver.dart --flavor staging --target=integration_test/{test_file}.dart
 ```
+
+## Screenshots
+
+- Onboarding
+
+<img src="https://user-images.githubusercontent.com/13492460/214794037-4ba23ac8-5957-4a5b-9d0b-54e6cad06c35.gif" width="180" height="375"/> <img src="https://user-images.githubusercontent.com/13492460/214794075-e59a8bee-212e-409e-b2d6-677d52f5844d.gif" width="180" height="375"/>
+
+- Home
+
+<img src="https://user-images.githubusercontent.com/13492460/214794101-ce4e5652-cc47-4574-b40b-d0fec3608f9a.gif" width="180" height="375"/>
+
+- Taking survey
+
+<img src="https://user-images.githubusercontent.com/13492460/214794121-3ba82c8c-2e61-427a-8d6a-cedb56d353bc.gif" width="180" height="375"/>
